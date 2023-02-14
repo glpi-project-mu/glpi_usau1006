@@ -1,0 +1,17 @@
+{
+    "dependencies": {
+        "jquery-slinky": "^4.1"
+    },
+    "devDependencies": {
+        "conventional-changelog-cli": "^2.0",
+        "standard-version": "^9.0"
+    },
+    "standard-version": {
+        "skip": {
+            "bump": true,
+            "commit": true,
+            "tag": true
+        }
+    },
+    "version": "2.13.4"
+}

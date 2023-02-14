@@ -1,0 +1,327 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# sai sai, 2019
+# sai sai, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Fields\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-15 14:47+0000\n"
+"PO-Revision-Date: 2015-09-18 09:34+0000\n"
+"Last-Translator: sai sai, 2019\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/teclib/glpi-plugin-plugin-fields/language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: inc/checkdatabasecommand.class.php:47
+#, php-format
+msgid ""
+"- some deleted fields may still be present in database (bug introduced in "
+"version %s and fixed in version %s)"
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:86
+#, php-format
+msgid "-> \"%s.%s\" has been deleted."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:87
+#, php-format
+msgid "-> \"%s.%s\" should be deleted."
+msgstr ""
+
+#: inc/field.class.php:514
+msgid "Add a new field"
+msgstr "新しいフィールドを追加する"
+
+#: templates/container_display_conditions.html.twig
+msgid "Add condition to hide block"
+msgstr ""
+
+#: templates/status_overrides.html.twig
+msgid "Add new status override"
+msgstr ""
+
+#: inc/container.class.php:935
+msgid "Add tab"
+msgstr "タブを追加する"
+
+#: inc/menu.class.php:37 front/container.php:34 front/container.form.php:60
+#: setup.php:197
+msgid "Additional fields"
+msgstr "追加のフィールド"
+
+#: ajax/field_specific_fields.php:53
+msgid "Allowed values"
+msgstr ""
+
+#: inc/container.class.php:683
+msgid "Block"
+msgstr "ブロック"
+
+#: inc/checkdatabasecommand.class.php:42
+msgid "Check database to detect inconsistencies."
+msgstr ""
+
+#: inc/toolbox.class.php:316
+msgid "Component items"
+msgstr ""
+
+#: templates/container_display_conditions.html.twig
+#: inc/containerdisplaycondition.class.php:153
+msgid "Condition to hide block"
+msgid_plural "Conditions to hide block"
+msgstr[0] ""
+
+#: inc/container.class.php:506
+msgid ""
+"Container name is too long for database (digits in name are replaced by "
+"characters, try to remove them)"
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:80
+#, php-format
+msgid "Database contains orphaned data from %s improperly deleted field(s)."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:79
+#, php-format
+msgid ""
+"Database was containing orphaned data from %s improperly deleted field(s)."
+msgstr ""
+
+#: inc/field.class.php:1186
+msgid "Date"
+msgstr "日付"
+
+#: inc/field.class.php:1187
+msgid "Date & time"
+msgstr "日時"
+
+#: ajax/field_specific_fields.php:89
+msgid "Default value"
+msgstr ""
+
+#: ajax/field_specific_fields.php:116
+msgid "Default value will be configurable once field will be created."
+msgstr ""
+
+#: inc/field.class.php:1184
+msgid "Dropdown"
+msgstr "ドロップダウン"
+
+#: inc/checkdatabasecommand.class.php:72
+msgid "Everything is in order - no action needed."
+msgstr ""
+
+#: inc/container.class.php:53 inc/container.class.php:693
+msgid "Export to YAML"
+msgstr ""
+
+#: templates/forms/status_override.html.twig inc/field.class.php:232
+msgid "Field"
+msgstr "フィールド"
+
+#: inc/field.class.php:248 inc/field.class.php:273
+msgid ""
+"Field name is too long for database (digits in name are replaced by "
+"characters, try to remove them)"
+msgstr ""
+
+#: inc/field.class.php:456
+msgid "Fields"
+msgstr "フィールド"
+
+#: inc/container.class.php:177
+msgid "Fix container names"
+msgstr "コンテナ名を変更する"
+
+#: inc/toolbox.class.php:122
+msgid "Fix fields names"
+msgstr "フィールド名を変更する"
+
+#: inc/field.class.php:1188
+msgid "GLPI item"
+msgstr ""
+
+#: inc/field.class.php:1179
+msgid "Header"
+msgstr "ヘッダ"
+
+#: inc/container.class.php:936
+msgid "Insertion in the form (before save button)"
+msgstr "フォームに追加する（フォーム保存前時点）"
+
+#: inc/container.class.php:937
+msgid "Insertion in the form of a specific tab (before save button)"
+msgstr "フォームのタブに追加する（フォーム保存前時点）"
+
+#: inc/labeltranslation.class.php:192
+msgid "Label"
+msgstr "ラベル"
+
+#: inc/labeltranslation.class.php:191
+msgid "Language"
+msgstr "言語"
+
+#: ajax/field_specific_fields.php:86
+msgid "Multiple dropdown"
+msgstr ""
+
+#: hook.php:55 hook.php:59
+msgid "MySQL tables installation"
+msgstr "MySQLテーブルのインストール"
+
+#: hook.php:121
+msgid "MySQL tables uninstallation"
+msgstr "MySQLテーブルのアンインストール"
+
+#: inc/field.class.php:518
+msgid "No field for this block"
+msgstr "ブロック内にフィールドはありません"
+
+#: templates/status_overrides.html.twig
+msgid "No item found"
+msgstr ""
+
+#: inc/field.class.php:1182
+msgid "Number"
+msgstr "数値"
+
+#: inc/statusoverride.class.php:88
+msgid "Override by status"
+msgstr ""
+
+#: templates/forms/status_override.html.twig inc/field.class.php:531
+#: inc/field.class.php:711
+msgid "Read only"
+msgstr "読取専用"
+
+#: inc/container.class.php:52
+msgid "Regenerate container files"
+msgstr "コンテナファイルを再生成する"
+
+#: inc/container.class.php:156
+msgid "Regenerate containers files"
+msgstr ""
+
+#: inc/command/regeneratefilescommand.class.php:41
+msgid "Regenerates containers files."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:96
+#, php-format
+msgid "Run \"%s\" to fix database inconsistencies."
+msgstr ""
+
+#: inc/container.class.php:1403
+msgid "Some URL fields contains invalid links"
+msgstr "不正なリンクを含むURLフィールドがあります。"
+
+#: inc/container.class.php:1393
+msgid "Some mandatory fields are empty"
+msgstr "必須項目が未入力です。"
+
+#: inc/container.class.php:1398
+msgid "Some numeric fields contains non numeric values"
+msgstr "非数値を含む数値フィールドがあります。"
+
+#: templates/status_overrides.html.twig
+msgid "Status overrides"
+msgstr ""
+
+#: inc/container.class.php:787
+msgid "Tab"
+msgstr "タブ"
+
+#: inc/field.class.php:1181
+msgid "Text (multiples lines)"
+msgstr "テキスト（複数行）"
+
+#: inc/field.class.php:1180
+msgid "Text (single line)"
+msgstr "テキスト（単一行）"
+
+#: hook.php:109
+msgid "The plugin can't be uninstalled when the plugin is disabled"
+msgstr "プラグインが無効な場合、プラグインをアンインストールできません。"
+
+#: inc/checkdatabasecommand.class.php:44
+msgid "This command will check database to detect following inconsistencies:"
+msgstr ""
+
+#: inc/command/regeneratefilescommand.class.php:43
+msgid ""
+"This command will clean up all files generated by the plugin and regenerate "
+"them."
+msgstr ""
+
+#: inc/field.class.php:1183
+msgid "URL"
+msgstr "URL"
+
+#: inc/container.class.php:269
+msgid "Updating generated containers files"
+msgstr "生成済みコンテナファイルを更新"
+
+#: inc/dropdown.class.php:78
+msgid "Updating generated dropdown files"
+msgstr "生成済ドロップダウンフィールドの選択肢を更新"
+
+#: inc/checkdatabasecommand.class.php:57
+msgid "Use this option to actually fix database"
+msgstr ""
+
+#: inc/field.class.php:1185
+msgid "Yes/No"
+msgstr "はい/いいえ"
+
+#: inc/container.class.php:455
+msgid "You cannot add block without associated element type"
+msgstr "「関連アイテムタイプ」が空のブロックを追加することはできません。"
+
+#: inc/container.class.php:490
+msgid ""
+"You cannot add several blocks with type 'Insertion in the form of a specific"
+" tab' on same object tab"
+msgstr "同種のオブジェクトのタブに、「ラベル」が同じブロックを複数追加することはできません。"
+
+#: inc/container.class.php:475
+msgid ""
+"You cannot add several blocks with type 'Insertion in the form' on same "
+"object"
+msgstr "同種のオブジェクトに、複数のブロックを追加することはできません。"
+
+#: inc/container.class.php:520
+msgid "You cannot add several blocs with identical name on same object"
+msgstr "同種のオブジェクトに、「ラベル」が同じブロックを追加することはできません。"
+
+#: inc/containerdisplaycondition.class.php:495
+#: inc/containerdisplaycondition.class.php:510
+msgid "You must specify an item type, search option and condition."
+msgstr ""
+
+#: inc/containerdisplaycondition.class.php:103
+#: inc/containerdisplaycondition.class.php:137
+msgid "not under"
+msgstr ""
+
+#: inc/containerdisplaycondition.class.php:109
+#: inc/containerdisplaycondition.class.php:131
+msgid "regular expression matches"
+msgstr ""
+
+#: templates/fields.html.twig
+msgid "show"
+msgstr "参照"
+
+#: inc/containerdisplaycondition.class.php:102
+#: inc/containerdisplaycondition.class.php:134
+msgid "under"
+msgstr ""

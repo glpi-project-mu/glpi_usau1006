@@ -1,0 +1,328 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Markku Vepsä, 2018
+# Markku Vepsä, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Fields\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-15 14:47+0000\n"
+"PO-Revision-Date: 2015-09-18 09:34+0000\n"
+"Last-Translator: Markku Vepsä, 2018\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/teclib/glpi-plugin-plugin-fields/language/fi_FI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: inc/checkdatabasecommand.class.php:47
+#, php-format
+msgid ""
+"- some deleted fields may still be present in database (bug introduced in "
+"version %s and fixed in version %s)"
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:86
+#, php-format
+msgid "-> \"%s.%s\" has been deleted."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:87
+#, php-format
+msgid "-> \"%s.%s\" should be deleted."
+msgstr ""
+
+#: inc/field.class.php:514
+msgid "Add a new field"
+msgstr "Lisää uusi kenttä"
+
+#: templates/container_display_conditions.html.twig
+msgid "Add condition to hide block"
+msgstr ""
+
+#: templates/status_overrides.html.twig
+msgid "Add new status override"
+msgstr ""
+
+#: inc/container.class.php:935
+msgid "Add tab"
+msgstr "Lisää välilehti"
+
+#: inc/menu.class.php:37 front/container.php:34 front/container.form.php:60
+#: setup.php:197
+msgid "Additional fields"
+msgstr "Lisäkentät"
+
+#: ajax/field_specific_fields.php:53
+msgid "Allowed values"
+msgstr ""
+
+#: inc/container.class.php:683
+msgid "Block"
+msgstr "Osio"
+
+#: inc/checkdatabasecommand.class.php:42
+msgid "Check database to detect inconsistencies."
+msgstr ""
+
+#: inc/toolbox.class.php:316
+msgid "Component items"
+msgstr ""
+
+#: templates/container_display_conditions.html.twig
+#: inc/containerdisplaycondition.class.php:153
+msgid "Condition to hide block"
+msgid_plural "Conditions to hide block"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/container.class.php:506
+msgid ""
+"Container name is too long for database (digits in name are replaced by "
+"characters, try to remove them)"
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:80
+#, php-format
+msgid "Database contains orphaned data from %s improperly deleted field(s)."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:79
+#, php-format
+msgid ""
+"Database was containing orphaned data from %s improperly deleted field(s)."
+msgstr ""
+
+#: inc/field.class.php:1186
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: inc/field.class.php:1187
+msgid "Date & time"
+msgstr "Päivämäärä ja aika"
+
+#: ajax/field_specific_fields.php:89
+msgid "Default value"
+msgstr ""
+
+#: ajax/field_specific_fields.php:116
+msgid "Default value will be configurable once field will be created."
+msgstr ""
+
+#: inc/field.class.php:1184
+msgid "Dropdown"
+msgstr "Pudotusvalikko"
+
+#: inc/checkdatabasecommand.class.php:72
+msgid "Everything is in order - no action needed."
+msgstr ""
+
+#: inc/container.class.php:53 inc/container.class.php:693
+msgid "Export to YAML"
+msgstr ""
+
+#: templates/forms/status_override.html.twig inc/field.class.php:232
+msgid "Field"
+msgstr "Kenttä"
+
+#: inc/field.class.php:248 inc/field.class.php:273
+msgid ""
+"Field name is too long for database (digits in name are replaced by "
+"characters, try to remove them)"
+msgstr ""
+
+#: inc/field.class.php:456
+msgid "Fields"
+msgstr "Kentät"
+
+#: inc/container.class.php:177
+msgid "Fix container names"
+msgstr ""
+
+#: inc/toolbox.class.php:122
+msgid "Fix fields names"
+msgstr ""
+
+#: inc/field.class.php:1188
+msgid "GLPI item"
+msgstr ""
+
+#: inc/field.class.php:1179
+msgid "Header"
+msgstr "Ylätunniste"
+
+#: inc/container.class.php:936
+msgid "Insertion in the form (before save button)"
+msgstr "Lisää lomakkeeseen (ennen tallennuspainiketta)"
+
+#: inc/container.class.php:937
+msgid "Insertion in the form of a specific tab (before save button)"
+msgstr "Lisää lomakkeeseen tietyssä välilehdessä (ennen tallennuspainiketta)"
+
+#: inc/labeltranslation.class.php:192
+msgid "Label"
+msgstr "Etiketti"
+
+#: inc/labeltranslation.class.php:191
+msgid "Language"
+msgstr "Kieli"
+
+#: ajax/field_specific_fields.php:86
+msgid "Multiple dropdown"
+msgstr ""
+
+#: hook.php:55 hook.php:59
+msgid "MySQL tables installation"
+msgstr "MySQL-taulukoiden asennus"
+
+#: hook.php:121
+msgid "MySQL tables uninstallation"
+msgstr "MySQL-taulukoiden poistaminen"
+
+#: inc/field.class.php:518
+msgid "No field for this block"
+msgstr "Ei kenttää tälle osiolle"
+
+#: templates/status_overrides.html.twig
+msgid "No item found"
+msgstr ""
+
+#: inc/field.class.php:1182
+msgid "Number"
+msgstr "Numero"
+
+#: inc/statusoverride.class.php:88
+msgid "Override by status"
+msgstr ""
+
+#: templates/forms/status_override.html.twig inc/field.class.php:531
+#: inc/field.class.php:711
+msgid "Read only"
+msgstr "Vain luku"
+
+#: inc/container.class.php:52
+msgid "Regenerate container files"
+msgstr "Luo uudelleen säilötiedostot"
+
+#: inc/container.class.php:156
+msgid "Regenerate containers files"
+msgstr ""
+
+#: inc/command/regeneratefilescommand.class.php:41
+msgid "Regenerates containers files."
+msgstr ""
+
+#: inc/checkdatabasecommand.class.php:96
+#, php-format
+msgid "Run \"%s\" to fix database inconsistencies."
+msgstr ""
+
+#: inc/container.class.php:1403
+msgid "Some URL fields contains invalid links"
+msgstr "Joissakin URL-kentissä on virheellisiä linkkejä"
+
+#: inc/container.class.php:1393
+msgid "Some mandatory fields are empty"
+msgstr "Jotkut pakolliset kentät ovat tyhjiä"
+
+#: inc/container.class.php:1398
+msgid "Some numeric fields contains non numeric values"
+msgstr "Jotkin numeeriset kentät sisältävät ei-numeerisia arvoja"
+
+#: templates/status_overrides.html.twig
+msgid "Status overrides"
+msgstr ""
+
+#: inc/container.class.php:787
+msgid "Tab"
+msgstr "Välilehti"
+
+#: inc/field.class.php:1181
+msgid "Text (multiples lines)"
+msgstr "Teksti (useita rivejä)"
+
+#: inc/field.class.php:1180
+msgid "Text (single line)"
+msgstr "Teksti (yksi rivi)"
+
+#: hook.php:109
+msgid "The plugin can't be uninstalled when the plugin is disabled"
+msgstr "Liitännäistä ei voi poistaa, kun liitännäinen on poistettu käytöstä"
+
+#: inc/checkdatabasecommand.class.php:44
+msgid "This command will check database to detect following inconsistencies:"
+msgstr ""
+
+#: inc/command/regeneratefilescommand.class.php:43
+msgid ""
+"This command will clean up all files generated by the plugin and regenerate "
+"them."
+msgstr ""
+
+#: inc/field.class.php:1183
+msgid "URL"
+msgstr "URL"
+
+#: inc/container.class.php:269
+msgid "Updating generated containers files"
+msgstr "Päivitetään luodut säilötiedostot"
+
+#: inc/dropdown.class.php:78
+msgid "Updating generated dropdown files"
+msgstr "Päivitetään luodut pudotusvalikko tiedostot"
+
+#: inc/checkdatabasecommand.class.php:57
+msgid "Use this option to actually fix database"
+msgstr ""
+
+#: inc/field.class.php:1185
+msgid "Yes/No"
+msgstr "Kyllä/Ei"
+
+#: inc/container.class.php:455
+msgid "You cannot add block without associated element type"
+msgstr "Et voi lisätä osiota ilman liittyvää elementtityyppiä"
+
+#: inc/container.class.php:490
+msgid ""
+"You cannot add several blocks with type 'Insertion in the form of a specific"
+" tab' on same object tab"
+msgstr "Et voi lisätä useita osioita, joissa on tyyppi \"Liitettynä lomakkeeseen tietyssä välilehdessä\" samassa objektin välilehdessä"
+
+#: inc/container.class.php:475
+msgid ""
+"You cannot add several blocks with type 'Insertion in the form' on same "
+"object"
+msgstr "Et voi lisätä useita osioita, joiden tyyppi on \"Lisää lomakkeeseen\" samassa objektissa"
+
+#: inc/container.class.php:520
+msgid "You cannot add several blocs with identical name on same object"
+msgstr "Et voi lisätä useita osioita samalla nimellä samaan objektiin"
+
+#: inc/containerdisplaycondition.class.php:495
+#: inc/containerdisplaycondition.class.php:510
+msgid "You must specify an item type, search option and condition."
+msgstr ""
+
+#: inc/containerdisplaycondition.class.php:103
+#: inc/containerdisplaycondition.class.php:137
+msgid "not under"
+msgstr ""
+
+#: inc/containerdisplaycondition.class.php:109
+#: inc/containerdisplaycondition.class.php:131
+msgid "regular expression matches"
+msgstr ""
+
+#: templates/fields.html.twig
+msgid "show"
+msgstr "näytä"
+
+#: inc/containerdisplaycondition.class.php:102
+#: inc/containerdisplaycondition.class.php:134
+msgid "under"
+msgstr ""

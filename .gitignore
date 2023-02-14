@@ -5,8 +5,14 @@
 /config/local_define.php
 /tests/config_db*
 /tests/cache.php
-/marketplace/*
-!/marketplace/.gitkeep
+/marketplace/oauthimap/vendor/
+/marketplace/behaviors/vendor/
+/marketplace/fields/vendor/
+/marketplace/formcreator/vendor/
+/marketplace/fussioninventory/vendor/
+/marketplace/mreporting/vendor/
+/marketplace/tag/vendor/
+/marketplace/uninstall/vendor/
 /plugins/*
 !/plugins/.gitkeep
 /files/*/*

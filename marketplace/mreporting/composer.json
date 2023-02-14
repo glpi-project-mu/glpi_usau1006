@@ -1,0 +1,22 @@
+{
+    "require": {
+        "php": ">=7.4",
+        "masnathan/odtphp": "dev-teclib"
+    },
+    "require-dev": {
+        "glpi-project/tools": "^0.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "7.4.0"
+        },
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/teclib/odtphp/"
+        }
+    ]
+}

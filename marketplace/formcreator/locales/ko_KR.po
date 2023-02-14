@@ -1,0 +1,2415 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Thierry Bugier <tbugier@teclib.com>, 2022
+# SeongHyeon Cho <jaymz9634@gmail.com>, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-24 14:10+0100\n"
+"PO-Revision-Date: 2021-08-30 07:22+0000\n"
+"Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>, 2023\n"
+"Language-Team: Korean (Korea) (https://www.transifex.com/teclib/teams/28042/ko_KR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ajax/question_update.php:36 ajax/section_update.php:37
+msgid "Bad request"
+msgstr "잘못된 요청"
+
+#: ajax/question_update.php:45 ajax/question_move.php:45
+#: ajax/question_delete.php:42 ajax/question_toggle_required.php:49
+msgid "Question not found"
+msgstr "질문을 찾을 수 없습니다"
+
+#: ajax/question_update.php:51 ajax/question_duplicate.php:49
+#: ajax/question_move.php:50 ajax/section_add.php:38
+#: ajax/section_delete.php:50 ajax/section_move.php:55
+#: ajax/section_duplicate.php:50 ajax/question_delete.php:49
+#: ajax/question_toggle_required.php:55 ajax/section_update.php:44
+msgid "You don't have right for this action"
+msgstr "이 작업에 대한 권한이 없습니다"
+
+#: ajax/question_duplicate.php:43
+msgid "Source question not found"
+msgstr "원 질문을 찾을 수 없습니다"
+
+#: ajax/question_move.php:73
+msgid "Could not move some questions"
+msgstr "일부 질문들을 이동할 수 없습니다"
+
+#: ajax/section_add.php:44
+msgid "Could not add the section"
+msgstr "섹션을 추가할 수 없습니다"
+
+#: ajax/commontree.php:55 entrée standard:128 standard:100
+msgid "Subtree root"
+msgstr "하위트리 최상위"
+
+#: ajax/commontree.php:59
+msgid "Selectable"
+msgstr "선택 가능"
+
+#: ajax/commontree.php:74 entrée standard:137 standard:109
+msgid "Limit subtree depth"
+msgstr "하위트리 깊이 제한"
+
+#: ajax/commontree.php:84
+msgid "No limit"
+msgstr "제한 없음"
+
+#: ajax/homepage_link.php:36 inc/formlist.class.php:46
+#: inc/entityconfig.class.php:84 inc/form.class.php:111 inc/form.class.php:570
+#: inc/form.class.php:1964 entrée standard:47
+msgid "Form"
+msgid_plural "Forms"
+msgstr[0] "양식"
+
+#: ajax/section_delete.php:44 ajax/section_move.php:49
+#: ajax/section_duplicate.php:44
+msgid "Source section not found"
+msgstr "원 섹션을 찾을 수 없습니다"
+
+#: ajax/section_delete.php:56
+msgid "Could not delete the section"
+msgstr "섹션을 삭제할 수 없습니다"
+
+#: ajax/question_add.php:45
+msgid "Could not add the question"
+msgstr "질문을 추가할 수 없습니다"
+
+#: ajax/section_move.php:66
+msgid "Could not move the section"
+msgstr "섹션을 이동할 수 없습니다"
+
+#: ajax/target_actor.php:51
+msgid "Failed to add the actor"
+msgstr "실행자 추가에 실패함"
+
+#: ajax/target_actor.php:62
+msgid "Failed to delete the actor"
+msgstr "실행자 삭제에 실패함"
+
+#: ajax/section_duplicate.php:56
+msgid "Could not duplicate the section"
+msgstr "섹션을 복제할 수 없습니다"
+
+#: ajax/section_update.php:50
+msgid "Could not update the section"
+msgstr "섹션을 갱신할 수 없습니다"
+
+#: front/knowbaseitem.php:42 front/knowbaseitem.php:47 front/wizard.php:45
+#: front/wizard.php:50 front/wizardfeeds.php:49 front/wizardfeeds.php:51
+#: front/issue.php:44 front/issue.php:50 front/formanswer.php:44
+#: front/reservation.php:46 front/reservation.php:48
+#: front/knowbaseitem.form.php:48 front/knowbaseitem.form.php:50
+#: front/reservationitem.php:42 front/reservationitem.php:44
+#: front/formanswer.form.php:75 front/reservation.form.php:46
+#: front/reservation.form.php:48
+msgid "Service catalog"
+msgstr "서비스 목록"
+
+#: front/issue.form.php:46
+msgid "Item not found"
+msgstr "항목을 찾을 수 없음"
+
+#: front/targetticket.form.php:46 front/targetticket.form.php:56
+#: front/targetticket.form.php:81 front/targetchange.form.php:46
+#: front/targetproblem.form.php:46
+msgid "No right to update this item."
+msgstr "이 항목을 수정할 권한이 없습니다."
+
+#: front/targetticket.form.php:75
+msgid "Bad request while deleting an actor."
+msgstr "실행자 삭제 중 잘못된 요청."
+
+#: front/targetticket.form.php:95 front/targetchange.form.php:81
+#: front/formanswer.php:47 front/targetproblem.form.php:81
+#: front/formanswer.form.php:78 front/form.php:44 inc/common.class.php:692
+#: inc/common.class.php:699
+msgid "Form Creator"
+msgstr "양식 생성기"
+
+#: front/targetticket.form.php:105 front/targetchange.form.php:90
+#: front/targetproblem.form.php:90
+#, php-format
+msgid "%1$s = %2$s"
+msgstr "%1$s = %2$s"
+
+#: front/formlist.php:46 front/formlist.php:52 inc/common.class.php:686
+msgid "Form list"
+msgstr "양식 목록"
+
+#: front/formdisplay.php:90 inc/formanswer.class.php:990
+#: inc/formanswer.class.php:1223 inc/formanswer.class.php:1273
+msgid "The form has been successfully saved!"
+msgstr "양식이 저장되었습니다!"
+
+#. TRANS: %s is the user login
+#: front/reservation.form.php:71
+#, php-format
+msgid "%1$s purges the reservation for item %2$s"
+msgstr "%1$s 가 항목 %2$s에 대한 예약을 삭제합니다"
+
+#: front/reservation.form.php:124
+#, php-format
+msgid "%1$s adds the reservation %2$s for item %3$s"
+msgstr "%1$s가 항목 %3$s에 대한 예약 %2$s를 추가합니다"
+
+#: inc/knowbase.class.php:60 inc/form.class.php:647
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "분류"
+
+#: inc/knowbase.class.php:62 inc/form.class.php:650 entrée standard:39
+msgid "See all"
+msgstr "전체 보기"
+
+#: inc/knowbase.class.php:83
+msgid "Please, describe your need here"
+msgstr "여기에 요구사항을 적어주세요"
+
+#: inc/field/textareafield.class.php:183
+msgid "Textarea"
+msgstr "텍스트에어리어"
+
+#: inc/field/textareafield.class.php:247 inc/field/dropdownfield.class.php:448
+#: inc/field/ldapselectfield.class.php:114 inc/field/textfield.class.php:125
+#: inc/field/urgencyfield.class.php:165 inc/field/tagfield.class.php:163
+#: inc/field/timefield.class.php:113 inc/field/fieldsfield.class.php:488
+#: inc/field/requesttypefield.class.php:160
+msgid "A required field is empty:"
+msgstr "필수 항목이 비었습니다:"
+
+#: inc/field/textareafield.class.php:265 inc/field/textfield.class.php:178
+#: inc/field/integerfield.class.php:112 inc/field/floatfield.class.php:193
+#: inc/conditionnabletrait.class.php:70
+msgid "The regular expression is invalid"
+msgstr "정규식이 잘못되었습니다"
+
+#: inc/field/dropdownfield.class.php:74 inc/filter/entityfilter.class.php:48
+msgid "User and form"
+msgstr "사용자와 양식"
+
+#: inc/field/dropdownfield.class.php:439 entrée standard:38
+msgid "Dropdown"
+msgid_plural "Dropdowns"
+msgstr[0] "드롭다운"
+
+#: inc/field/dropdownfield.class.php:470
+msgid "Invalid value for "
+msgstr "다음에 대한 잘못된 값"
+
+#: inc/field/dropdownfield.class.php:482
+#, php-format
+msgid "The itemtype field is required: %s"
+msgstr "itemtype 항목은 필수입니다: %s"
+
+#: inc/field/dropdownfield.class.php:498
+#, php-format
+msgid "Invalid dropdown type: %s"
+msgstr "잘못된 드롭다운 유형: %s"
+
+#: inc/field/dropdownfield.class.php:829 entrée standard:162 standard:134
+msgid "Entity restriction"
+msgstr "개체 제한"
+
+#: inc/field/dropdownfield.class.php:838
+msgid ""
+"To respect the GLPI entity system, \"Form\" should be selected. Others "
+"settings will break the entity restrictions"
+msgstr "GLPI 개체 시스템을 중시하려면, \"양식\"을 선택해야 합니다. 다른 설정들은 개체 제한을 파괴합니다."
+
+#: inc/field/ldapselectfield.class.php:95
+msgid "LDAP Select"
+msgstr "LDAP 선택"
+
+#: inc/field/ldapselectfield.class.php:139
+msgid "LDAP directory not defined!"
+msgstr "LDAP 디렉토리가 정의되지 않았습니다!"
+
+#: inc/field/ldapselectfield.class.php:146
+msgid "LDAP directory not found!"
+msgstr "LDAP 디렉토리를 찾을 수 없습니다!"
+
+#: inc/field/textfield.class.php:146 inc/field/integerfield.class.php:71
+#: inc/field/floatfield.class.php:155
+#, php-format
+msgid "Specific format does not match: %s"
+msgstr "지정한 형식이 일치하지 않음: %s"
+
+#: inc/field/textfield.class.php:155
+#, php-format
+msgid "The text is too short (minimum %d characters): %s"
+msgstr "문구가 너무 짧음 (최소 %d 자): %s"
+
+#: inc/field/textfield.class.php:160
+#, php-format
+msgid "The text is too long (maximum %d characters): %s"
+msgstr "문구가 너무 김 (최대 %d 자): %s"
+
+#: inc/field/textfield.class.php:168
+msgid "Text"
+msgstr "문구"
+
+#: inc/field/textfield.class.php:217 inc/field/floatfield.class.php:234
+#: inc/questionregex.class.php:62 entrée standard:42
+msgid "Regular expression"
+msgstr "정규식"
+
+#: inc/field/textfield.class.php:222 inc/field/floatfield.class.php:239
+msgid "Range"
+msgstr "범위"
+
+#: inc/field/textfield.class.php:228 inc/field/floatfield.class.php:245
+msgid "Additional validation"
+msgstr "추가 확인"
+
+#: inc/field/radiosfield.class.php:109
+msgid "Radios"
+msgstr "라디오"
+
+#: inc/field/radiosfield.class.php:115 inc/field/glpiselectfield.class.php:95
+#: inc/field/fieldsfield.class.php:512 inc/field/checkboxesfield.class.php:240
+msgid "The field value is required:"
+msgstr "항목 값은 필수입니다:"
+
+#: inc/field/radiosfield.class.php:193 inc/field/selectfield.class.php:104
+#: inc/field/datetimefield.class.php:118 inc/field/actorfield.class.php:257
+#: inc/field/checkboxesfield.class.php:186 inc/field/floatfield.class.php:124
+#: inc/field/datefield.class.php:115
+#, php-format
+msgid "A required field is empty: %s"
+msgstr "필수 항목이 비었습니다: %s"
+
+#: inc/field/integerfield.class.php:59
+#, php-format
+msgid "This is not an integer: %s"
+msgstr "이것은 정수가 아닙니다: %s"
+
+#: inc/field/integerfield.class.php:85 inc/field/floatfield.class.php:166
+#, php-format
+msgid "The following number must be greater than %d: %s"
+msgstr "다음 숫자는 %d보다 커야 합니다 : %s"
+
+#: inc/field/integerfield.class.php:91 inc/field/floatfield.class.php:172
+#, php-format
+msgid "The following number must be lower than %d: %s"
+msgstr "다음 숫자는 %d보다 작아야 합니다 : %s"
+
+#: inc/field/integerfield.class.php:101
+msgid "Integer"
+msgstr "정수"
+
+#: inc/field/undefinedfield.class.php:44
+msgid "Undefined"
+msgstr "정의되지않음"
+
+#: inc/field/ipfield.class.php:122
+msgid "IP address"
+msgid_plural "IP addresses"
+msgstr[0] "IP 주소"
+
+#: inc/field/urgencyfield.class.php:85 inc/abstractitiltarget.class.php:1014
+msgid "Urgency"
+msgstr "긴급도"
+
+#: inc/field/urgencyfield.class.php:119
+msgctxt "urgency"
+msgid "Very high"
+msgstr "매우 높음"
+
+#: inc/field/urgencyfield.class.php:120
+msgctxt "urgency"
+msgid "High"
+msgstr "높음"
+
+#: inc/field/urgencyfield.class.php:121
+msgctxt "urgency"
+msgid "Medium"
+msgstr "매체"
+
+#: inc/field/urgencyfield.class.php:122
+msgctxt "urgency"
+msgid "Low"
+msgstr "낮음"
+
+#: inc/field/urgencyfield.class.php:123
+msgctxt "urgency"
+msgid "Very low"
+msgstr "매우 낮음"
+
+#: inc/field/tagfield.class.php:51
+msgid "Warning: Tag plugin is disabled or missing"
+msgstr "경고: 태그 플러그인이 비활성화 됐거나 없습니다."
+
+#: inc/field/tagfield.class.php:197
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] "태그"
+
+#: inc/field/glpiselectfield.class.php:80 entrée standard:38
+msgid "GLPI object"
+msgid_plural "GLPI objects"
+msgstr[0] "GLPI 객체"
+
+#: inc/field/hostnamefield.class.php:115
+msgid "Hostname"
+msgid_plural "Hostnames"
+msgstr[0] "호스트명"
+
+#: inc/field/timefield.class.php:129
+msgid "Time"
+msgstr "시간"
+
+#: inc/field/emailfield.class.php:88
+#, php-format
+msgid "This is not a valid e-mail: %s"
+msgstr "이것은 올바른 이-메일이 아닙니다: %s"
+
+#: inc/field/emailfield.class.php:99
+msgid "Email"
+msgid_plural "Emails"
+msgstr[0] "이메일"
+
+#: inc/field/selectfield.class.php:97
+msgid "Select"
+msgstr "선택"
+
+#: inc/field/datetimefield.class.php:139
+msgid "Date & time"
+msgstr "날짜 & 시간"
+
+#: inc/field/actorfield.class.php:83
+msgid "Actor"
+msgid_plural "Actors"
+msgstr[0] "시행자"
+
+#: inc/field/actorfield.class.php:267
+#, php-format
+msgid "Invalid value: %s"
+msgstr "잘못된 값: %s"
+
+#: inc/field/actorfield.class.php:290
+#, php-format
+msgid "User not found or invalid email address: %s"
+msgstr "사용자를 찾을 수 없거나 잘못된 이메일 주소: %s"
+
+#: inc/field/filefield.class.php:105
+msgid "No attached document"
+msgstr "첨부된 문서 없음"
+
+#: inc/field/filefield.class.php:114 inc/field/filefield.class.php:251
+#: inc/field/filefield.class.php:258
+msgid "Attached document"
+msgstr "첨부된 문서"
+
+#: inc/field/filefield.class.php:156
+#, php-format
+msgid "A required file is missing: %s"
+msgstr "필수 파일이 누락되었습니다: %s"
+
+#: inc/field/filefield.class.php:173
+msgid "File"
+msgstr "파일"
+
+#: inc/field/multiselectfield.class.php:86
+msgid "Multiselect"
+msgstr "다중선택"
+
+#: inc/field/fieldsfield.class.php:154
+msgid "Warning: Additional Fields plugin is disabled or missing"
+msgstr "경고:부가 항목 플러그인이 비활성화 됐거나 없습니다."
+
+#: inc/field/fieldsfield.class.php:167
+msgid "Block"
+msgstr "블록"
+
+#: inc/field/fieldsfield.class.php:171 inc/targetticket.class.php:339
+msgid "Field"
+msgstr "항목"
+
+#: inc/field/fieldsfield.class.php:253
+msgid "show"
+msgstr "표시"
+
+#: inc/field/fieldsfield.class.php:389
+#, php-format
+msgid "Field '%1$s' type not implemented yet!"
+msgstr "항목 '%1$s' 유형이 아직 구현되지 않았습니다!"
+
+#: inc/field/fieldsfield.class.php:466
+msgid "Some numeric fields contains non numeric values"
+msgstr "일부 숫자 항목에 숫자가 아닌 값들이 포함되었습니다"
+
+#: inc/field/fieldsfield.class.php:471
+msgid "Some URL fields contains invalid links"
+msgstr "일부 URL 항목에 잘못된 링크가 포함되었습니다"
+
+#: inc/field/fieldsfield.class.php:565
+msgid "Additionnal fields"
+msgstr "부가 항목"
+
+#: inc/field/checkboxesfield.class.php:128
+msgid "Checkboxes"
+msgstr "체크박스"
+
+#: inc/field/checkboxesfield.class.php:222
+#, php-format
+msgid "The following question needs at least %d answers"
+msgstr "다음 질문은 최소 %d개의 답변이 필요합니다"
+
+#: inc/field/checkboxesfield.class.php:228
+#, php-format
+msgid "The following question does not accept more than %d answers"
+msgstr "다음 질문은 %d개 이상의 답변이 허용되지 않습니다"
+
+#: inc/field/checkboxesfield.class.php:300
+msgid "Range min"
+msgstr "범위 최소값"
+
+#: inc/field/checkboxesfield.class.php:301
+msgid "Range max"
+msgstr "범위 최대값"
+
+#: inc/field/requesttypefield.class.php:86 inc/targetticket.class.php:1097
+msgid "Request type"
+msgstr "요청 유형"
+
+#: inc/field/floatfield.class.php:141
+#, php-format
+msgid "This is not a number: %s"
+msgstr "이것은 숫자가 아님: %s"
+
+#: inc/field/floatfield.class.php:182
+msgid "Float"
+msgstr "부동 소숫점"
+
+#: inc/field/datefield.class.php:136
+msgid "Date"
+msgstr "날짜"
+
+#: inc/field/descriptionfield.class.php:105 inc/form.class.php:165
+#: inc/question.class.php:166 entrée standard:82 standard:52 standard:113
+msgid "Description"
+msgstr "상세"
+
+#: inc/field/descriptionfield.class.php:112
+msgid "A description field should have a description:"
+msgstr "상세 항목을 써야 합니다:"
+
+#: inc/field/hiddenfield.class.php:95
+msgid "Hidden field"
+msgid_plural "Hidden fields"
+msgstr[0] "숨겨진 항목"
+
+#: inc/condition.class.php:65
+msgid "Condition"
+msgid_plural "Conditions"
+msgstr[0] "조건"
+
+#: inc/condition.class.php:104
+msgid "is visible"
+msgstr "보임"
+
+#: inc/condition.class.php:105
+msgid "is not visible"
+msgstr "보이지 않음"
+
+#: inc/condition.class.php:106
+msgid "regular expression matches"
+msgstr "정규식 일치"
+
+#: inc/condition.class.php:117
+msgid "Always displayed"
+msgstr "항상 표시됨"
+
+#: inc/condition.class.php:118
+msgid "Hidden unless"
+msgstr "그 외에 숨김"
+
+#: inc/condition.class.php:119
+msgid "Displayed unless"
+msgstr "그 외에 표시됨"
+
+#: inc/condition.class.php:179 inc/target_actor.class.php:231
+#: inc/form_language.class.php:540 inc/form_validator.class.php:379
+#: inc/targetproblem.class.php:539 inc/questionrange.class.php:196
+#: inc/form.class.php:1857 inc/targetchange.class.php:303
+#: inc/section.class.php:379 inc/restrictedformcriteria.class.php:200
+#: inc/question.class.php:828 inc/questionparameter/range.class.php:202
+#: inc/questionregex.class.php:185 inc/questiondependency.class.php:196
+#: inc/item_targetticket.class.php:154 inc/targetticket.class.php:1407
+#, php-format
+msgid "Failed to add or update the %1$s %2$s"
+msgstr "%1$s %2$s의 추가 또는 갱신에 실패함"
+
+#: inc/condition.class.php:201 inc/target_actor.class.php:252
+#: inc/form_language.class.php:556 inc/form_validator.class.php:403
+#: inc/targetproblem.class.php:374 inc/questionrange.class.php:131
+#: inc/form.class.php:1548 inc/targetchange.class.php:148
+#: inc/section.class.php:404 inc/restrictedformcriteria.class.php:226
+#: inc/question.class.php:877 inc/questionparameter/range.class.php:137
+#: inc/questionregex.class.php:120 inc/questiondependency.class.php:211
+#: inc/item_targetticket.class.php:64 inc/targetticket.class.php:1446
+#, php-format
+msgid "Cannot export an empty object: %s"
+msgstr "빈 객체를 불러올 수 없음: %s"
+
+#: inc/condition.class.php:269
+msgid "Conditions"
+msgstr "조건"
+
+#: inc/linker.class.php:78
+msgid "Importing"
+msgstr "불러오기"
+
+#: inc/linker.class.php:80
+msgid "Import in progress"
+msgstr "가져오기 중"
+
+#: inc/issue.class.php:43
+msgid "Issue"
+msgid_plural "Issues"
+msgstr[0] "문제 사항"
+
+#: inc/issue.class.php:56
+msgid "Update issue data from tickets and form answers"
+msgstr "티켓과 양식 답변에서 문제사항 데이터를 갱신"
+
+#: inc/issue.class.php:379
+msgid "Satisfaction survey expired"
+msgstr "만족도 설문조사 만료됨"
+
+#: inc/issue.class.php:510 inc/form_language.class.php:213
+#: inc/form.class.php:156 inc/form.class.php:2161 entrée standard:52
+#: standard:49 standard:57 standard:38 standard:39 standard:46
+msgid "Name"
+msgstr "이름"
+
+#: inc/issue.class.php:522 inc/formanswer.class.php:234
+#: inc/formanswer.class.php:307 inc/targetproblem.class.php:622
+#: inc/form.class.php:147 inc/targetchange.class.php:334
+#: inc/section.class.php:95 inc/question.class.php:156
+#: inc/targetticket.class.php:178 entrée standard:45
+msgid "ID"
+msgstr "ID"
+
+#: inc/issue.class.php:531 inc/form.class.php:503 inc/form.class.php:2170
+#: entrée standard:111 standard:65
+msgid "Type"
+msgid_plural "Types"
+msgstr[0] "유형"
+
+#: inc/issue.class.php:544 inc/formanswer.class.php:294
+msgid "Status"
+msgstr "상태"
+
+#: inc/issue.class.php:556
+msgid "Opening date"
+msgstr "개시 일자"
+
+#: inc/issue.class.php:565
+msgid "Last update"
+msgstr "최근 수정"
+
+#: inc/issue.class.php:574 inc/abstracttarget.class.php:517
+msgid "Entity"
+msgid_plural "Entities"
+msgstr[0] "개체"
+
+#: inc/issue.class.php:584 inc/notificationtargetformanswer.class.php:79
+#: inc/target_actor.class.php:99 inc/formanswer.class.php:253
+#: inc/formanswer.class.php:705 inc/abstractitiltarget.class.php:1744 entrée
+#: standard:48
+msgid "Requester"
+msgid_plural "Requesters"
+msgstr[0] "요청자"
+
+#: inc/issue.class.php:602 inc/formanswer.class.php:263
+msgid "Form approver"
+msgstr "양식 승인자"
+
+#: inc/issue.class.php:626 inc/formanswer.class.php:631
+#: inc/formanswer.class.php:638 inc/formanswer.class.php:720
+#: inc/form_language.class.php:227
+msgid "Comment"
+msgstr "의견"
+
+#: inc/issue.class.php:638
+msgid "Ticket approver"
+msgstr "티켓 승인자"
+
+#: inc/issue.class.php:711
+msgid "Technician"
+msgstr "기술자"
+
+#: inc/issue.class.php:742
+msgid "Technician group"
+msgstr "기술자 그룹"
+
+#: inc/issue.class.php:778 inc/formanswer.class.php:283
+msgid "Form approver group"
+msgstr "양식 승인자 그룹"
+
+#: inc/issue.class.php:800
+msgid "Ticket approver group"
+msgstr "티켓 승인자 그룹"
+
+#: inc/issue.class.php:840
+msgid "Ticket requester"
+msgstr ""
+
+#: inc/issue.class.php:887
+msgid "Ticket observer"
+msgstr ""
+
+#: inc/issue.class.php:935
+msgid "Ticket technician"
+msgstr ""
+
+#: inc/issue.class.php:1078
+#, php-format
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: inc/issue.class.php:1336 inc/filter/itilcategoryfilter.class.php:56
+#: hook.php:687
+msgid "All"
+msgstr "전체"
+
+#: inc/issue.class.php:1342 hook.php:688
+msgid "New"
+msgstr "신규"
+
+#: inc/issue.class.php:1348 hook.php:689
+msgid "Assigned"
+msgstr "할당됨"
+
+#: inc/issue.class.php:1354 inc/formanswer.class.php:77
+#: inc/form_validator.class.php:69 hook.php:690
+msgid "Waiting"
+msgstr "대기 중"
+
+#: inc/issue.class.php:1360 hook.php:691
+msgid "To validate"
+msgstr "확인 예정"
+
+#: inc/issue.class.php:1366 hook.php:692
+msgid "Solved"
+msgstr "해결됨"
+
+#: inc/issue.class.php:1372 hook.php:693
+msgid "Closed"
+msgstr "마감됨"
+
+#: inc/category.class.php:50 hook.php:72
+msgid "Form category"
+msgid_plural "Form categories"
+msgstr[0] "양식 분류"
+
+#: inc/category.class.php:72
+msgid "Knowbase category"
+msgstr "지식기반 분류"
+
+#: inc/category.class.php:78
+msgid "As child of"
+msgstr "다음의 하위"
+
+#: inc/notificationtargetformanswer.class.php:43
+msgid "The form as been saved"
+msgstr "저장된 양식"
+
+#: inc/notificationtargetformanswer.class.php:44 install/install.php:410
+msgid "A form need to be validate"
+msgstr "확인이 필요한 양식"
+
+#: inc/notificationtargetformanswer.class.php:45 install/install.php:416
+msgid "The form is refused"
+msgstr "양식 거부됨"
+
+#: inc/notificationtargetformanswer.class.php:46 install/install.php:422
+msgid "The form is accepted"
+msgstr "양식 승인됨"
+
+#: inc/notificationtargetformanswer.class.php:47 install/install.php:428
+msgid "The form is deleted"
+msgstr "양식 삭제됨"
+
+#: inc/notificationtargetformanswer.class.php:77
+msgid "Form #"
+msgstr "양식 #"
+
+#: inc/notificationtargetformanswer.class.php:78
+msgid "Form name"
+msgstr "양식 이름"
+
+#: inc/notificationtargetformanswer.class.php:80
+msgctxt "tag"
+msgid "Validator"
+msgstr "확인자"
+
+#: inc/notificationtargetformanswer.class.php:81 inc/formanswer.class.php:274
+#: entrée standard:49
+msgid "Creation date"
+msgstr "생성 일자"
+
+#: inc/notificationtargetformanswer.class.php:82
+msgid "Full form answers"
+msgstr "전체 양식 답변"
+
+#: inc/notificationtargetformanswer.class.php:83
+msgid "Refused comment"
+msgstr "거부된 의견"
+
+#: inc/notificationtargetformanswer.class.php:84
+msgid "Validation link"
+msgstr "확인 링크"
+
+#: inc/notificationtargetformanswer.class.php:85
+msgid "Request #"
+msgstr "요청 #"
+
+#: inc/notificationtargetformanswer.class.php:97
+msgid "Author"
+msgstr "작성자"
+
+#: inc/notificationtargetformanswer.class.php:98
+#: inc/abstractitiltarget.class.php:1309
+msgid "Approver"
+msgstr "승인자"
+
+#: inc/target_actor.class.php:68 inc/abstractitiltarget.class.php:2081
+msgid "Form author"
+msgstr "양식 작성자"
+
+#: inc/target_actor.class.php:69 inc/abstractitiltarget.class.php:2084
+msgid "Form validator"
+msgstr "양식 확인자"
+
+#: inc/target_actor.class.php:70
+msgid "Specific person"
+msgstr "특정인"
+
+#: inc/target_actor.class.php:71 inc/abstractitiltarget.class.php:2094
+msgid "Person from the question"
+msgstr "질문자"
+
+#: inc/target_actor.class.php:72
+msgid "Specific group"
+msgstr "그룹 지정"
+
+#: inc/target_actor.class.php:73 inc/abstractitiltarget.class.php:2105
+msgid "Group from the question"
+msgstr "질문 그룹"
+
+#: inc/target_actor.class.php:74
+msgid "Group from an object"
+msgstr "하나의 객체에서의 그룹"
+
+#: inc/target_actor.class.php:75
+msgid "Tech group from an object"
+msgstr "하나의 객체에서의 기술 그룹"
+
+#: inc/target_actor.class.php:76
+msgid "Specific supplier"
+msgstr "공급사 지정"
+
+#: inc/target_actor.class.php:77 inc/abstractitiltarget.class.php:2134
+msgid "Supplier from the question"
+msgstr "질문 공급사"
+
+#: inc/target_actor.class.php:78 inc/abstractitiltarget.class.php:2123
+msgid "Actors from the question"
+msgstr "질문 시행자"
+
+#: inc/target_actor.class.php:79 inc/abstractitiltarget.class.php:2138
+msgid "Form author's supervisor"
+msgstr "양식 작성자의 감독자"
+
+#: inc/target_actor.class.php:100
+msgid "Observer"
+msgstr "관찰자"
+
+#: inc/target_actor.class.php:101 inc/abstractitiltarget.class.php:1758
+msgid "Assigned to"
+msgstr "다음에 할당됨"
+
+#: inc/target_actor.class.php:107
+msgid "Target actor"
+msgid_plural "Target actors"
+msgstr[0] "대상 실행자"
+
+#: inc/target_actor.class.php:113 inc/target_actor.class.php:129
+#: inc/target_actor.class.php:138
+msgid "Bad request while adding an actor."
+msgstr "수행자 추가 중 잘못된 요청."
+
+#: inc/target_actor.class.php:195
+#, php-format
+msgid "Failed to find a user: %1$s"
+msgstr "사용자 검색 실패: %1$s"
+
+#: inc/target_actor.class.php:204
+#, php-format
+msgid "Failed to find a group: %1$s"
+msgstr "그룹 검색 실패: %1$s"
+
+#: inc/target_actor.class.php:213
+#, php-format
+msgid "Failed to find a supplier: %1$s"
+msgstr "공급자 검색 실패: %1$s"
+
+#: inc/formanswer.class.php:78 inc/form_validator.class.php:71
+msgid "Refused"
+msgstr "거부됨"
+
+#: inc/formanswer.class.php:79 inc/form_validator.class.php:70
+msgid "Accepted"
+msgstr "승인됨"
+
+#: inc/formanswer.class.php:219
+msgid "Form answer"
+msgid_plural "Form answers"
+msgstr[0] "양식 답변"
+
+#: inc/formanswer.class.php:616
+msgid "Print this form"
+msgstr "이 양식 인쇄"
+
+#: inc/formanswer.class.php:641
+msgid "Form accepted by validator."
+msgstr "확인자에 의해 양식이 승인되었습니다."
+
+#: inc/formanswer.class.php:643
+msgid "Form successfully saved."
+msgstr "양식이 저장되었습니다."
+
+#: inc/formanswer.class.php:713 inc/formaccesstype.class.php:122
+msgid "Save"
+msgstr "저장"
+
+#: inc/formanswer.class.php:725
+msgid "Required if refused"
+msgstr "거부된 경우 필수"
+
+#: inc/formanswer.class.php:731
+msgid "Refuse"
+msgstr "거부"
+
+#: inc/formanswer.class.php:739
+msgid "Edit answers"
+msgstr "답변 수정"
+
+#: inc/formanswer.class.php:745
+msgid "Cancel edition"
+msgstr "수정 취소"
+
+#: inc/formanswer.class.php:752
+msgid "Accept"
+msgstr "승인"
+
+#: inc/formanswer.class.php:775
+msgid "Refused comment is required!"
+msgstr "거부 의견은 필수입니다!"
+
+#: inc/formanswer.class.php:857
+msgid "You are not the validator of these answers"
+msgstr "당신은 이 질문들의 확인자가 아닙니다"
+
+#: inc/formanswer.class.php:996
+#, php-format
+msgid "Item sucessfully added: %1$s (%2$s: %3$s)"
+msgstr "항목이 추가되었음: %1$s (%2$s:%3$s) "
+
+#: inc/formanswer.class.php:1079 inc/formanswer.class.php:1081
+msgid "Form data"
+msgstr "양식 데이터"
+
+#: inc/formanswer.class.php:1208 inc/formanswer.class.php:1260
+msgid "Cannot generate targets!"
+msgstr "대상을 생성할 수 없습니다!"
+
+#: inc/formanswer.class.php:1409
+msgid "No turing test set"
+msgstr "튜링 테스트 셋 없음"
+
+#: inc/formanswer.class.php:1415
+msgid "You failed the Turing test"
+msgstr "튜링 테스트에 실패함"
+
+#: inc/formanswer.class.php:1439
+msgid "You must select validator!"
+msgstr "확인자를 선택해야 합니다!"
+
+#: inc/common.class.php:229
+msgid "You cannot delete this issue. Maybe it is taken into account."
+msgstr "이 이슈를 삭제할 수 없습니다. 잠긴 계정인 것 같습니다."
+
+#: inc/common.class.php:234
+msgid "Failed to delete this issue. An internal error occured."
+msgstr "이 이슈를 삭제하는데 실패했습니다. 내부 오류가 발생했습니다."
+
+#: inc/common.class.php:783
+msgid "Seek assistance"
+msgstr "도움 요청"
+
+#: inc/common.class.php:789 inc/common.class.php:793
+msgid "My requests for assistance"
+msgstr "나의 도움 요청"
+
+#: inc/common.class.php:829
+msgid "Consult feeds"
+msgstr "피드 상담"
+
+#: inc/formaccesstype.class.php:39 inc/formaccesstype.class.php:64
+msgid "Access type"
+msgid_plural "Access types"
+msgstr[0] "접속 유형"
+
+#: inc/formaccesstype.class.php:78
+msgid "Link to the form"
+msgstr "양식에 연결"
+
+#: inc/formaccesstype.class.php:91
+msgid "Please activate the form to view the link"
+msgstr "링크를 보려면 양식을 활성화 하세요"
+
+#: inc/formaccesstype.class.php:99
+msgid "Enable captcha"
+msgstr "캡챠 활성화"
+
+#: inc/formaccesstype.class.php:109
+msgid "Restricted to"
+msgstr "다음에 제한됨"
+
+#: inc/form_language.class.php:51
+msgid "Form language"
+msgid_plural "Form languages"
+msgstr[0] "양식 언어"
+
+#: inc/form_language.class.php:72 inc/form_language.class.php:348
+msgid "Translation"
+msgid_plural "Translations"
+msgstr[0] "번역"
+
+#: inc/form_language.class.php:111 inc/form.class.php:1080
+#: inc/form.class.php:1214 inc/abstracttarget.class.php:161
+#: inc/abstractitiltarget.class.php:1564
+msgid "The name cannot be empty!"
+msgstr "이름은 비워둘 수 없습니다!"
+
+#: inc/form_language.class.php:119
+msgid "The language must be associated to a form!"
+msgstr "언어는 양식에 연결되야 합니다!"
+
+#: inc/form_language.class.php:249
+msgid "Add a translation"
+msgstr "번역 추가"
+
+#: inc/form_language.class.php:283 js/scripts.js:1163
+msgid "Update a translation"
+msgstr "번역 수정"
+
+#: inc/form_language.class.php:313 inc/form_language.class.php:315
+msgid "New translation"
+msgstr "새 번역"
+
+#: inc/form_language.class.php:318
+msgid "Filter list"
+msgstr "필터 목록"
+
+#: inc/form_language.class.php:323 inc/form_language.class.php:413
+msgid "No translation found"
+msgstr "검색된 번역 없음"
+
+#: inc/form_language.class.php:328
+msgid "Do you want to delete the selected items?"
+msgstr "선택된 항목들을 삭제하시겠습니까?"
+
+#: inc/form_language.class.php:337 inc/form_language.class.php:376
+#: inc/form.class.php:527 inc/abstractitiltarget.class.php:1649
+msgid "Delete"
+msgstr "삭제"
+
+#: inc/form_language.class.php:347
+msgid "Original string"
+msgstr "원본 문자열"
+
+#: inc/form_language.class.php:399
+msgid "Add a new language"
+msgstr "새 언어 추가"
+
+#: inc/form_language.class.php:432 inc/form_language.class.php:464
+#: inc/form.class.php:192 entrée standard:72
+msgid "Language"
+msgstr "언어"
+
+#: inc/form_validator.class.php:68 inc/targetticket.class.php:97
+#: inc/abstractitiltarget.class.php:178
+msgid "None"
+msgstr "없음"
+
+#: inc/form_validator.class.php:76
+msgid "Validator"
+msgid_plural "Validators"
+msgstr[0] "검수자"
+
+#: inc/form_validator.class.php:114
+msgid "Need validaton?"
+msgstr "검증이 필요한가요?"
+
+#: inc/form_validator.class.php:118 inc/abstractitiltarget.class.php:2485
+msgid "No"
+msgstr "아니오"
+
+#: inc/form_validator.class.php:295 inc/targetproblem.class.php:146
+#: inc/entityconfig.class.php:435 inc/targetchange.class.php:483
+#: inc/targetticket.class.php:316 inc/targetticket.class.php:351
+#: inc/abstractitiltarget.class.php:2064
+msgctxt "button"
+msgid "Save"
+msgstr "저장"
+
+#: inc/form_validator.class.php:709 inc/abstractitiltarget.class.php:1289
+msgid "Validation"
+msgstr "확인"
+
+#: inc/form_validator.class.php:711
+msgid "Choose a validator"
+msgstr "확인자를 선택하세요"
+
+#: inc/targetproblem.class.php:42 entrée standard:43
+msgid "Target problem"
+msgid_plural "Target problems"
+msgstr[0] "목표 문제"
+
+#: inc/targetproblem.class.php:108 inc/targetproblem.class.php:577
+#: inc/targetchange.class.php:104 inc/targetchange.class.php:440
+#: inc/targetticket.class.php:133 inc/targetticket.class.php:236
+msgid "Properties"
+msgstr "속성"
+
+#: inc/targetproblem.class.php:521 inc/targetchange.class.php:285
+#: inc/targetticket.class.php:1389
+#, php-format
+msgid ""
+"Failed to add or update the %1$s %2$s: a question is missing and is used in "
+"a parameter of the target"
+msgstr "%1$s%2$s의 추가 또는 갱신에 실패함: 질문이 누락되어 대상의 매개변수에 사용됨"
+
+#: inc/targetproblem.class.php:578 inc/targetchange.class.php:105
+#: inc/targetticket.class.php:134 inc/abstractitiltarget.class.php:1191
+msgid "Actors"
+msgstr "실행자"
+
+#: inc/targetproblem.class.php:631 entrée standard:48
+msgid "Problem title"
+msgstr "문제 제목"
+
+#: inc/targetproblem.class.php:641 inc/targetchange.class.php:353
+#: inc/targetticket.class.php:197
+msgid "Content"
+msgstr "내용"
+
+#: inc/targetproblem.class.php:651 inc/targetchange.class.php:363
+msgid "Impact"
+msgstr "영향"
+
+#: inc/targetproblem.class.php:661 entrée standard:56
+msgid "Cause"
+msgstr "원인"
+
+#: inc/targetproblem.class.php:671 entrée standard:58
+msgid "Symptom"
+msgstr "증상"
+
+#: inc/entityconfig.class.php:92 inc/entityconfig.class.php:101
+#: inc/entityconfig.class.php:109 inc/entityconfig.class.php:117
+#: inc/entityconfig.class.php:125 inc/entityconfig.class.php:133
+#: inc/entityconfig.class.php:141 inc/entityconfig.class.php:149
+#: inc/entityconfig.class.php:157
+msgid "Inheritance of the parent entity"
+msgstr "부모 개체의 상속"
+
+#: inc/entityconfig.class.php:93
+msgid "GLPi's helpdesk"
+msgstr "GLPi 업무 지원 센터"
+
+#: inc/entityconfig.class.php:94
+msgid "Service catalog simplified"
+msgstr "서비스 목록 단순화"
+
+#: inc/entityconfig.class.php:95
+msgid "Service catalog extended"
+msgstr "서비스 목록 확장"
+
+#: inc/entityconfig.class.php:102
+msgid "All available forms"
+msgstr "사용가능한 모든 양식"
+
+#: inc/entityconfig.class.php:103
+msgid "Only default forms"
+msgstr "기본 양식 만"
+
+#: inc/entityconfig.class.php:110
+msgid "Popularity sort"
+msgstr "인기도 순"
+
+#: inc/entityconfig.class.php:111
+msgid "Alphabetic sort"
+msgstr "알파벳 순"
+
+#: inc/entityconfig.class.php:118
+msgid "Merged with Forms"
+msgstr "양식과 병합"
+
+#: inc/entityconfig.class.php:119
+msgid "Distinct menu entry"
+msgstr "고유한 메뉴 항목"
+
+#: inc/entityconfig.class.php:126 inc/entityconfig.class.php:134
+#: inc/entityconfig.class.php:142 inc/entityconfig.class.php:150
+#: inc/form.class.php:285 entrée standard:100
+msgid "Visible"
+msgstr "표시"
+
+#: inc/entityconfig.class.php:127 inc/entityconfig.class.php:135
+#: inc/entityconfig.class.php:143 inc/entityconfig.class.php:151
+msgid "Hidden"
+msgstr "숨김"
+
+#: inc/entityconfig.class.php:158
+msgid "Variable height"
+msgstr "가변 높이"
+
+#: inc/entityconfig.class.php:159
+msgid "Uniform height"
+msgstr "균일 높이"
+
+#: inc/entityconfig.class.php:164
+msgid "Search for assistance"
+msgstr ""
+
+#: inc/entityconfig.class.php:165
+msgid "User's assistance requests"
+msgstr ""
+
+#: inc/entityconfig.class.php:261
+msgid "Helpdesk"
+msgstr "업무 지원 센터"
+
+#: inc/entityconfig.class.php:269 inc/entityconfig.class.php:449 entrée
+#: standard:44
+msgid "Helpdesk mode"
+msgstr "업무 지원 센터 모드"
+
+#: inc/entityconfig.class.php:280 inc/entityconfig.class.php:519
+msgid "Default Form list mode"
+msgstr "기본 양식 목록 모드"
+
+#: inc/entityconfig.class.php:298 inc/entityconfig.class.php:459
+msgid "Sort order"
+msgstr "정렬 순서"
+
+#: inc/entityconfig.class.php:314 inc/entityconfig.class.php:469
+msgid "Knowledge base"
+msgstr "지식 기반"
+
+#: inc/entityconfig.class.php:329
+msgid "Search"
+msgstr "검색"
+
+#: inc/entityconfig.class.php:345 inc/entityconfig.class.php:529
+msgid "Counters dashboard"
+msgstr "카운터 대시보드"
+
+#: inc/entityconfig.class.php:361
+msgid "Header message"
+msgstr "머릿말 메시지"
+
+#: inc/entityconfig.class.php:377 inc/entityconfig.class.php:539
+msgid "Search issue"
+msgstr "문제사항 검색"
+
+#: inc/entityconfig.class.php:393 inc/entityconfig.class.php:509
+msgid "Service catalog home page"
+msgstr ""
+
+#: inc/entityconfig.class.php:409 inc/entityconfig.class.php:549
+msgid "Tile design"
+msgstr "타일 디자인"
+
+#: inc/entityconfig.class.php:421 inc/entityconfig.class.php:499
+#: inc/form.class.php:239 entrée standard:84
+msgid "Header"
+msgid_plural "Headers"
+msgstr[0] "머릿말"
+
+#: inc/entityconfig.class.php:479
+msgid "Display search field"
+msgstr "검색 항목 표시"
+
+#: inc/entityconfig.class.php:489
+msgid "Display header"
+msgstr "머릿말 표시"
+
+#: inc/questionrange.class.php:52 inc/questionparameter/range.class.php:56
+msgid "Question range"
+msgid_plural "Question ranges"
+msgstr[0] "질문 범위"
+
+#: inc/questionrange.class.php:62 inc/questionparameter/range.class.php:66
+msgid "Minimum range"
+msgstr "최소 범위"
+
+#: inc/questionrange.class.php:71 inc/questionparameter/range.class.php:75
+msgid "maximum range"
+msgstr "최대 범위"
+
+#: inc/form.class.php:66 inc/form.class.php:432
+msgid "Public access"
+msgstr "공개 접속"
+
+#: inc/form.class.php:67 inc/form.class.php:436
+msgid "Private access"
+msgstr "비공개 접속"
+
+#: inc/form.class.php:68 inc/form.class.php:440
+msgid "Restricted access"
+msgstr "접속 제한됨"
+
+#: inc/form.class.php:122
+msgid "Answers waiting for validation"
+msgstr "검증을 기다리는 답변"
+
+#: inc/form.class.php:124 inc/form.class.php:1632 inc/form.class.php:1658
+msgid "Import forms"
+msgstr "양식 불러오기"
+
+#: inc/form.class.php:140
+msgid "Characteristics"
+msgstr "특징"
+
+#: inc/form.class.php:183
+msgid "Recursive"
+msgstr "반복"
+
+#: inc/form.class.php:204
+msgid "Homepage"
+msgstr "홈페이지"
+
+#: inc/form.class.php:217
+msgid "Access"
+msgstr "접속"
+
+#: inc/form.class.php:248 inc/form.class.php:330 inc/form.class.php:397 entrée
+#: standard:54
+msgid "Active"
+msgstr "활성화"
+
+#: inc/form.class.php:261 entrée standard:65
+msgid "Icon"
+msgstr "아이콘"
+
+#: inc/form.class.php:269 entrée standard:67
+msgid "Icon color"
+msgstr "아이콘 색상"
+
+#: inc/form.class.php:277 entrée standard:80
+msgid "Background color"
+msgstr "배경 색상"
+
+#: inc/form.class.php:300 inc/form.class.php:341 inc/form.class.php:416
+msgid "Default form"
+msgstr "기본 양식"
+
+#: inc/form.class.php:329 inc/form.class.php:394
+msgid "Inactive"
+msgstr "비활성화"
+
+#: inc/form.class.php:340 inc/form.class.php:413
+msgid "Not default form"
+msgstr "기본 양식 아님"
+
+#: inc/form.class.php:364 inc/form.class.php:448 entrée standard:75
+msgid "All languages"
+msgstr "모든 언어"
+
+#: inc/form.class.php:502 inc/form.class.php:562
+msgid "Target"
+msgid_plural "Targets"
+msgstr[0] "대상"
+
+#: inc/form.class.php:504
+msgid "Actions"
+msgstr "작업"
+
+#: inc/form.class.php:544 inc/form.class.php:2158
+msgid "Add a target"
+msgstr "대상 추가"
+
+#: inc/form.class.php:565
+msgid "Preview"
+msgstr "미리보기"
+
+#: inc/form.class.php:566
+msgid "properties"
+msgstr "속성"
+
+#: inc/form.class.php:885
+msgid "What are you looking for?"
+msgstr "무엇을 찾으시나요?"
+
+#: inc/form.class.php:894
+#, php-format
+msgid "My %1$d last forms (requester)"
+msgstr "나의 %1$d 최근 양식 (요청자)"
+
+#: inc/form.class.php:921
+msgid "No form posted yet"
+msgstr "아직 게시된 양식 없음"
+
+#: inc/form.class.php:949
+msgid "All my forms (requester)"
+msgstr "모든 내 양식 (요청자)"
+
+#: inc/form.class.php:962
+#, php-format
+msgid "My %1$d last forms (validator)"
+msgstr "나의 %1$d 최근 양식 (확인자)"
+
+#: inc/form.class.php:992
+msgid "No form waiting for validation"
+msgstr "확인 중인 양식 없음"
+
+#: inc/form.class.php:1020
+msgid "All my forms (validator)"
+msgstr "모든 내 양식 (확인자)"
+
+#: inc/form.class.php:1225
+msgid "Cannot use empty name for form answers. Keeping the previous value."
+msgstr "양식 답변에는 이름을 비워둘 수 없습니다. 이전 값을 유지합니다."
+
+#: inc/form.class.php:1320
+#, php-format
+msgid "The question %s is not compatible with public forms"
+msgstr "질문 %s은 공개 양식과 호환되지 않습니다"
+
+#: inc/form.class.php:1400
+msgid "Errored duplicate"
+msgstr "중복 오류"
+
+#: inc/form.class.php:1411
+msgid "Duplicate"
+msgstr "복제"
+
+#: inc/form.class.php:1458
+msgctxt "button"
+msgid "Post"
+msgstr "게시"
+
+#: inc/form.class.php:1476
+#, php-format
+msgid "Form duplicated: %s"
+msgstr "양식 복제됨:  %s"
+
+#: inc/form.class.php:1487
+#, php-format
+msgid "Form Transfered: %s"
+msgstr "양식 전송됨: %s"
+
+#: inc/form.class.php:1506
+msgid "Back"
+msgstr "뒤로가기"
+
+#: inc/form.class.php:1605
+msgid "Upload of JSON files not allowed."
+msgstr "JSON 파일의 업로드는 허용되지 않습니다."
+
+#: inc/form.class.php:1608
+msgid "You may allow JSON files right now."
+msgstr "지금 바로 JSON 파일을 허용해야 합니다."
+
+#: inc/form.class.php:1609
+msgctxt "button"
+msgid "Create"
+msgstr "생성"
+
+#: inc/form.class.php:1612 inc/form.class.php:1623
+msgid "Please contact your GLPI administrator."
+msgstr "GLPI 관리자에게 연락하세요."
+
+#: inc/form.class.php:1613 inc/form.class.php:1624
+msgctxt "button"
+msgid "Back"
+msgstr "뒤로가기"
+
+#: inc/form.class.php:1616
+msgid "Upload of JSON files not enabled."
+msgstr "JSON 파일의 업로드가 활성화되지 않았습니다."
+
+#: inc/form.class.php:1619 inc/form.class.php:1622
+msgid "You may enable JSON files right now."
+msgstr "지금 바로 JSON 파일을 활성화해야 합니다."
+
+#: inc/form.class.php:1620
+msgctxt "button"
+msgid "Enable"
+msgstr "활성화"
+
+#: inc/form.class.php:1667
+msgctxt "button"
+msgid "Send"
+msgstr "전송"
+
+#: inc/form.class.php:1686
+msgid "Forms import impossible, the file is empty"
+msgstr "양식 불러오기를 할 수 없습니다, 파일이 비었습니다"
+
+#: inc/form.class.php:1690 inc/form.class.php:1694
+msgid "Forms import impossible, the file seems corrupt"
+msgstr "양식 불러오기를 할 수 없습니다, 파일이 손상된 것 같습니다"
+
+#: inc/form.class.php:1700
+msgid "Forms import impossible, the file was generated with another version"
+msgstr "양식 불러오기를 할 수 없습니다, 파일이 다른 버전으로 생성되었습니다"
+
+#: inc/form.class.php:1707
+msgid ""
+"The file does not specifies the schema version. It was probably generated "
+"with a version older than 2.10. Giving up."
+msgstr "파일에서 스키마 버전을 지정하지 않았습니다. 2.10 이전 버전으로 생성되었을 수 있습니다. 포기하세요."
+
+#: inc/form.class.php:1733
+#, php-format
+msgid "Failed to import %s"
+msgstr "%s불러오기 실패함"
+
+#: inc/form.class.php:1738
+#, php-format
+msgid "Forms successfully imported from %s"
+msgstr "양식을 %s에서 불러옴"
+
+#: inc/form.class.php:1801
+#, php-format
+msgid "The form %1$s already exists and is in an unmodifiable entity."
+msgstr "양식 %1$s는 이미 존재하며 수정할 수 없는 개체 내에 있습니다."
+
+#: inc/form.class.php:1809
+#, php-format
+msgid "You don't have right to update the entity %1$s."
+msgstr "요소 %1$s 를 수정할 권한이 없습니다."
+
+#: inc/form.class.php:1819
+#, php-format
+msgid "The entity %1$s is required for the form %2$s."
+msgstr "개체 %1$s는 양식 %2$s가 필요합니다."
+
+#: inc/form.class.php:1901
+msgid "Failed to create JSON document type"
+msgstr "JSON 문서 유형 생성 실패함"
+
+#: inc/form.class.php:1908
+msgid "JSON document type not found"
+msgstr "JSON 문서 유형을 찾을 수 없음"
+
+#: inc/form.class.php:1915
+msgid "Failed to update JSON document type"
+msgstr "JSON 문서 유형 갱신 실패함"
+
+#: inc/form.class.php:1935
+msgid "Forms without category"
+msgstr "분류 없는 양식"
+
+#: inc/form.class.php:1956
+msgid "No form available"
+msgstr "사용가능한 양식 없음"
+
+#: inc/form.class.php:2189 inc/targetticket.class.php:391
+#: inc/abstractitiltarget.class.php:1768 inc/abstractitiltarget.class.php:2064
+msgid "Add"
+msgstr "추가"
+
+#: inc/form.class.php:2207 inc/form.class.php:2230
+msgid "Unsupported target type."
+msgstr "지원되지 않는 대상 유형"
+
+#: inc/form.class.php:2264
+msgid "plugin_formcreator_load_check"
+msgstr "plugin_formcreator_load_check"
+
+#: inc/targetchange.class.php:43 entrée standard:43
+msgid "Target change"
+msgid_plural "Target changes"
+msgstr[0] "대상 변경"
+
+#: inc/targetchange.class.php:343 entrée standard:48
+msgid "Change title"
+msgstr "제목 변경"
+
+#: inc/targetchange.class.php:373 entrée standard:56
+msgid "Control list"
+msgstr "제어 목록"
+
+#: inc/targetchange.class.php:383 entrée standard:58
+msgid "Deployment plan"
+msgstr "배포 계획"
+
+#: inc/targetchange.class.php:393 entrée standard:60
+msgid "Backup plan"
+msgstr "백업 계획"
+
+#: inc/targetchange.class.php:403
+msgid "Check list"
+msgstr "확인 목록"
+
+#: inc/section.class.php:71 entrée standard:53 standard:44
+msgid "Section"
+msgid_plural "Sections"
+msgstr[0] "섹션"
+
+#: inc/section.class.php:123 inc/section.class.php:164
+#: inc/question.class.php:312
+msgid "The title is required"
+msgstr "제목은 필수입니다"
+
+#: inc/restrictedformcriteria.class.php:179
+#, php-format
+msgid "Failed to find %1$s %2$s"
+msgstr "%1$s %2$s 검색 실패"
+
+#: inc/question.class.php:70 inc/abstractitiltarget.class.php:1102 entrée
+#: standard:41
+msgid "Question"
+msgid_plural "Questions"
+msgstr[0] "질문"
+
+#: inc/question.class.php:228 entrée standard:37
+msgid "Count of conditions"
+msgstr "조건 수"
+
+#: inc/question.class.php:320
+msgid "The field type is required"
+msgstr "항목 유형은 필수입니다"
+
+#: inc/question.class.php:327
+msgid "The section is required"
+msgstr "섹션은 필수입니다"
+
+#: inc/question.class.php:339
+#, php-format
+msgid "Field type %1$s is not available for question %2$s."
+msgstr "항목 유형 %1$s은 질문 %2$s에 대해 사용 가능하지 않습니다."
+
+#: inc/question.class.php:353
+msgid "This type of question is not compatible with public forms."
+msgstr "이 질문의 유형은 공개 양식과 호환되지 않습니다."
+
+#: inc/question.class.php:362
+msgid "This type of question requires parameters"
+msgstr "이 질문의 유형은 매개변수가 필요합니다"
+
+#: inc/question.class.php:368
+msgid "A parameter is missing for this question type"
+msgstr "매개변수가 이 질문 유형에 누락되었습니다"
+
+#: inc/question.class.php:1182
+msgid "Service levels"
+msgstr "서비스 수준"
+
+#: inc/question.class.php:1183 inc/abstractitiltarget.class.php:825
+msgid "SLA"
+msgstr "SLA"
+
+#: inc/question.class.php:1184 inc/abstractitiltarget.class.php:898
+msgid "OLA"
+msgstr "OLA"
+
+#: inc/question.class.php:1203 inc/question.class.php:1245
+#: inc/question.class.php:1248
+msgid "Assets"
+msgstr "자산"
+
+#: inc/question.class.php:1216 hook.php:701 hook.php:718
+msgid "Assistance"
+msgstr "보조"
+
+#: inc/question.class.php:1222
+msgid "Management"
+msgstr "운영관리"
+
+#: inc/question.class.php:1233
+msgid "Tools"
+msgstr "도구"
+
+#: inc/question.class.php:1234
+msgid "Notes"
+msgstr "알림"
+
+#: inc/question.class.php:1235
+msgid "RSS feed"
+msgstr "RSS 피드"
+
+#: inc/question.class.php:1237
+msgid "Administration"
+msgstr "관리"
+
+#: inc/question.class.php:1245 inc/question.class.php:1248
+msgid "Plugin"
+msgid_plural "Plugins"
+msgstr[0] "플러그잉ㄴ"
+
+#: inc/abstractquestionparameter.class.php:92
+msgid "Parameter"
+msgstr "매개변수"
+
+#: inc/abstractquestionparameter.class.php:99
+msgid "Field name"
+msgstr "항목 명"
+
+#: inc/abstracttarget.class.php:96
+msgid "Current active entity"
+msgstr "현재 활성화 개체"
+
+#: inc/abstracttarget.class.php:97
+msgid "Default requester user's entity"
+msgstr "사용자 개체 기본 요청자"
+
+#: inc/abstracttarget.class.php:98
+msgid "First dynamic requester user's entity (alphabetical)"
+msgstr "사용자 개체 첫번째 동적 요청자 (알파벳 순)"
+
+#: inc/abstracttarget.class.php:99
+msgid "Last dynamic requester user's entity (alphabetical)"
+msgstr "사용자 개체 마지막 동적 요청자 (알파벳 순)"
+
+#: inc/abstracttarget.class.php:100
+msgid "The form entity"
+msgstr "양식 개체"
+
+#: inc/abstracttarget.class.php:101
+msgid "Default entity of the validator"
+msgstr "확인자의 기본 개체"
+
+#: inc/abstracttarget.class.php:102
+msgid "Specific entity"
+msgstr "개체 지정"
+
+#: inc/abstracttarget.class.php:103
+msgid "Default entity of a user type question answer"
+msgstr "사용자 유형 질답의 기본 개체"
+
+#: inc/abstracttarget.class.php:104
+msgid "From a GLPI object > Entity type question answer"
+msgstr "GLPI 객체에서 > 개체 유형 질답"
+
+#: inc/abstracttarget.class.php:115
+msgid "Always generated"
+msgstr "항상 생성됨"
+
+#: inc/abstracttarget.class.php:116
+msgid "Disabled unless"
+msgstr "다음을 제외하고 비활성화됨"
+
+#: inc/abstracttarget.class.php:117
+msgid "Generated unless"
+msgstr "다음을 제외하고 생성됨"
+
+#: inc/abstracttarget.class.php:128
+msgid "A target must be associated to a form."
+msgstr "대상은 양식과 연결되야 합니다."
+
+#: inc/abstracttarget.class.php:133
+msgid "A target must be associated to an existing form."
+msgstr "대상은 기존 양식과 연결되야 합니다."
+
+#: inc/abstracttarget.class.php:138
+msgid "Name is required."
+msgstr "이름은 필수입니다."
+
+#: inc/abstracttarget.class.php:502
+msgid "Destination entity"
+msgstr "대상 개체"
+
+#: inc/abstracttarget.class.php:518
+msgid "User type question"
+msgstr "사용자 유형 지문"
+
+#: inc/abstracttarget.class.php:519
+msgid "Entity type question"
+msgstr "개체 유형 질문"
+
+#: inc/filter/itilcategoryfilter.class.php:52
+#: inc/filter/itilcategoryfilter.class.php:54
+msgid "Request categories"
+msgstr "분류 요청"
+
+#: inc/filter/itilcategoryfilter.class.php:53
+#: inc/filter/itilcategoryfilter.class.php:54
+msgid "Incident categories"
+msgstr "사건 분류"
+
+#: inc/filter/itilcategoryfilter.class.php:55
+msgid "Change categories"
+msgstr "분류 변경"
+
+#: inc/questionregex.class.php:52
+msgid "Question regular expression"
+msgid_plural "Question regular expressions"
+msgstr[0] "질문 정규식"
+
+#: inc/questiondependency.class.php:66
+msgid "Question dependency"
+msgid_plural "Question dependencies"
+msgstr[0] "질문 의존성"
+
+#: inc/answer.class.php:66 entrée standard:43
+msgid "Answer"
+msgid_plural "Answers"
+msgstr[0] "답변"
+
+#: inc/item_targetticket.class.php:52
+msgid "Composite ticket relation"
+msgid_plural "Composite ticket relations"
+msgstr[0] "복합 티켓 관계"
+
+#: inc/targetticket.class.php:55 entrée standard:43
+msgid "Target ticket"
+msgid_plural "Target tickets"
+msgstr[0] "대상 티켓"
+
+#: inc/targetticket.class.php:98
+msgid "Specific asset"
+msgstr "자산 지정"
+
+#: inc/targetticket.class.php:99 inc/targetticket.class.php:115
+#: inc/abstractitiltarget.class.php:198 inc/abstractitiltarget.class.php:206
+#: inc/abstractitiltarget.class.php:214 inc/abstractitiltarget.class.php:222
+#: inc/abstractitiltarget.class.php:231
+msgid "Equals to the answer to the question"
+msgstr "질답이 동일함"
+
+#: inc/targetticket.class.php:100 inc/abstractitiltarget.class.php:223
+#: inc/abstractitiltarget.class.php:232
+msgid "Last valid answer"
+msgstr "최근 검증한 답변"
+
+#: inc/targetticket.class.php:106
+msgid "Source from template or user default or GLPI default"
+msgstr "템플릿 또는 사용자 기본값 또는 GLPI 기본값의 소스"
+
+#: inc/targetticket.class.php:107
+msgid "Formcreator"
+msgstr "양식생성기"
+
+#: inc/targetticket.class.php:113
+msgid "Default or from a template"
+msgstr "기본 또는 양식 견본"
+
+#: inc/targetticket.class.php:114
+msgid "Specific type"
+msgstr "특정 유형"
+
+#: inc/targetticket.class.php:187 entrée standard:48
+msgid "Ticket title"
+msgstr "티켓 제목"
+
+#: inc/targetticket.class.php:300
+msgid "Add validation message as first ticket followup"
+msgstr "첫번째 티켓 추적으로서의 확인 메시지 추가"
+
+#: inc/targetticket.class.php:334
+msgid "Add a field"
+msgstr "항목 추가"
+
+#: inc/targetticket.class.php:362
+msgid "Managed fields"
+msgstr "관리 항목"
+
+#: inc/targetticket.class.php:369
+msgid "No managed field"
+msgstr "관리 항목 없음"
+
+#: inc/targetticket.class.php:389
+msgid "Link to an other ticket"
+msgstr "다른 티켓에 연결"
+
+#: inc/targetticket.class.php:398
+msgid "An other destination of this form"
+msgstr "이 양식의 다른 목적"
+
+#: inc/targetticket.class.php:399
+msgid "An existing ticket"
+msgstr "존재하는 티켓"
+
+#: inc/targetticket.class.php:400
+msgid "A ticket from an answer to a question"
+msgstr "질문에 대한 답변에서의 티켓"
+
+#: inc/targetticket.class.php:481
+msgctxt "button"
+msgid "Delete permanently"
+msgstr "영구 삭제"
+
+#: inc/targetticket.class.php:722
+msgid "Invalid link type"
+msgstr "잘못된 연결 유형"
+
+#: inc/targetticket.class.php:742
+msgid "Invalid linked item type"
+msgstr "잘못된 연결된 품목 유형"
+
+#: inc/targetticket.class.php:755
+msgid "Linked item does not exists"
+msgstr "연결된 품목이 존재하지 않습니다"
+
+#: inc/targetticket.class.php:768
+msgid "Failed to link the item"
+msgstr "품목에 연결 실패함"
+
+#: inc/targetticket.class.php:922 install/install.php:423
+msgid "Your form has been accepted by the validator"
+msgstr "당신의 양식이 확인자에 의해 승인되었습니다."
+
+#: inc/targetticket.class.php:1084
+msgid "Request source"
+msgstr "요청 소스"
+
+#: inc/targetticket.class.php:1109
+msgid "Type "
+msgstr "유형"
+
+#: inc/targetticket.class.php:1137
+msgid "Associated elements"
+msgstr "관련 요소"
+
+#: inc/targetticket.class.php:1148
+msgid "Item "
+msgstr "품목"
+
+#: inc/translation.class.php:153
+msgid "No more string to translate"
+msgstr "더 이상 번역할 문자열 없음"
+
+#: inc/translation.class.php:216
+msgid "Language not found."
+msgstr "언어를 찾을 수 없습니다."
+
+#: inc/translation.class.php:221
+msgid "Form not found."
+msgstr "양식을 찾을 수 없습니다."
+
+#: inc/translation.class.php:234
+msgid "Failed to add the translation."
+msgstr "번역 추가에 실패함."
+
+#: inc/abstractitiltarget.class.php:179
+msgid "Tags from questions"
+msgstr "질문 태그"
+
+#: inc/abstractitiltarget.class.php:180
+msgid "Specific tags"
+msgstr "태그 지정"
+
+#: inc/abstractitiltarget.class.php:181
+msgid "Tags from questions and specific tags"
+msgstr "질문 태그와 태그 지정"
+
+#: inc/abstractitiltarget.class.php:182
+msgid "Tags from questions or specific tags"
+msgstr "질문 태그 또는 태그 지정"
+
+#: inc/abstractitiltarget.class.php:188
+msgid "equals to the answer to the question"
+msgstr "질답이 동일함"
+
+#: inc/abstractitiltarget.class.php:189
+msgid "calculated from the ticket creation date"
+msgstr "티켓 생성일로부터 계산됨"
+
+#: inc/abstractitiltarget.class.php:190
+msgid "calculated from the answer to the question"
+msgstr "질문에 대한 답변에서 계산됨"
+
+#: inc/abstractitiltarget.class.php:196
+msgid "SLA from template or none"
+msgstr "견본의 SLA 또는 없음"
+
+#: inc/abstractitiltarget.class.php:197
+msgid "Specific SLA"
+msgstr "특정 SLA"
+
+#: inc/abstractitiltarget.class.php:204
+msgid "OLA from template or none"
+msgstr "견본의 OLA 또는 없음"
+
+#: inc/abstractitiltarget.class.php:205
+msgid "Specific OLA"
+msgstr "특정 OLA"
+
+#: inc/abstractitiltarget.class.php:212
+msgid "Urgency from template or Medium"
+msgstr "견본 또는 매체의 긴급도"
+
+#: inc/abstractitiltarget.class.php:213
+msgid "Specific urgency"
+msgstr "긴급도 지정"
+
+#: inc/abstractitiltarget.class.php:220
+msgid "Category from template or none"
+msgstr "견본의 분류 또는 없음"
+
+#: inc/abstractitiltarget.class.php:221
+msgid "Specific category"
+msgstr "분류 지정"
+
+#: inc/abstractitiltarget.class.php:229
+msgid "Location from template or none"
+msgstr "견본의 위치 또는 없음"
+
+#: inc/abstractitiltarget.class.php:230
+msgid "Specific location"
+msgstr "위치 지정"
+
+#: inc/abstractitiltarget.class.php:238
+msgid "No validation"
+msgstr "검증 없음"
+
+#: inc/abstractitiltarget.class.php:239
+msgid "Specific user or group"
+msgstr "특정 사용자 또는 그룹"
+
+#: inc/abstractitiltarget.class.php:240
+msgid "User from question answer"
+msgstr "질문 답변의 사용자"
+
+#: inc/abstractitiltarget.class.php:241
+msgid "Group from question answer"
+msgstr "질문 답변의 그룹"
+
+#: inc/abstractitiltarget.class.php:760 entrée standard:108
+msgid "Time to resolve"
+msgstr "해결까지의 시간"
+
+#: inc/abstractitiltarget.class.php:813
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "분"
+
+#: inc/abstractitiltarget.class.php:814
+msgid "Hour"
+msgid_plural "Hours"
+msgstr[0] "시간"
+
+#: inc/abstractitiltarget.class.php:815
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "일"
+
+#: inc/abstractitiltarget.class.php:816
+msgid "Month"
+msgid_plural "Months"
+msgstr[0] "월"
+
+#: inc/abstractitiltarget.class.php:848
+msgid "SLA (TTO/TTR)"
+msgstr "SLA (TTO/TTR)"
+
+#: inc/abstractitiltarget.class.php:849 inc/abstractitiltarget.class.php:922
+msgid "Question (TTO/TTR)"
+msgstr "질문 (TTO/TTR)"
+
+#: inc/abstractitiltarget.class.php:921
+msgid "OLA (TTO/TTR)"
+msgstr "OLA (TTO/TTR)"
+
+#: inc/abstractitiltarget.class.php:1025
+msgid "Urgency "
+msgstr "긴급도"
+
+#: inc/abstractitiltarget.class.php:1055
+msgid "Ticket tags"
+msgstr "티켓 태그"
+
+#: inc/abstractitiltarget.class.php:1103
+msgid "Tags"
+msgstr "태그"
+
+#: inc/abstractitiltarget.class.php:1222
+msgid "Location"
+msgstr "위치"
+
+#: inc/abstractitiltarget.class.php:1234
+msgid "Location "
+msgstr "위치"
+
+#: inc/abstractitiltarget.class.php:1574
+msgid "The description cannot be empty!"
+msgstr "상세내용은 비워둘 수 없습니다!"
+
+#: inc/abstractitiltarget.class.php:1751
+msgid "Watcher"
+msgid_plural "Watchers"
+msgstr[0] "감시자"
+
+#: inc/abstractitiltarget.class.php:1770
+msgid "Cancel"
+msgstr "취소"
+
+#: inc/abstractitiltarget.class.php:2058 inc/abstractitiltarget.class.php:2481
+#: inc/abstractitiltarget.class.php:2485
+msgid "Email followup"
+msgstr "이메일 추적"
+
+#: inc/abstractitiltarget.class.php:2089 inc/abstractitiltarget.class.php:2469
+msgid "User"
+msgstr "사용자"
+
+#: inc/abstractitiltarget.class.php:2100 inc/abstractitiltarget.class.php:2473
+msgid "Group"
+msgstr "그룹"
+
+#: inc/abstractitiltarget.class.php:2111
+msgid "Group from the object"
+msgstr "객체에서의 그룹"
+
+#: inc/abstractitiltarget.class.php:2117
+msgid "Tech group from the object"
+msgstr "객체에서의 기술 그룹"
+
+#: inc/abstractitiltarget.class.php:2129 inc/abstractitiltarget.class.php:2477
+msgid "Supplier"
+msgstr "공급자"
+
+#: inc/abstractitiltarget.class.php:2481
+msgid "Yes"
+msgstr "예"
+
+#: install/install.php:132
+#, php-format
+msgid "Upgrade tables to innoDB; run %s"
+msgstr "테이블을 innoDB로 업그레이드하세요; %s실행"
+
+#: install/install.php:162
+#, php-format
+msgid ""
+"The database schema is not consistent with the installed Formcreator %s. To "
+"see the logs run the command %s"
+msgstr "데이터베이스 스키마가 설치된 Formcreator %s과(와) 일치하지 않습니다. 로그를 보려면 %s 명령을 실행하세요"
+
+#: install/install.php:171
+#, php-format
+msgid "To ignore the inconsistencies and upgrade anyway run %s"
+msgstr "불일치를 무시하고 업그레이드하려면 %s을(를) 실행하세요"
+
+#: install/install.php:189
+msgid ""
+"Upgrade from version older than 2.5.0 is no longer supported. Please upgrade"
+" to GLPI 9.5.7, upgrade Formcreator to version 2.12.5, then upgrade again to"
+" GLPI 10 or later and Formcreator 2.13 or later."
+msgstr ""
+"2.5.0 이전 버전에서의 업그레이드는 더 이상 지원되지 않습니다. GLPI 9.5.7로 업그레이드하고, Formcreator를 버전 "
+"2.12.5로 업그레이드 한 다음, GLPI 10 이상 및 Formcreator 2.13 이상으로 다시 업그레이드 하세요."
+
+#: install/install.php:241
+#, php-format
+msgid ""
+"The database schema is not consistent with the installed Formcreator %s. To "
+"see the logs enable the plugin and run the command %s"
+msgstr ""
+"데이터베이스 스키마가 설치된 Formcreator %s과(와) 일치하지 않습니다. 로그를 보려면 플러그인을 활성화하고%s 명령을 "
+"실행하세요."
+
+#: install/install.php:252
+msgid "The tables of the plugin passed the schema integrity check."
+msgstr "플러그인의 테이블이 스키마 무결성 검사를 통과했습니다."
+
+#: install/install.php:404
+msgid "A form has been created"
+msgstr "양식이 생성되었습니다"
+
+#: install/install.php:405
+msgid "Your request has been saved"
+msgstr "요청이 저장되었습니다"
+
+#: install/install.php:406
+msgid ""
+"Hi,\\nYour request from GLPI has been successfully saved with number "
+"##formcreator.request_id## and transmitted to the helpdesk team.\\nYou can "
+"see your answers onto the following link:\\n##formcreator.validation_link##"
+msgstr ""
+"안녕하세요,\\nGLPI에서의 요청이 ##formcreator.request_id##로 잘 저장되었고 업무 지원 센터 팀에 전달 "
+"되었습니다.\\n다음 링크에서 당신의 질문을 확인할 수 있습니다:\\n##formcreator.validation_link##"
+
+#: install/install.php:411
+msgid "A form from GLPI need to be validate"
+msgstr "GLPI에서의 양식은 확인이 필요합니다"
+
+#: install/install.php:412
+msgid ""
+"Hi,\\nA form from GLPI need to be validate and you have been choosen as the "
+"validator.\\nYou can access it by clicking onto this "
+"link:\\n##formcreator.validation_link##"
+msgstr ""
+"안녕하세요,\\nGLPI에서의 양식은 확인이 필요하고 당신은 확인자로 선택 되었습니다.\\n이 링크를 클릭하여 접속할 수 "
+"있습니다:\\n##formcreator.validation_link##"
+
+#: install/install.php:417
+msgid "Your form has been refused by the validator"
+msgstr "확인자에 의해 당신의 양식이 거부되었습니다."
+
+#: install/install.php:418
+msgid ""
+"Hi,\\nWe are sorry to inform you that your form has been refused by the "
+"validator for the reason "
+"below:\\n##formcreator.validation_comment##\\n\\nYou can still modify and "
+"resubmit it by clicking onto this link:\\n##formcreator.validation_link##"
+msgstr ""
+"안녕하세요,\\n다음의 이유로 확인자에 의해 당신의 양식이 거부됨을 알리게 되어 "
+"유감입니다:\\n##formcreator.validation_comment##\\n\\n아직은 이 링크를 클릭하여  수정하여 다시 제출할"
+" 수 있습니다:\\n##formcreator.validation_link##"
+
+#: install/install.php:424
+msgid ""
+"Hi,\\nWe are pleased to inform you that your form has been accepted by the "
+"validator.\\nYour request will be considered soon."
+msgstr "안녕하세요,\\n확인자에 의해 당신의 양식이 승인됨을 알리게 되어 기쁩니다.\\n당신의 요청은 곧 고려되게 됩니다."
+
+#: install/install.php:429
+msgid "Your form has been deleted by an administrator"
+msgstr "당신의 양식이 관리자에 의해 삭제되었습니다"
+
+#: install/install.php:430
+msgid ""
+"Hi,\\nWe are sorry to inform you that your request cannot be considered and "
+"has been deleted by an administrator."
+msgstr "안녕하세요,\\n당신의 요청이 고려될 수 없고 관리자에 의해 삭제됨을 알리게 되어 유감입니다."
+
+#: install/install.php:656
+msgid "Formcreator - Sync service catalog issues"
+msgstr "양식생성기 - 서비스 목록 문제 동기화"
+
+#: install/install.php:844
+msgid "Failed to check the sanity of the tables!"
+msgstr "테이블의 온전성 확인에 실패했습니다!"
+
+#: install/install.php:858
+#, php-format
+msgid "Table schema differs for table \"%s\"."
+msgstr "테이블 스키마가 테이블 \"%s\"와 다릅니다."
+
+#: install/install.php:861
+#, php-format
+msgid "Table \"%s\" is missing."
+msgstr "테이블 \"%s\" 이 없습니다."
+
+#: install/install.php:864
+#, php-format
+msgid "Unknown table \"%s\" has been found in database."
+msgstr "데이터베이스에서 알 수 없ㄴ느 테이블 \"%s\"이 발견되었습니다."
+
+#: hook.php:375
+msgctxt "button"
+msgid "Duplicate"
+msgstr "복제"
+
+#: hook.php:376
+msgid "Transfer"
+msgstr "전송자"
+
+#: hook.php:377
+msgctxt "button"
+msgid "Export"
+msgstr "내보내기"
+
+#: hook.php:677
+msgid "Cancel my ticket"
+msgstr "내 티켓 취소"
+
+#: hook.php:695
+msgid "Old"
+msgstr "오래됨"
+
+#: hook.php:702
+#, php-format
+msgid "Number of %s"
+msgstr "%s의 횟수 "
+
+#: hook.php:719
+msgid "Issues summary"
+msgstr "이슈 요약"
+
+#: hook.php:757
+msgid ""
+"Formcreator's mini dashboard not usable as default. This Setting has been "
+"ignored."
+msgstr "양식생성기의 미니 대시보드는 기본적으로 사용할 수 없습니다. 이 설정은 무시되었습니다."
+
+#: js/scripts.js:296
+msgid "No form found. Please choose a form below instead."
+msgstr "양식을 찾을 수 없습니다. 대신 다음 양식에서 선택해 주세요."
+
+#: js/scripts.js:298
+msgid "No form found."
+msgstr "양식을 찾을 수 없습니다."
+
+#: js/scripts.js:302
+msgid "No FAQ item found."
+msgstr "FAQ 항목을 찾을 수 없습니다."
+
+#: js/scripts.js:687
+msgid "Are you sure you want to delete this question?"
+msgstr "이 질문을 삭제 하시겠습니까?"
+
+#: js/scripts.js:876
+msgid "Are you sure you want to delete this section?"
+msgstr "이 섹션을 삭제 하시겠습니까?"
+
+#: js/scripts.js:1116
+msgid "Add translations"
+msgstr "번역 추가"
+
+#: js/scripts.js:1243 js/scripts.js:1267
+msgid "An error occured while querying forms"
+msgstr "양식 질의 중 오류 발생함"
+
+#: js/scripts.js:1358 entrée standard:139
+msgid "Send"
+msgstr "전송"
+
+#: js/scripts.js:1367
+msgid "An internal error occurred. Please report it to administrator."
+msgstr "내부 오류 발생함. 관리자에게 보고해 주세요."
+
+#: js/scripts.js:1420
+msgid "Are you sure you want to delete this target:"
+msgstr "이 대상을 삭제 하시겠습니가:"
+
+#: entrée standard:43 standard:50 standard:44 standard:49 standard:78
+msgid "Required"
+msgstr "필수"
+
+#: entrée standard:57 standard:61 standard:60 standard:59 standard:43
+#: standard:69 standard:52 standard:76 standard:37
+msgid "Default values"
+msgstr "기본 값"
+
+#: entrée standard:52 standard:59 standard:58
+msgid "Show empty"
+msgstr "빈란 표시"
+
+#: entrée standard:39
+msgid "LDAP directory"
+msgid_plural "LDAP directories"
+msgstr[0] "LDAP 디렉토리"
+
+#: entrée standard:68
+msgid "Filter"
+msgstr "필터"
+
+#: entrée standard:78
+msgid "Attribute"
+msgstr "속성"
+
+#: entrée standard:70 standard:68
+msgid "Values"
+msgstr "값"
+
+#: entrée standard:90
+msgid "Show ticket categories"
+msgstr "티켓 분류 표시"
+
+#: entrée standard:109
+msgid "Time to own"
+msgstr "소유까지의 시간"
+
+#: entrée standard:146 standard:118
+msgid "Selectable root"
+msgstr "선택가능 root"
+
+#: entrée standard:63
+msgid "Direct access on homepage"
+msgstr "홈페이지에 바로 접속"
+
+#: entrée standard:86
+msgid "Default form in service catalog"
+msgstr "서비스 목록 내의 기본 양식"
+
+#: entrée standard:113 standard:114
+msgid "Are you a robot ?"
+msgstr "당신은 로봇인가요?"
+
+#: entrée standard:64
+msgid "Condition to show the section"
+msgstr "섹션 표시 조건"
+
+#: entrée standard:40
+msgid "Condition to generate the target"
+msgstr "대상 생성 조건"
+
+#: entrée standard:127
+msgid "Condition to show the question"
+msgstr "질문 표시 조건"
+
+#: entrée standard:54
+msgid "Impacts"
+msgstr "영향"
+
+#: entrée standard:62
+msgid "Checklist"
+msgstr "확인목록"
+
+#: entrée standard:36
+msgid "Answers title"
+msgstr "답변 제목"
+
+#: entrée standard:45
+msgid "Add a section"
+msgstr "섹션 추가"
+
+#: entrée standard:55
+msgid "Condition to show the submit button"
+msgstr "제출 버튼을 표시하는 조건"
+
+#: entrée standard:33
+msgid "No form answer yet"
+msgstr "아직 답변한 양식 없음"
+
+#: entrée standard:38
+#, php-format
+msgid "%s latest items"
+msgstr "%s 최근 항목"
+
+#: entrée standard:83
+msgid "Add a question"
+msgstr "질문 추가"
+
+#: entrée standard:39
+msgid "List of available tags"
+msgstr "사용가능한 태그의 목록"
+
+#: entrée standard:42
+msgid "Title"
+msgstr "제목"
+
+#: entrée standard:47
+msgid "Full form"
+msgstr "전체 양식"
+
+#: entrée standard:42
+msgid "Min"
+msgstr "최소"
+
+#: entrée standard:53
+msgid "Max"
+msgstr "최대"
