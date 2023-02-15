@@ -155,11 +155,37 @@ class GLPIUploadHandler extends UploadHandler
                     if (isset($val->name)) {
                         $val->prefix = substr($val->name, 0, 23);
                         $val->display = str_replace($val->prefix, '', $val->name);
-                    }
-                    if (isset($val->size)) {
-                        $val->filesize = Toolbox::getSize($val->size);
-                        if (isset($params['showfilesize']) && $params['showfilesize']) {
-                            $val->display = sprintf('%1$s %2$s', $val->display, $val->filesize);
+                        
+                        $count_dots = substr_count($val->display, '.');
+                        //$format = 'Nombre: %s ,Numero de puntos: %d //';
+                        //echo sprintf($format, $val->display,$count_dots);
+                        if($count_dots > 1){
+                            if(file_exists($upload_dir . $val->name)){
+                                unlink($upload_dir . $val->name);
+                            }
+                            $val->error = __('Filetype with double ext. is not allowed');
+                        }else{
+
+                            if(!empty(Document::isValidDoc($val->display))){
+
+                                if (isset($val->size)) {
+                                    $val->filesize = Toolbox::getSize($val->size);
+                                    if (isset($params['showfilesize']) && $params['showfilesize']) {
+                                        $val->display = sprintf('%1$s %2$s', $val->display, $val->filesize);
+                                    }
+                                }
+    
+                                $val->id = 'doc' . $params['name'] . mt_rand();
+
+                            }else{
+
+                                if(file_exists($upload_dir . $val->name)){
+                                    unlink($upload_dir . $val->name);
+                                }
+                                $val->error = __('Filetype not allowed');
+
+                            }
+                            
                         }
                     }
                 }
