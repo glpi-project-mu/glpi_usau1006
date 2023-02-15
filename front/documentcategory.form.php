@@ -34,6 +34,7 @@
  */
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 $dropdown = new DocumentCategory();
 include(GLPI_ROOT . "/front/dropdown.common.form.php");

@@ -34,6 +34,7 @@
  */
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (!isset($_GET['itemtype']) || !class_exists($_GET['itemtype'])) {
     throw new \RuntimeException(

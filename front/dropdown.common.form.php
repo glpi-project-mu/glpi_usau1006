@@ -39,7 +39,7 @@
  */
 
 use Glpi\Event;
-include('../src/Toolbox/HandlerSubmitForm.php');
+
 
 if (!($dropdown instanceof CommonDropdown)) {
     Html::displayErrorAndDie('');

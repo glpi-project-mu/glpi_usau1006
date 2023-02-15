@@ -34,6 +34,7 @@
  */
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (isset($_POST['reinit_network'])) {
     if (

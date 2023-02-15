@@ -36,6 +36,7 @@
 use Glpi\SocketModel;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 $dropdown = new SocketModel();
 include(GLPI_ROOT . "/front/dropdown.common.form.php");
