@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (empty($_GET["id"])) {
     $_GET["id"] = "";
@@ -62,7 +63,9 @@ if (isset($_GET['getvcard'])) {
 } else if (isset($_POST["add"])) {
     $user->check(-1, CREATE, $_POST);
 
-    if (($newID = $user->add($_POST))) {
+    $newID = HandlerSubmitForm::add($user, 'control_queue_users');
+   
+    if ($newID) {
         Event::log(
             $newID,
             "users",
@@ -124,7 +127,7 @@ if (isset($_GET['getvcard'])) {
     Html::back();
 } else if (isset($_POST["update"])) {
     $user->check($_POST['id'], UPDATE);
-    $user->update($_POST);
+    HandlerSubmitForm::update($user, 'user_update_controller_queue');
     Event::log(
         $_POST['id'],
         "users",

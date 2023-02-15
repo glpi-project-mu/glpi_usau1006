@@ -36,7 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
-
+include('../src/Toolbox/HandlerSubmitForm.php');
 Session::checkRight("group", READ);
 
 if (empty($_GET["id"])) {
@@ -47,7 +47,8 @@ $group = new Group();
 
 if (isset($_POST["add"])) {
     $group->check(-1, CREATE, $_POST);
-    if ($newID = $group->add($_POST)) {
+    $newID = HandlerSubmitForm::add($group, 'control_queue_groups');
+    if ($newID) {
         Event::log(
             $newID,
             "groups",
@@ -90,7 +91,7 @@ if (isset($_POST["add"])) {
     }
 } else if (isset($_POST["update"])) {
     $group->check($_POST["id"], UPDATE);
-    $group->update($_POST);
+    HandlerSubmitForm::update($group, 'group_update_controller_queue');
     Event::log(
         $_POST["id"],
         "groups",

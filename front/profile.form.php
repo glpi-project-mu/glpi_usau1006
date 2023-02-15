@@ -36,7 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
-
+include('../src/Toolbox/HandlerSubmitForm.php');
 Session::checkRight("profile", READ);
 
 if (!isset($_GET['id'])) {
@@ -47,7 +47,8 @@ $prof = new Profile();
 
 if (isset($_POST["add"])) {
     $prof->check(-1, CREATE, $_POST);
-    if ($newID = $prof->add($_POST)) {
+    $newID = HandlerSubmitForm::add($prof, 'control_queue_profiles');
+    if ($newID) {
         Event::log(
             $newID,
             "profiles",
@@ -82,7 +83,7 @@ if (isset($_POST["add"])) {
 ) {
     $prof->check($_POST['id'], UPDATE);
 
-    $prof->update($_POST);
+    HandlerSubmitForm::update($prof, 'prof_update_controller_queue');
     Event::log(
         $_POST['id'],
         "profiles",
