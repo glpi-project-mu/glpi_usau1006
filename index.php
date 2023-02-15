@@ -49,6 +49,7 @@ use Glpi\Toolbox\Sanitizer;
 //Load GLPI constants
 define('GLPI_ROOT', __DIR__);
 include(GLPI_ROOT . "/inc/based_config.php");
+include(GLPI_ROOT . "/captcha/captcha.php");
 
 define('DO_NOT_CHECK_HTTP_REFERER', 1);
 
@@ -133,6 +134,9 @@ if (!file_exists(GLPI_CONFIG_DIR . "/config_db.php")) {
         Toolbox::manageRedirect($redirect);
     }
 
+    $var_captcha = getImageCaptcha();
+    $_SESSION['cptchfield'] = $var_captcha[1];
+
     TemplateRenderer::getInstance()->display('pages/login.html.twig', [
         'card_bg_width'       => true,
         'lang'                => $CFG_GLPI["languages"][$_SESSION['glpilanguage']][3],
@@ -160,7 +164,8 @@ if (!file_exists(GLPI_CONFIG_DIR . "/config_db.php")) {
                                || $CFG_GLPI["use_public_faq"],
         'auth_dropdown_login' => Auth::dropdownLogin(false),
         'copyright_message'   => Html::getCopyrightMessage(false),
-        'errors'              => $errors
+        'errors'              => $errors,
+        'captchaImage'        => $var_captcha[0]
     ]);
 }
 // call cron

@@ -46,9 +46,9 @@
             </div>
             <div class="mb-3">
                <label class="form-label">{{ __('Login') }}</label>
-               <input type="text" class="form-control" id="login_name" name="{{ namfield }}" placeholder="" tabindex="1" />
+               <input type="text" class="form-control" id="login_name" required name="{{ namfield }}" placeholder="" tabindex="1" />
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
                <label class="form-label">
                   {{ __('Password') }}
 
@@ -60,8 +60,25 @@
                      </span>
                   {% endif %}
                </label>
-               <input type="password" class="form-control" name="{{ pwdfield }}" placeholder="" autocomplete="off" tabindex="2" />
+               <input type="password" class="form-control" required name="{{ pwdfield }}" placeholder="" autocomplete="off" tabindex="2" />
             </div>
+
+            <div class="mb-4">
+               <label class="form-label">
+                  {{ __('Captcha') }}
+               </label>
+                <div class="text-center mb-3">
+                  <img src="data:image/png;base64, {{ captchaImage }}" alt="Captcha" id="imageCaptcha"/>
+
+                  <button type="button" name="reload" id="reloadId" class="btn btn-secondary w-20" >
+                     <i class="fas fa-rotate auto-refresh" title="refresh_captcha"></i>
+                  </button>
+               </div>
+
+               <input type="text" class="form-control" required maxlength="6" name="cptchfield_form" placeholder="Ingrese el valor de la imagen" autocomplete="off" tabindex="3" />
+            </div>
+
+           
 
             {% if constant('GLPI_DEMO_MODE') %}
                <div class="mb-3">
@@ -131,7 +148,10 @@
 {% block javascript_block %}
 <script type="text/javascript">
    $(function () {
-$('#login_name').focus();
+   $('#login_name').focus();
+   $("#reloadId").click(function() {
+      location.reload();
+   })
 });
 </script>
 {% endblock %}

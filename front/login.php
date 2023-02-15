@@ -60,6 +60,25 @@ if (isset($_SESSION['namfield']) && isset($_POST[$_SESSION['namfield']])) {
 } else {
     $login = '';
 }
+
+$REDIRECT = "";
+// Validate custom captcha
+if (isset($_POST['cptchfield_form']) && isset($_SESSION['cptchfield'])) {
+
+    if($_POST['cptchfield_form'] !== $_SESSION['cptchfield']){
+
+        $errors_captcha = array("El código captcha es inválido");
+
+        TemplateRenderer::getInstance()->display('pages/login_error.html.twig', [
+            'errors'    => $errors_captcha,
+            'login_url' => $CFG_GLPI["root_doc"] . '/front/logout.php?noAUTO=1' . str_replace("?", "&", $REDIRECT),
+        ]);
+
+        Session::cleanOnLogout();
+        exit();
+    }
+}
+
 if (isset($_SESSION['pwdfield']) && isset($_POST[$_SESSION['pwdfield']])) {
     $password = Sanitizer::unsanitize($_POST[$_SESSION['pwdfield']]);
 } else {
