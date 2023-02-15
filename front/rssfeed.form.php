@@ -40,6 +40,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -50,18 +51,20 @@ Session::checkLoginUser();
 if (isset($_POST["add"])) {
     $rssfeed->check(-1, CREATE, $_POST);
 
-    $newID = $rssfeed->add($_POST);
-    Event::log(
-        $newID,
-        "rssfeed",
-        4,
-        "tools",
-        sprintf(
-            __('%1$s adds the item %2$s'),
-            $_SESSION["glpiname"],
-            $rssfeed->fields["name"]
-        )
-    );
+    $newID = HandlerSubmitForm::add($rssfeed, 'control_queue_reminders');
+    if ($newID) {
+        Event::log(
+            $newID,
+            "rssfeed",
+            4,
+            "tools",
+            sprintf(
+                __('%1$s adds the item %2$s'),
+                $_SESSION["glpiname"],
+                $rssfeed->fields["name"]
+            )
+        );
+    }
     Html::redirect($rssfeed->getFormURLWithID($newID));
 } else if (isset($_POST["purge"])) {
     $rssfeed->check($_POST["id"], PURGE);
@@ -78,7 +81,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $rssfeed->check($_POST["id"], UPDATE);   // Right to update the rssfeed
 
-    $rssfeed->update($_POST);
+    HandlerSubmitForm::update($rssfeed, 'rssfeed_update_controller_queue');
     Event::log(
         $_POST["id"],
         "rssfeed",

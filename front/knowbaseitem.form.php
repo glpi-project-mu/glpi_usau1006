@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -56,7 +57,7 @@ $kb = new KnowbaseItem();
 if (isset($_POST["add"])) {
    // ajoute un item dans la base de connaisssances
     $kb->check(-1, CREATE, $_POST);
-    $newID = $kb->add($_POST);
+    $newID = HandlerSubmitForm::add($kb, 'control_queue_knowledgebases');
     Event::log(
         $newID,
         "knowbaseitem",
@@ -73,7 +74,7 @@ if (isset($_POST["add"])) {
    // actualiser  un item dans la base de connaissances
     $kb->check($_POST["id"], UPDATE);
 
-    $kb->update($_POST);
+    HandlerSubmitForm::update($kb, 'kb_update_controller_queue');
     Event::log(
         $_POST["id"],
         "knowbaseitem",

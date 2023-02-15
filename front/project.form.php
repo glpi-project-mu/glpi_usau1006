@@ -40,6 +40,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (empty($_GET["id"])) {
     $_GET["id"] = '';
@@ -54,7 +55,7 @@ $project = new Project();
 if (isset($_POST["add"])) {
     $project->check(-1, CREATE, $_POST);
 
-    $newID = $project->add($_POST);
+    $newID = HandlerSubmitForm::add($project, 'control_queue_projects');
     Event::log(
         $newID,
         "project",
@@ -110,7 +111,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $project->check($_POST["id"], UPDATE);
 
-    $project->update($_POST);
+    HandlerSubmitForm::update($project, 'project_update_controller_queue');
     Event::log(
         $_POST["id"],
         "project",

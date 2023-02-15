@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -46,7 +47,9 @@ Session::checkLoginUser();
 if (isset($_POST["add"])) {
     $remind->check(-1, CREATE, $_POST);
 
-    if ($newID = $remind->add($_POST)) {
+    $newID = HandlerSubmitForm::add($remind, 'control_queue_reminders');;
+   
+    if ($newID) {
         Event::log(
             $newID,
             "reminder",
@@ -78,7 +81,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $remind->check($_POST["id"], UPDATE);   // Right to update the reminder
 
-    $remind->update($_POST);
+    HandlerSubmitForm::update($remind, 'remind_update_controller_queue');
     Event::log(
         $_POST["id"],
         "reminder",
