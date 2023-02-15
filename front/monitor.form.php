@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("monitor", READ);
 
@@ -51,7 +52,8 @@ $monitor = new Monitor();
 if (isset($_POST["add"])) {
     $monitor->check(-1, CREATE, $_POST);
 
-    if ($newID = $monitor->add($_POST)) {
+    $newID = HandlerSubmitForm::add($monitor, 'control_queue_monitors');
+    if ($newID) {
         Event::log(
             $newID,
             "monitors",
@@ -106,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $monitor->check($_POST["id"], UPDATE);
 
-    $monitor->update($_POST);
+    HandlerSubmitForm::update($monitor, 'monitor_update_controller_queue');
     Event::log(
         $_POST["id"],
         "monitors",

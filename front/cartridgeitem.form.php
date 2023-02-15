@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("cartridge", READ);
 
@@ -48,7 +49,9 @@ $cartype = new CartridgeItem();
 if (isset($_POST["add"])) {
     $cartype->check(-1, CREATE, $_POST);
 
-    if ($newID = $cartype->add($_POST)) {
+    $newID = HandlerSubmitForm::add($cartype, 'control_queue_cartridges');
+  
+    if ($newID) {
         Event::log(
             $newID,
             "cartridgeitems",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $cartype->check($_POST["id"], UPDATE);
 
-    if ($cartype->update($_POST)) {
+    if (HandlerSubmitForm::update($cartype, 'cartype_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "cartridgeitems",

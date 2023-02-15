@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("datacenter", READ);
 
@@ -51,7 +52,9 @@ $pdu = new PDU();
 if (isset($_POST["add"])) {
     $pdu->check(-1, CREATE, $_POST);
 
-    if ($newID = $pdu->add($_POST)) {
+    $newID = HandlerSubmitForm::add($pdu, 'control_queue_pdus');
+   
+    if ($newID) {
         Event::log(
             $newID,
             "pdus",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $pdu->check($_POST["id"], UPDATE);
 
-    $pdu->update($_POST);
+    HandlerSubmitForm::update($pdu, 'pdu_update_controller_queue');
     Event::log(
         $_POST["id"],
         "pdus",

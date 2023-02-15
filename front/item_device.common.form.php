@@ -42,6 +42,7 @@
  * @var Item_Devices $item_device
  */
 
+include('../src/Toolbox/HandlerSubmitForm.php');
 use Glpi\Event;
 
 if (!($item_device instanceof Item_Devices)) {
@@ -62,7 +63,9 @@ if (isset($_POST["id"])) {
 
 if (isset($_POST["add"])) {
     $item_device->check(-1, CREATE, $_POST);
-    if ($newID = $item_device->add($_POST)) {
+    $newID = HandlerSubmitForm::add($item_device, 'control_queue_devsimcard');
+    
+    if ($newID) {
         Event::log(
             $newID,
             get_class($item_device),
@@ -93,7 +96,7 @@ if (isset($_POST["add"])) {
     Html::redirect($device->getLinkURL());
 } else if (isset($_POST["update"])) {
     $item_device->check($_POST["id"], UPDATE);
-    $item_device->update($_POST);
+    HandlerSubmitForm::update($item_device, 'devsimcard_update_controller_queue');
 
     Event::log(
         $_POST["id"],

@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("printer", READ);
 
@@ -50,7 +51,9 @@ $print = new Printer();
 if (isset($_POST["add"])) {
     $print->check(-1, CREATE, $_POST);
 
-    if ($newID = $print->add($_POST)) {
+    $newID = HandlerSubmitForm::add($print, 'control_queue_printers');
+    
+    if ($newID) {
         Event::log(
             $newID,
             "printers",
@@ -105,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $print->check($_POST["id"], UPDATE);
 
-    $print->update($_POST);
+    HandlerSubmitForm::update($print, 'printer_update_controller_queue');
     Event::log(
         $_POST["id"],
         "printers",

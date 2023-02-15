@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("consumable", READ);
 
@@ -48,7 +49,9 @@ $constype = new ConsumableItem();
 if (isset($_POST["add"])) {
     $constype->check(-1, CREATE, $_POST);
 
-    if ($newID = $constype->add($_POST)) {
+    $newID = HandlerSubmitForm::add($constype, 'control_queue_consumables');
+    
+    if ($newID) {
         Event::log(
             $newID,
             "consumableitems",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $constype->check($_POST["id"], UPDATE);
 
-    if ($constype->update($_POST)) {
+    if (HandlerSubmitForm::update($constype, 'constype_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "consumableitems",

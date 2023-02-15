@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("software", READ);
 
@@ -49,8 +50,9 @@ if (!isset($_GET["withtemplate"])) {
 $soft = new Software();
 if (isset($_POST["add"])) {
     $soft->check(-1, CREATE, $_POST);
+    $newID = HandlerSubmitForm::add($soft, 'control_queue_softwares');
 
-    if ($newID = $soft->add($_POST)) {
+    if ($newID) {
         Event::log(
             $newID,
             "software",
@@ -106,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $soft->check($_POST["id"], UPDATE);
 
-    $soft->update($_POST);
+    HandlerSubmitForm::update($soft, 'software_update_controller_queue');
     Event::log(
         $_POST["id"],
         "software",

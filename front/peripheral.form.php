@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("peripheral", READ);
 
@@ -50,8 +51,9 @@ $peripheral = new Peripheral();
 
 if (isset($_POST["add"])) {
     $peripheral->check(-1, CREATE, $_POST);
+    $newID = HandlerSubmitForm::add($peripheral, 'control_queue_devices');
 
-    if ($newID = $peripheral->add($_POST)) {
+    if ($newID) {
         Event::log(
             $newID,
             "peripherals",
@@ -106,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $peripheral->check($_POST["id"], UPDATE);
 
-    $peripheral->update($_POST);
+    HandlerSubmitForm::update($peripheral,'devices_update_controller_queue');
     Event::log(
         $_POST["id"],
         "peripherals",

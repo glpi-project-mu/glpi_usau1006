@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("cable_management", READ);
 
@@ -50,7 +51,9 @@ $cable = new Cable();
 if (isset($_POST["add"])) {
     $cable->check(-1, CREATE, $_POST);
 
-    if ($newID = $cable->add($_POST)) {
+    $newID = HandlerSubmitForm::add($cable, 'control_queue_cables');
+    
+    if ($newID)  {
         Event::log(
             $newID,
             "cable",
@@ -109,7 +112,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $cable->check($_POST["id"], UPDATE);
 
-    if ($cable->update($_POST)) {
+    if (HandlerSubmitForm::update($cable, 'cable_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "cable",

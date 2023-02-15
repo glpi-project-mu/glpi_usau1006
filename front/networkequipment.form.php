@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("networking", READ);
 
@@ -49,8 +50,9 @@ if (!isset($_GET["withtemplate"])) {
 $netdevice = new NetworkEquipment();
 if (isset($_POST["add"])) {
     $netdevice->check(-1, CREATE, $_POST);
+    $newID = HandlerSubmitForm::add($netdevice, 'control_queue_networkdevices');
 
-    if ($newID = $netdevice->add($_POST)) {
+    if ($newID) {
         Event::log(
             $newID,
             "networkequipment",
@@ -106,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $netdevice->check($_POST["id"], UPDATE);
 
-    $netdevice->update($_POST);
+    HandlerSubmitForm::update($netdevice, 'netdevice_update_controller_queue');
     Event::log(
         $_POST["id"],
         "networkequipment",

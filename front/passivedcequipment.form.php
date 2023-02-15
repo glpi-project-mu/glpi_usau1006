@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("datacenter", READ);
 
@@ -51,7 +52,9 @@ $passive_equip = new PassiveDCEquipment();
 if (isset($_POST["add"])) {
     $passive_equip->check(-1, CREATE, $_POST);
 
-    if ($newID = $passive_equip->add($_POST)) {
+    $newID = HandlerSubmitForm::add($passive_equip, 'control_queue_passivedce');
+
+    if ($newID) {
         Event::log(
             $newID,
             "passivedcequipment",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $passive_equip->check($_POST["id"], UPDATE);
 
-    $passive_equip->update($_POST);
+    HandlerSubmitForm::update($passive_equip,'passivedce_update_controller_queue');
     Event::log(
         $_POST["id"],
         "passivedcequipment",

@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("computer", READ);
 
@@ -51,7 +52,8 @@ $computer = new Computer();
 //Add a new computer
 if (isset($_POST["add"])) {
     $computer->check(-1, CREATE, $_POST);
-    if ($newID = $computer->add($_POST)) {
+    $newID = HandlerSubmitForm::add($computer, 'control_queue_computers');
+    if ($newID) {
         Event::log(
             $newID,
             "computers",
@@ -111,7 +113,7 @@ if (isset($_POST["add"])) {
    //update a computer
 } else if (isset($_POST["update"])) {
     $computer->check($_POST['id'], UPDATE);
-    $computer->update($_POST);
+    HandlerSubmitForm::update($computer, 'computer_update_controller_queue');
     Event::log(
         $_POST["id"],
         "computers",

@@ -34,6 +34,7 @@
  */
 
 use Glpi\Event;
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 include('../inc/includes.php');
 
@@ -51,7 +52,9 @@ $rack = new Rack();
 if (isset($_POST["add"])) {
     $rack->check(-1, CREATE, $_POST);
 
-    if ($newID = $rack->add($_POST)) {
+    $newID = HandlerSubmitForm::add($rack, 'control_queue_racks');
+
+    if ($newID) {
         Event::log(
             $newID,
             "racks",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $rack->check($_POST["id"], UPDATE);
 
-    $rack->update($_POST);
+    HandlerSubmitForm::update($rack, 'rack_update_controller_queue');
     Event::log(
         $_POST["id"],
         "racks",
