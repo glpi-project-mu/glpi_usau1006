@@ -983,7 +983,7 @@ class CommonGLPI implements CommonGLPIInterface
             $glpilisturl   = & $_SESSION['glpilisturl'][$this->getType()];
             if ($this instanceof CommonDBChild) {
                 $parent = $this->getItem(true, false);
-                $glpilisturl = $parent::getFormURLWithID($parent->fields['id'], true);
+                $glpilisturl = ($parent)?$parent::getFormURLWithID($parent->fields['id'], true):'';
             }
             if (empty($glpilisturl)) {
                 $glpilisturl = $this->getSearchURL();
