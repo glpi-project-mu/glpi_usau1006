@@ -46,6 +46,7 @@
  */
 
 include ("../../../inc/includes.php");
+include('../../../src/Toolbox/HandlerSubmitForm.php');
 
 $dropdown = new PluginFusioninventoryCredentialIp();
 if (empty($_POST['plugin_fusioninventory_credentials_id'])) {

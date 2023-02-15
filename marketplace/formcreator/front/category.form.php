@@ -30,6 +30,7 @@
  */
 
 include ('../../../inc/includes.php');
+include('../../../src/Toolbox/HandlerSubmitForm.php');
 
 // Check if plugin is activated...
 if (!(new Plugin())->isActivated('formcreator')) {
