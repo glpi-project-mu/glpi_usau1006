@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight('database', READ);
 
@@ -50,8 +51,9 @@ $database = new Database();
 
 if (isset($_POST["add"])) {
     $database->check(-1, CREATE, $_POST);
-
-    if ($newID = $database->add($_POST)) {
+    $newID = HandlerSubmitForm::add($database, 'control_queue_databases');
+    
+    if ($newID) {
         Event::log(
             $newID,
             "database",
@@ -106,7 +108,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $database->check($_POST["id"], UPDATE);
 
-    $database->update($_POST);
+    HandlerSubmitForm::update($database, 'database_update_controller_queue');
     Event::log(
         $_POST["id"],
         "database",

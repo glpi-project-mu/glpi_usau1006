@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("datacenter", READ);
 
@@ -51,7 +52,9 @@ $datacenter = new Datacenter();
 if (isset($_POST["add"])) {
     $datacenter->check(-1, CREATE, $_POST);
 
-    if ($newID = $datacenter->add($_POST)) {
+    $newID = HandlerSubmitForm::add($datacenter, 'control_queue_datacenters');
+
+    if ($newID) {
         Event::log(
             $newID,
             "datacenters",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $datacenter->check($_POST["id"], UPDATE);
 
-    $datacenter->update($_POST);
+    HandlerSubmitForm::update($datacenter, 'datacenter_update_controller_queue');
     Event::log(
         $_POST["id"],
         "datacenters",

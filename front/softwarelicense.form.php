@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("license", READ);
 if (!isset($_REQUEST["id"])) {
@@ -52,7 +53,9 @@ $license = new SoftwareLicense();
 
 if (isset($_POST["add"])) {
     $license->check(-1, CREATE, $_POST);
-    if ($newID = $license->add($_POST)) {
+    $newID = HandlerSubmitForm::add($license, 'control_queue_licenses');
+    
+    if ($newID) {
         Event::log(
             $_POST['softwares_id'],
             "software",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $license->check($_POST['id'], UPDATE);
 
-    $license->update($_POST);
+    HandlerSubmitForm::update($license, 'license_update_controller_queue');
     Event::log(
         $license->fields['softwares_id'],
         "software",

@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("contact_enterprise", READ);
 
@@ -54,7 +55,9 @@ if (isset($_GET['getvcard'])) {
 } else if (isset($_POST["add"])) {
     $contact->check(-1, CREATE, $_POST);
 
-    if ($newID = $contact->add($_POST)) {
+    $newID = HandlerSubmitForm::add($contact, 'control_queue_contacts');
+
+    if ($newID) {
         Event::log(
             $newID,
             "contacts",
@@ -112,7 +115,7 @@ if (isset($_GET['getvcard'])) {
 } else if (isset($_POST["update"])) {
     $contact->check($_POST["id"], UPDATE);
 
-    if ($contact->update($_POST)) {
+    if (HandlerSubmitForm::update($contact, 'contact_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "contacts",

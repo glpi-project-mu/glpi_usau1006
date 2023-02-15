@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("cluster", READ);
 
@@ -51,7 +52,9 @@ $cluster = new Cluster();
 if (isset($_POST["add"])) {
     $cluster->check(-1, CREATE, $_POST);
 
-    if ($newID = $cluster->add($_POST)) {
+    $newID = HandlerSubmitForm::add($cluster, 'control_queue_clusters');
+    
+    if ($newID) {
         Event::log(
             $newID,
             "cluster",
@@ -106,7 +109,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $cluster->check($_POST["id"], UPDATE);
 
-    $cluster->update($_POST);
+    HandlerSubmitForm::update($cluster, 'cluster_update_controller_queue');
     Event::log(
         $_POST["id"],
         "cluster",

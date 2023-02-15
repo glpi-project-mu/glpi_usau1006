@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkLoginUser();
 
@@ -68,7 +69,7 @@ if (isset($_POST["add"])) {
         if ($_SESSION['glpibackcreated'] && (!isset($_POST['itemtype']) || !isset($_POST['items_id']))) {
             Html::redirect($doc->getLinkURL());
         }
-    } else if ($newID = $doc->add($_POST)) {
+    } else if (HandlerSubmitForm::add($doc, 'control_queue_documents')) {
         Event::log(
             $newID,
             "documents",
@@ -128,7 +129,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $doc->check($_POST["id"], UPDATE);
 
-    if ($doc->update($_POST)) {
+    if (HandlerSubmitForm::update($doc, 'doc_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "documents",

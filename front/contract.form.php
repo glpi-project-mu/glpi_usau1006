@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("contract", READ);
 
@@ -52,7 +53,9 @@ $contract         = new Contract();
 if (isset($_POST["add"])) {
     $contract->check(-1, CREATE, $_POST);
 
-    if ($newID = $contract->add($_POST)) {
+    $newID = HandlerSubmitForm::add($contract, 'control_queue_contracts');    
+
+    if ($newID) {
         Event::log(
             $newID,
             "contracts",
@@ -110,7 +113,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $contract->check($_POST['id'], UPDATE);
 
-    if ($contract->update($_POST)) {
+    if (HandlerSubmitForm::update($contract, 'contract_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "contracts",

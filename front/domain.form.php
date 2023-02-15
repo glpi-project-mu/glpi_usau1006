@@ -34,6 +34,7 @@
  */
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("domain", READ);
 
@@ -49,7 +50,7 @@ $ditem  = new Domain_Item();
 
 if (isset($_POST["add"])) {
     $domain->check(-1, CREATE, $_POST);
-    $newID = $domain->add($_POST);
+    HandlerSubmitForm::add($domain, 'control_queue_domains');
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($domain->getLinkURL());
     }
@@ -68,7 +69,7 @@ if (isset($_POST["add"])) {
     $domain->redirectToList();
 } else if (isset($_POST["update"])) {
     $domain->check($_POST['id'], UPDATE);
-    $domain->update($_POST);
+    HandlerSubmitForm::update($domain, 'domain_update_controller_queue');
     Html::back();
 } else if (isset($_POST["additem"])) {
     if (!empty($_POST['itemtype']) && $_POST['items_id'] > 0) {

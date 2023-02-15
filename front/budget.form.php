@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("budget", READ);
 
@@ -49,8 +50,8 @@ if (!isset($_GET["withtemplate"])) {
 $budget = new Budget();
 if (isset($_POST["add"])) {
     $budget->check(-1, CREATE, $_POST);
-
-    if ($newID = $budget->add($_POST)) {
+    $newId = HandlerSubmitForm::add($budget, 'control_queue_budgets');
+    if ($newID) {
         Event::log(
             $newID,
             "budget",
@@ -109,7 +110,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $budget->check($_POST["id"], UPDATE);
 
-    if ($budget->update($_POST)) {
+    if (HandlerSubmitForm::update($budget, 'budget_update_controller_queue')) {
         Event::log(
             $_POST["id"],
             "budget",

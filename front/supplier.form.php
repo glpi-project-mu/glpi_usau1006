@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkRight("contact_enterprise", READ);
 
@@ -49,7 +50,9 @@ $ent = new Supplier();
 if (isset($_POST["add"])) {
     $ent->check(-1, CREATE, $_POST);
 
-    if ($newID = $ent->add($_POST)) {
+    $newID = HandlerSubmitForm::add($ent, 'control_queue_suppliers');
+
+    if ($newID) {
         Event::log(
             $newID,
             "suppliers",
@@ -102,7 +105,7 @@ if (isset($_POST["add"])) {
     $ent->redirectToList();
 } else if (isset($_POST["update"])) {
     $ent->check($_POST["id"], UPDATE);
-    $ent->update($_POST);
+    HandlerSubmitForm::update($ent, 'ent_update_controller_queue');
     Event::log(
         $_POST["id"],
         "suppliers",

@@ -36,7 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
-
+include('../src/Toolbox/HandlerSubmitForm.php');
 Session::checkRight("certificate", READ);
 
 if (empty($_GET["id"])) {
@@ -51,7 +51,9 @@ $certificate = new Certificate();
 if (isset($_POST["add"])) {
     $certificate->check(-1, CREATE, $_POST);
 
-    if ($newID = $certificate->add($_POST)) {
+    $newID = HandlerSubmitForm::add($certificate, 'control_queue_certificates');
+
+    if ($newID) {
         Event::log(
             $newID,
             "certificates",
@@ -110,7 +112,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $certificate->check($_POST["id"], UPDATE);
 
-    $certificate->update($_POST);
+    HandlerSubmitForm::update($certificate, 'cert_update_controller_queue');
     Event::log(
         $_POST["id"],
         "certificates",
