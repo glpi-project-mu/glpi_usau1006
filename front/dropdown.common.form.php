@@ -39,6 +39,7 @@
  */
 
 use Glpi\Event;
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (!($dropdown instanceof CommonDropdown)) {
     Html::displayErrorAndDie('');
@@ -59,7 +60,8 @@ if (isset($_POST["id"])) {
 if (isset($_POST["add"])) {
     $dropdown->check(-1, CREATE, $_POST);
 
-    if ($newID = $dropdown->add($_POST)) {
+    $newID = HandlerSubmitForm::add($dropdown, 'control_queue_dropdown');
+    if ($newID) {
         if ($dropdown instanceof CommonDevice) {
             Event::log(
                 $newID,
@@ -133,7 +135,7 @@ if (isset($_POST["add"])) {
     $dropdown->redirectToList();
 } else if (isset($_POST["update"])) {
     $dropdown->check($_POST["id"], UPDATE);
-    $dropdown->update($_POST);
+    HandlerSubmitForm::update($dropdown, 'dropdown_update_controller_queue');
 
     Event::log(
         $_POST["id"],

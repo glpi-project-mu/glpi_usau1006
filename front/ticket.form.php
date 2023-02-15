@@ -35,7 +35,9 @@
 
 use Glpi\Event;
 
+
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 Session::checkLoginUser();
 $track = new Ticket();
@@ -71,7 +73,9 @@ if (isset($_UPOST['_actors'])) {
 if (isset($_POST["add"])) {
     $track->check(-1, CREATE, $_POST);
 
-    if ($track->add($_POST)) {
+    $newID = HandlerSubmitForm::add($track, 'control_queue_tickets'); 
+
+    if ($newID) {
         if ($_SESSION['glpibackcreated']) {
             Html::redirect($track->getLinkURL());
         }
@@ -81,7 +85,7 @@ if (isset($_POST["add"])) {
     if (!$track::canUpdate()) {
         Html::displayRightError();
     }
-    $track->update($_POST);
+    HandlerSubmitForm::update($track, 'ticket_update_controller_queue');
 
     if (isset($_POST['kb_linked_id'])) {
        //if solution should be linked to selected KB entry

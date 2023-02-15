@@ -36,6 +36,7 @@
 use Glpi\Event;
 
 include('../inc/includes.php');
+include('../src/Toolbox/HandlerSubmitForm.php');
 
 if (empty($_GET["id"])) {
     $_GET["id"] = '';
@@ -53,15 +54,18 @@ $change = new Change();
 if (isset($_POST["add"])) {
     $change->check(-1, CREATE, $_POST);
 
-    $newID = $change->add($_POST);
-    Event::log(
-        $newID,
-        "change",
-        4,
-        "maintain",
-        //TRANS: %1$s is the user login, %2$s is the name of the item
-        sprintf(__('%1$s adds the item %2$s'), $_SESSION["glpiname"], $_POST["name"])
-    );
+    $newID = HandlerSubmitForm::add($change, 'control_queue_changes'); 
+    if($newId){
+        Event::log(
+            $newID,
+            "change",
+            4,
+            "maintain",
+            //TRANS: %1$s is the user login, %2$s is the name of the item
+            sprintf(__('%1$s adds the item %2$s'), $_SESSION["glpiname"], $_POST["name"])
+        );
+    }
+    
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($change->getLinkURL());
     } else {
@@ -109,16 +113,17 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
     $change->check($_POST["id"], UPDATE);
 
-    $change->update($_POST);
-    Event::log(
-        $_POST["id"],
-        "change",
-        4,
-        "maintain",
-        //TRANS: %s is the user login
-        sprintf(__('%s updates an item'), $_SESSION["glpiname"])
-    );
-
+    if(HandlerSubmitForm::update($change,'change_update_controller_queue')){
+        Event::log(
+            $_POST["id"],
+            "change",
+            4,
+            "maintain",
+            //TRANS: %s is the user login
+            sprintf(__('%s updates an item'), $_SESSION["glpiname"])
+        );
+    }
+    
     Html::back();
 } else if (isset($_POST['addme_observer'])) {
     $change->check($_POST['changes_id'], READ);
