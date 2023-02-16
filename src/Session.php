@@ -95,6 +95,17 @@ class Session
             self::start();
             $_SESSION = $save;
             $_SESSION['valid_id'] = session_id();
+
+            // Define time control for report dynamic
+            date_default_timezone_set("America/Lima");
+            $_SESSION['n_reports_generated'] = 0;
+            $_SESSION['total_reports_generated'] = 0;
+            $_SESSION['until_waited_datetime'] = date("Y-m-d H:i:s");
+            // Define time control for stadistics
+            $_SESSION['n_graphreports_generated'] = 0;
+            $_SESSION['total_graphreports_generated'] = 0;
+            $_SESSION['until_waited_datetime_graph'] = date("Y-m-d H:i:s");
+
            // Define default time :
             $_SESSION["glpi_currenttime"] = date("Y-m-d H:i:s");
 

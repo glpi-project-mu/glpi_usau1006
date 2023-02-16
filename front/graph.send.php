@@ -53,6 +53,34 @@ if (!is_a($statdata_itemtype, StatData::class, true)) {
 
 // Get data and output csv
 $graph_data = new $statdata_itemtype($_GET);
-CsvResponse::output(
-    new StatCsvExport($graph_data->getSeries(), $graph_data->getOptions())
-);
+date_default_timezone_set("America/Lima");
+$current_time = date("Y-m-d H:i:s"); 
+
+if($_SESSION['n_graphreports_generated'] == 10){
+    $_SESSION['n_graphreports_generated'] = 0;    
+    $_SESSION['until_waited_datetime_graph'] = date("H:i:s", strtotime($current_time.' +180 seconds')); 
+}
+
+if($_SESSION['total_graphreports_generated'] == 20){
+    $_SESSION['total_graphreports_generated'] = 0;
+    Session::cleanOnLogout();
+    Session::redirectIfNotLoggedIn();
+    exit();
+}
+
+if(strtotime(date("Y-m-d H:i:s")) < strtotime($_SESSION['until_waited_datetime_graph'])){
+    $dateObject = new DateTime($_SESSION['until_waited_datetime_graph']);
+    $msg_redirect = "Generaste/Descargaste muchos reportes, espera hasta las ".$dateObject->format('h:i:s A')." para volver a intentarlo.";
+
+    Session::addMessageAfterRedirect($msg_redirect,false,INFO,true);
+    Session::addMessageAfterRedirect('10 generaciones de reportes más y se cerrará la sesión.',false,WARNING,false);
+    Html::back();
+}else{
+    $_SESSION['n_graphreports_generated'] =  $_SESSION['n_graphreports_generated'] + 1;
+    $_SESSION['total_graphreports_generated'] =  $_SESSION['total_graphreports_generated'] + 1;
+
+    CsvResponse::output(
+        new StatCsvExport($graph_data->getSeries(), $graph_data->getOptions())
+    );
+}
+
