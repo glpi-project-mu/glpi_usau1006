@@ -1222,7 +1222,7 @@ class Search
                         }
                     }
                 } else if (
-                    isset($meta_searchopt[$criterion['field']]["usehaving"])
+                    ( isset($criterion['field']) && isset($meta_searchopt[$criterion['field']]["usehaving"]))
                        || ($meta && "AND NOT" === $criterion['link'])
                 ) {
                     if (!$is_having) {
@@ -1247,18 +1247,21 @@ class Search
                         continue;
                     }
 
-                    $new_where = self::addWhere(
-                        $LINK,
-                        $NOT,
-                        $itemtype,
-                        $criterion['field'],
-                        $criterion['searchtype'],
-                        $criterion['value'],
-                        $meta
-                    );
-                    if ($new_where !== false) {
-                        $sql .= $new_where;
+                    if(isset($criterion['field'])){
+                        $new_where = self::addWhere(
+                            $LINK,
+                            $NOT,
+                            $itemtype,
+                            $criterion['field'],
+                            $criterion['searchtype'],
+                            $criterion['value'],
+                            $meta
+                        );
+                        if ($new_where !== false) {
+                            $sql .= $new_where;
+                        }
                     }
+                   
                 }
             } else if (
                 isset($criterion['value'])
