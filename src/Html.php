@@ -3850,17 +3850,17 @@ JS;
                // inline toolbar configuration
                menubar: false,
                toolbar: richtext_layout == 'classic'
-                  ? 'styles | bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link image | code fullscreen'
+                  ? 'bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link | fullscreen'
                   : false,
                quickbars_insert_toolbar: richtext_layout == 'inline'
                   ? 'emoticons quicktable quickimage quicklink | bullist numlist | outdent indent '
                   : false,
                quickbars_selection_toolbar: richtext_layout == 'inline'
-                  ? 'bold italic | styles | forecolor backcolor '
+                  ? 'bold italic | forecolor backcolor '
                   : false,
                contextmenu: richtext_layout == 'classic'
                   ? false
-                  : 'copy paste | emoticons table image link | undo redo | code fullscreen',
+                  : 'copy paste | emoticons table link | undo redo | fullscreen',
 
                // Content settings
                entity_encoding: 'raw',
