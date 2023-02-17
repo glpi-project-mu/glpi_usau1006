@@ -1706,8 +1706,8 @@ class Problem extends CommonITILObject
             array_push($selector_fields_outrange,'is_recursive solo puede ser 0 o 1');
         }
 
-        $timeunixDate = strtotime($input['begin_date']);
-        $timeunixTTR = strtotime($input['end_date']);
+        $timeunixDate = strtotime($input['date']);
+        $timeunixTTR = strtotime($input['time_to_resolve']);
 
         if( $timeunixDate !== false && $timeunixTTR !== false){
 

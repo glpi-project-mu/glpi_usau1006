@@ -7018,7 +7018,7 @@ JAVASCRIPT;
         'impact' => 'number',		
         'priority' => 'number',		
         //'locations_id' => 'number',		
-        '_contracts_id' => 'number',		
+        //'_contracts_id' => 'number',		
         'actiontime' => 'number',		
         'validatortype' => 'string',		
         '_add_validation' => 'number',	
@@ -7029,20 +7029,33 @@ JAVASCRIPT;
         'my_items' => '',		
         'itemtype' => 'string',		
         'items_id' => 'number',		
-        'time_to_own' => '',		
+        //'time_to_own' => '',		
         'slas_id_tto' => 'number',		
-        'time_to_resolve' => '',		
+        //'time_to_resolve' => '',		
         'slas_id_ttr' => 'number',		
-        'internal_time_to_own' => '',		
+        //'internal_time_to_own' => '',		
         'olas_id_tto' => 'number',		
-        'internal_time_to_resolve' => '',		
+        //'internal_time_to_resolve' => '',		
         'olas_id_ttr' => 'number'
         ];
 
-
+        
         foreach($fields_necessary as $key => $value){
             
-            if(!isset($input[$key])){
+            if(!array_key_exists($key,$input)){
+
+                /*Toolbox::logInFile(
+                    'content_post',
+                    sprintf(
+                        __('%1$s: %2$s'),
+                        basename(__FILE__,'.php'),
+                        sprintf(
+                            __('INPUT: %s') . "\n",
+                            var_export($input,true)
+                        )
+                    )
+                );*/
+
                 array_push($mandatory_missing, $key);
                 break;       
             }else{
