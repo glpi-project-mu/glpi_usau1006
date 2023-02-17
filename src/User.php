@@ -36,6 +36,7 @@
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\Exception\ForgetPasswordException;
 use Glpi\Plugin\Hooks;
+use Glpi\Toolbox\ControlRangeDates;
 use Glpi\Toolbox\Sanitizer;
 use Sabre\VObject;
 
@@ -2541,19 +2542,27 @@ HTML;
 
         if (!GLPI_DEMO_MODE) {
             $sincerand = mt_rand();
+            $untilrand = mt_rand();
             echo "<tr class='tab_bg_1'>";
             echo "<td><label for='showdate$sincerand'>" . __('Valid since') . "</label></td><td>";
             Html::showDateTimeField("begin_date", ['value'       => $this->fields["begin_date"],
                 'rand'        => $sincerand,
-                'maybeempty'  => true
+                //'maybeempty'  => true,
+                'max' => '2099-12-31',
+                'min' => '1990-01-01',
+                'required' => 'true',
+                'on_change' => ControlRangeDates::controlEndDateMinValue($untilrand)      
             ]);
             echo "</td>";
 
-            $untilrand = mt_rand();
+            
             echo "<td><label for='showdate$untilrand'>" . __('Valid until') . "</label></td><td>";
             Html::showDateTimeField("end_date", ['value'       => $this->fields["end_date"],
                 'rand'        => $untilrand,
-                'maybeempty'  => true
+                //'maybeempty'  => true,
+                'max' => '2099-12-31',
+                'min' => '1990-01-01',
+                'on_change' => ControlRangeDates::controlBeginDateMaxValue($sincerand)
             ]);
             echo "</td></tr>";
         }
@@ -2566,6 +2575,8 @@ HTML;
             [
                 'value' => $this->fields['phone'],
                 'id'    => "textfield_phone$phonerand",
+                'maxlength' => 9,
+                'onkeypress'=>'return event.charCode >= 48 && event.charCode <= 57'
             ]
         );
         echo "</td>";
@@ -2608,6 +2619,8 @@ HTML;
             [
                 'value' => $this->fields['mobile'],
                 'id'    => "textfield_mobile$mobilerand",
+                'maxlength' => 9,
+                'onkeypress'=>'return event.charCode >= 48 && event.charCode <= 57'
             ]
         );
         echo "</td>";
@@ -2624,6 +2637,8 @@ HTML;
             [
                 'value' => $this->fields['phone2'],
                 'id'    => "textfield_phone2$phone2rand",
+                'maxlength' => 9,
+                'onkeypress'=>'return event.charCode >= 48 && event.charCode <= 57'
             ]
         );
         echo "</td>";
@@ -2639,6 +2654,8 @@ HTML;
             [
                 'value' => $this->fields['registration_number'],
                 'id'    => "textfield_registration_number$admnumrand",
+                'maxlength' => 12,
+                'onkeypress'=>'return event.charCode >= 48 && event.charCode <= 57'
             ]
         );
         echo "</td></tr>";

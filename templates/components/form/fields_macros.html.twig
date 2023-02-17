@@ -87,6 +87,8 @@
 
 {% macro textField(name, value, label = '', options = {}) %}
    {% set options = {'type': 'text'}|merge(options) %}
+   {% set options = {'onkeypress': ''}|merge(options) %}
+   {% set options = {'placeholder': ''}|merge(options) %}
    {% if options.fields_template.isMandatoryField(name) %}
       {% set options = {'required': true}|merge(options) %}
    {% endif %}
@@ -95,6 +97,8 @@
       <input type="{{ options.type }}" id="%id%"
              class="form-control {{ options.input_addclass }}"
              name="{{ name }}" value="{{ value|verbatim_value }}"
+             onkeypress= "{{options.onkeypress}}"
+             placeholder= "{{options.placeholder}}"
              {{ options.maxlength ? 'maxlength=' ~ options.maxlength : '' }}
              {{ options.readonly ? 'readonly' : '' }}
              {{ options.disabled ? 'disabled' : '' }}
@@ -168,7 +172,7 @@
    {% endif %}
 
    {% set field %}
-      <input type="number" id="%id%"
+      <input type="number" id="%id%" step='any'
              class="form-control {{ options.input_addclass }}"
              name="{{ name }}" value="{{ value }}"
          {{ options.readonly ? 'readonly' : '' }}
@@ -176,7 +180,9 @@
          {{ options.required ? 'required' : '' }}
          {% if options.min is defined %}min="{{ options.min }}"{% endif %}
          {% if options.max is defined %}max="{{ options.max }}"{% endif %}
-         {% if options.step is defined %}step="{{ options.step }}"{% endif %} />
+         {% if options.step is defined %}step="{{ options.step }}"{% endif %}
+         {% if options.maxlength is defined %}maxlength="{{ options.maxlength }}"{% endif %}
+         {% if options.oninput is defined %}oninput="{{ options.oninput }}"{% endif %} />
    {% endset %}
    {{ _self.field(name, field, label, options) }}
 {% endmacro %}
@@ -327,6 +333,8 @@
             dateFormat: 'Y-m-d',
             enableTime: false,
             weekNumbers: true,
+            minDate: '1990-01-01',
+            maxDate: '2099-12-31',
             allowInput: {{ options.readonly ? 'false' : 'true' }},
             clickOpens: {{ options.readonly ? 'false' : 'true' }},
             locale: getFlatPickerLocale("{{ locale['language'] }}", "{{ locale['region'] }}"),
@@ -347,6 +355,7 @@
 {% macro datetimeField(name, value, label = '', options = {}) %}
    {% set options = {'rand': random()}|merge(options) %}
    {% set options = {'id': name|slug ~ '_' ~ options.rand}|merge(options) %}
+   {% set options = {'on_change':''}|merge(options) %}
    {% set locale = get_current_locale() %}
 
    {% set field %}
@@ -361,9 +370,14 @@
             wrap: true,
             enableSeconds: true,
             weekNumbers: true,
+            minDate: '1990-01-01',
+            maxDate: '2099-12-31',
             allowInput: {{ options.readonly ? 'false' : 'true' }},
             clickOpens: {{ options.readonly ? 'false' : 'true' }},
             locale: getFlatPickerLocale('{{ locale['language'] }}', '{{ locale['region'] }}'),
+             onChange: function(selectedDates, dateStr, instance) {
+               {{ options.on_change|raw }}
+            },
             onClose(dates, currentdatestring, picker) {
                picker.setDate(picker.altInput.value, true, picker.config.altFormat)
             },

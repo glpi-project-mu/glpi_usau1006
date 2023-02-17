@@ -36,6 +36,7 @@
 use Glpi\CalDAV\Contracts\CalDAVCompatibleItemInterface;
 use Glpi\CalDAV\Traits\VobjectConverterTrait;
 use Glpi\RichText\RichText;
+use Glpi\Toolbox\ControlRangeDates;
 use Sabre\VObject\Component\VCalendar;
 use Sabre\VObject\Component\VTodo;
 
@@ -637,13 +638,21 @@ class Reminder extends CommonDBVisible implements
             echo "<tr class='tab_bg_2'>";
             echo "<td>" . __('Visibility') . "</td>";
             echo "<td colspan='2'>";
+
+            //DATEFIELDS IDs
+            $randBeginId = mt_rand();
+            $randEndId = mt_rand();
             echo '<table><tr><td>';
             echo __('Begin') . '</td><td>';
             Html::showDateTimeField(
                 "begin_view_date",
                 ['value'      => $this->fields["begin_view_date"],
-                    'maybeempty' => true,
-                    'canedit'    => $canedit
+                    'canedit'    => $canedit,
+                    'max' => '2099-12-31',
+                    'min' => '1990-01-01',
+                    'rand' => $randBeginId,
+                    'required' => 'true',
+                    'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)                
                 ]
             );
             echo '</td><td>' . __('End') . '</td><td>';
@@ -651,7 +660,11 @@ class Reminder extends CommonDBVisible implements
                 "end_view_date",
                 ['value'      => $this->fields["end_view_date"],
                     'maybeempty' => true,
-                    'canedit'    => $canedit
+                    'canedit'    => $canedit,
+                    'max' => '2099-12-31',
+                    'min' => '1990-01-01',
+                    'rand' => $randEndId,
+                    'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
                 ]
             );
             echo '</td></tr></table>';

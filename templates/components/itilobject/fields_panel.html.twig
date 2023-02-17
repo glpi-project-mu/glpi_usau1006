@@ -98,20 +98,60 @@
                {% endif %}
             {% endif %}
 
-            {{ fields.datetimeField(
-               'date',
-               item.fields['date'],
-               __('Opening date'),
-               field_options
-            ) }}
+
+            {% set opDateRandValue = random() %}
+            {% set ttrDateRandValue = random() %}
+
+            {% set field_options_opDate = {'rand': "%02d"|format(opDateRandValue),
+            'on_change':"
+               const fpTimeToResolve = document.querySelector('#time-to-resolve_%02d')._flatpickr
+               const newLimitMinDate = new Date(dateStr);
+               newLimitMinDate.setDate(newLimitMinDate.getDate() + 1);
+               fpTimeToResolve.config.minDate = newLimitMinDate;
+            "|format(ttrDateRandValue),
+            'full_width': true,
+            'fields_template': itiltemplate,
+            'disabled': (not canupdate),
+            'add_field_class': (is_expanded ? 'col-sm-6' : '')
+            } %}
+
+            {% set field_options_ttrDate = {'rand': "%02d"|format(ttrDateRandValue),
+            'on_change':"
+               const fpDate = document.querySelector('#date_%02d')._flatpickr
+               const newLimitMaxDate = new Date(dateStr);
+               fpDate.config.maxDate = newLimitMaxDate;
+            "|format(opDateRandValue),
+            'full_width': true,
+            'fields_template': itiltemplate,
+            'disabled': (not canupdate),
+            'add_field_class': (is_expanded ? 'col-sm-6' : '')
+            } %}
 
             {% if item.getType() != 'Ticket' %}
+               
+               {{ fields.datetimeField(
+                  'date',
+                  item.fields['date'],
+                  __('Opening date'),
+                  field_options_opDate
+               ) }}
+
                {{ fields.datetimeField(
                   'time_to_resolve',
                   item.fields['time_to_resolve'],
                   __('Time to resolve'),
+                  field_options_ttrDate
+               ) }}
+            
+            {% else %}
+
+               {{ fields.datetimeField(
+                  'date',
+                  item.fields['date'],
+                  __('Opening date'),
                   field_options
                ) }}
+
             {% endif %}
 
             {% if item.isSolved(true) %}

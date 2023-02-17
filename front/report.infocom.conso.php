@@ -1,4 +1,5 @@
 <?php
+use Glpi\Toolbox\ControlRangeDates;
 
 /**
  * ---------------------------------------------------------------------
@@ -64,15 +65,33 @@ $chart_opts =  [
 
 Report::title();
 
+//DATEFIELDS IDs
+$randBeginId = mt_rand();
+$randEndId = mt_rand();
+
 echo "\n<form method='post' name='form' action='" . $_SERVER['PHP_SELF'] . "'>";
 echo "<table class='tab_cadre'><tr class='tab_bg_2'>";
 echo "<td class='right'>" . __('Start date') . "</td><td>";
-Html::showDateField("date1", ['value' => $_POST["date1"]]);
+Html::showDateField("date1", [
+    'value' => $_POST["date1"],
+    'max' => '2099-12-31',
+    'min' => '1990-01-01',
+    'rand' => $randBeginId,
+    'required' => 'true',
+    'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
+]);
 echo "</td><td rowspan='2' class='center'>";
 echo "<input type='submit' class='btn btn-primary' name='submit' value=\"" . __s('Display report') . "\"></td>" .
      "</tr>\n";
 echo "<tr class='tab_bg_2'><td class='right'>" . __('End date') . "</td><td>";
-Html::showDateField("date2", ['value' => $_POST["date2"]]);
+Html::showDateField("date2", [
+    'value' => $_POST["date2"],
+    'max' => '2099-12-31',
+    'min' => '1990-01-01',
+    'rand' => $randEndId,
+    'required' => 'true',
+    'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
+]);
 echo "</td></tr>";
 echo "</table>\n";
 Html::closeForm();

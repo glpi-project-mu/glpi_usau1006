@@ -38,6 +38,7 @@ use Glpi\Plugin\Hooks;
 use Glpi\RichText\RichText;
 use Glpi\Team\Team;
 use Glpi\Toolbox\Sanitizer;
+use Glpi\Toolbox\ControlRangeDates;
 
 /**
  * Project Class
@@ -49,7 +50,6 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
     use Glpi\Features\Kanban;
     use Glpi\Features\Clonable;
     use Glpi\Features\Teamwork;
-
    // From CommonDBTM
     public $dohistory                   = true;
     protected static $forward_entity_to = ['ProjectCost', 'ProjectTask'];
@@ -1683,24 +1683,59 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
 
         echo "<tr><td colspan='4' class='subheader'>" . __('Planning') . "</td></tr>";
 
+        //DATEFIELDS IDs
+        $randBeginId = mt_rand();
+        $randEndId = mt_rand();
+
+        $randRealBeginId = mt_rand();
+        $randRealEndId = mt_rand();
+
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Planned start date') . "</td>";
         echo "<td>";
-        Html::showDateTimeField("plan_start_date", ['value' => $this->fields['plan_start_date']]);
+        Html::showDateTimeField("plan_start_date", [
+            'value' => $this->fields['plan_start_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randBeginId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
+        ]);
         echo "</td>";
         echo "<td>" . __('Real start date') . "</td>";
         echo "<td>";
-        Html::showDateTimeField("real_start_date", ['value' => $this->fields['real_start_date']]);
+        Html::showDateTimeField("real_start_date", [
+            'value' => $this->fields['real_start_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randRealBeginId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlEndDateMinValue($randRealEndId)
+        ]);
         echo "</td></tr>\n";
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Planned end date') . "</td>";
         echo "<td>";
-        Html::showDateTimeField("plan_end_date", ['value' => $this->fields['plan_end_date']]);
+        Html::showDateTimeField("plan_end_date", [
+            'value' => $this->fields['plan_end_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randEndId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
+        ]);
         echo "</td>";
         echo "<td>" . __('Real end date') . "</td>";
         echo "<td>";
-        Html::showDateTimeField("real_end_date", ['value' => $this->fields['real_end_date']]);
+        Html::showDateTimeField("real_end_date", [
+            'value' => $this->fields['real_end_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randRealEndId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlBeginDateMaxValue($randRealBeginId)
+        ]);
         echo "</td></tr>\n";
 
         echo "<tr class='tab_bg_1'>";

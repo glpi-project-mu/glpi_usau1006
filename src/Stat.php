@@ -34,6 +34,7 @@
  */
 
 use Glpi\Stat\StatData;
+use Glpi\Toolbox\ControlRangeDates;
 
 /**
  *  Stat class
@@ -2107,11 +2108,19 @@ class Stat extends CommonGLPI
 
         $out .= "<table class='tab_cadre'>";
         $out .= "<tr class='tab_bg_2'><td class='right'>" . __('Start date') . "</td><td>";
+        //DATEFIELDS IDs
+        $randBeginId = mt_rand();
+        $randEndId = mt_rand();
+ 
         $out .= Html::showDateField(
             'date1',
             [
                 'value'   => $date1,
-                'display' => false
+                'display' => false,
+                'max' => '2099-12-31',
+                'min' => '1990-01-01',
+                'rand' => $randBeginId,
+                'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
             ]
         );
         $out .= "</td><td rowspan='2' class='center'>";
@@ -2122,7 +2131,11 @@ class Stat extends CommonGLPI
             'date2',
             [
                 'value'   => $date2,
-                'display' => false
+                'display' => false,
+                'max' => '2099-12-31',
+                'min' => '1990-01-01',
+                'rand' => $randEndId,
+                'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
             ]
         );
         $out .= "</td></tr>";

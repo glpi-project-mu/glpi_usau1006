@@ -32,7 +32,7 @@
  *
  * ---------------------------------------------------------------------
  */
-
+use Glpi\Toolbox\ControlRangeDates;
 /**
  * Budget class
  */
@@ -144,7 +144,8 @@ class Budget extends CommonDropdown
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . _x('price', 'Value') . "</td>";
-        echo "<td><input type='text' name='value' size='14'
+        echo "<td><input type='number' name='value' size='14' min='1' max='999999' step='any' maxlength='9'
+                 oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)'
                  value='" . Html::formatNumber($this->fields["value"], true) . "' class='form-control'></td>";
 
                  echo "<td rowspan='$rowspan' class='middle right'>" . __('Comments') . "</td>";
@@ -155,13 +156,29 @@ class Budget extends CommonDropdown
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Start date') . "</td>";
         echo "<td>";
-        Html::showDateField("begin_date", ['value' => $this->fields["begin_date"]]);
+        //DATEFIELDS IDs
+        $randBeginId = mt_rand();
+        $randEndId = mt_rand();
+        Html::showDateField("begin_date", [
+            'value' => $this->fields["begin_date"],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randBeginId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
+        ]);
         echo "</td></tr>";
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('End date') . "</td>";
         echo "<td>";
-        Html::showDateField("end_date", ['value' => $this->fields["end_date"]]);
+        Html::showDateField("end_date", [
+            'value' => $this->fields["end_date"],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randEndId,
+            'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
+        ]);
         echo "</td></tr>";
 
         echo "<tr class='tab_bg_1'>";

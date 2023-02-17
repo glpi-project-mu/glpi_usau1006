@@ -222,7 +222,11 @@ class Report extends CommonGLPI
             }
 
             $result = $DB->request($criteria)->current();
-            $number = (int)$result['cpt'];
+            $number = 0;
+            if(isset($result['cpt'])){
+                $number = (int)$result['cpt'];
+            }
+
 
             echo "<tr class='tab_bg_2'><td>" . $itemtype::getTypeName(Session::getPluralNumber()) . "</td>";
             echo "<td class='numeric'>$number</td></tr>";

@@ -40,7 +40,11 @@
       'num',
       item,
       _x('phone', 'Number'),
-      withtemplate
+      withtemplate,
+      {
+         'maxlength': 12,
+         'onkeypress':'return event.charCode >= 48 && event.charCode <= 57'
+      }
    ) }}
 
    {% if item.fields['begin_date'] is not empty and item.fields['duration'] is not empty %}
@@ -89,7 +93,11 @@
       'accounting_number',
       item,
       __('Account number'),
-      withtemplate
+      withtemplate,
+      {
+         'maxlength': 12,
+         'onkeypress':'return event.charCode >= 48 && event.charCode <= 57',
+      }
    ) }}
 
    {{ fields.dropdownNumberField('periodicity', item.fields['periodicity'], __('Contract renewal period'), {

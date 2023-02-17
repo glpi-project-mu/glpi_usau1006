@@ -38,6 +38,7 @@ use Glpi\Stat\Data\Location\StatDataLate;
 use Glpi\Stat\Data\Location\StatDataOpened;
 use Glpi\Stat\Data\Location\StatDataOpenSatisfaction;
 use Glpi\Stat\Data\Location\StatDataSolved;
+use Glpi\Toolbox\ControlRangeDates;
 
 include('../inc/includes.php');
 
@@ -138,8 +139,17 @@ echo "<table class='tab_cadre_fixe'>";
 echo "<tr class='tab_bg_2'><td rowspan='2' class='center' width='30%'>";
 Dropdown::showFromArray('type', $values, ['value' => $_GET['type']]);
 echo "</td>";
+//DATEFIELDS IDs
+$randBeginId = mt_rand();
+$randEndId = mt_rand();
 echo "<td class='right'>" . __('Start date') . "</td><td>";
-Html::showDateField("date1", ['value' => $_GET["date1"]]);
+Html::showDateField("date1", [
+    'value' => $_GET["date1"],
+    'max' => '2099-12-31',
+    'min' => '1990-01-01',
+    'rand' => $randBeginId,
+    'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
+]);
 echo "</td>";
 echo "<td class='right'>" . __('Show graphics') . "</td>";
 echo "<td rowspan='2' class='center'>";
@@ -147,7 +157,13 @@ echo "<input type='submit' class='btn btn-primary' name='submit' value=\"" . __s
      "</tr>";
 
 echo "<tr class='tab_bg_2'><td class='right'>" . __('End date') . "</td><td>";
-Html::showDateField("date2", ['value' => $_GET["date2"]]);
+Html::showDateField("date2", [
+    'value' => $_GET["date2"],
+    'max' => '2099-12-31',
+    'min' => '1990-01-01',
+    'rand' => $randEndId,
+    'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
+]);
 echo "</td><td class='center'>";
 echo "<input type='hidden' name='value2' value='" . $_GET["value2"] . "'>";
 Dropdown::showYesNo('showgraph', $_GET['showgraph']);

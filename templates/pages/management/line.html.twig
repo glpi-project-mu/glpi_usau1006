@@ -40,7 +40,11 @@
       'caller_num',
       item,
       __('Caller number'),
-      withtemplate
+      withtemplate,
+      {
+         'maxlength': 9,
+         'onkeypress':'return event.charCode >= 48 && event.charCode <= 57',
+      }
    ) }}
 
    {{ fields.autoNameField(

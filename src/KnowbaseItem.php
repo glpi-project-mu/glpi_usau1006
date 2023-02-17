@@ -35,6 +35,7 @@
 
 use Glpi\Event;
 use Glpi\RichText\RichText;
+use Glpi\Toolbox\ControlRangeDates;
 use Glpi\Toolbox\Sanitizer;
 
 /**
@@ -1027,17 +1028,29 @@ class KnowbaseItem extends CommonDBVisible implements ExtraVisibilityCriteria
             }
         }
 
+        //DATEFIELDS IDs
+        $randBeginId = mt_rand();
+        $randEndId = mt_rand();
+
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Visible since') . "</td><td>";
         Html::showDateTimeField("begin_date", ['value'       => $this->fields["begin_date"],
-            'maybeempty' => true,
-            'canedit'    => $canedit
+            'canedit'    => $canedit,
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randBeginId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
         ]);
         echo "</td>";
         echo "<td>" . __('Visible until') . "</td><td>";
         Html::showDateTimeField("end_date", ['value'       => $this->fields["end_date"],
             'maybeempty' => true,
-            'canedit'    => $canedit
+            'canedit'    => $canedit,
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randEndId,
+            'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
         ]);
         echo "</td></tr>";
 

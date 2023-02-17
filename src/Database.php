@@ -32,7 +32,6 @@
  *
  * ---------------------------------------------------------------------
  */
-
 /**
  * Database Class
  **/
@@ -115,7 +114,12 @@ class Database extends CommonDBChild
             [
                 'id' => 'size' . $rand,
                 'type' => 'number',
-                'value' => $this->fields['size']
+                'value' => $this->fields['size'],
+                'min' => 1,
+                'max' => 99999,
+                'step' => 'any',
+                'maxlength' => 7,
+                'oninput' =>'if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)'
             ]
         );
         echo "</td></tr>\n";
