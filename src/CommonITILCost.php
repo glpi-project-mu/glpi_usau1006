@@ -1,4 +1,5 @@
 <?php
+use Glpi\Toolbox\ControlRangeDates;
 
 /**
  * ---------------------------------------------------------------------
@@ -429,9 +430,19 @@ abstract class CommonITILCost extends CommonDBChild
 
         echo Html::input('name', ['value' => $this->fields['name']]);
         echo "</td>";
+
+        $randBeginId = mt_rand();
+        $randEndId = mt_rand();
         echo "<td>" . __('Begin date') . "</td>";
         echo "<td>";
-        Html::showDateField("begin_date", ['value' => $this->fields['begin_date']]);
+        Html::showDateField("begin_date", [
+            'value' => $this->fields['begin_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randBeginId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlEndDateMinValue($randEndId)
+        ]);
         echo "</td>";
         echo "</tr>";
 
@@ -444,13 +455,22 @@ abstract class CommonITILCost extends CommonDBChild
         echo "</td>";
         echo "<td>" . __('End date') . "</td>";
         echo "<td>";
-        Html::showDateField("end_date", ['value' => $this->fields['end_date']]);
+        Html::showDateField("end_date", [
+            'value' => $this->fields['end_date'],
+            'max' => '2099-12-31',
+            'min' => '1990-01-01',
+            'rand' => $randEndId,
+            'required' => 'true',
+            'on_change' => ControlRangeDates::controlBeginDateMaxValue($randBeginId)
+        ]);
         echo "</td>";
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Time cost') . "</td><td>";
-        echo "<input type='text' class='form-control' size='15' name='cost_time' value='" .
+        echo "<input type='number' class='form-control' size='15' name='cost_time' 
+            min='1' max='9999' step='any' maxlength='7'
+            oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)' value='" .
              Html::formatNumber($this->fields["cost_time"], true) . "'>";
         echo "</td>";
         $rowspan = 4;
@@ -462,14 +482,18 @@ abstract class CommonITILCost extends CommonDBChild
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Fixed cost') . "</td><td>";
-        echo "<input type='text' class='form-control' size='15' name='cost_fixed' value='" .
+        echo "<input type='number' class='form-control' size='15' name='cost_fixed' 
+            min='1' max='9999' step='any' maxlength='7'
+            oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)' value='" .
              Html::formatNumber($this->fields["cost_fixed"], true) . "'>";
         echo "</td>";
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . __('Material cost') . "</td><td>";
-        echo "<input type='text' class='form-control' size='15' name='cost_material' value='" .
+        echo "<input type='number' class='form-control' size='15' name='cost_material' 
+            min='1' max='9999' step='any' maxlength='7'
+            oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)' value='" .
              Html::formatNumber($this->fields["cost_material"], true) . "'>";
         echo "</td>";
         echo "</tr>";
@@ -484,6 +508,133 @@ abstract class CommonITILCost extends CommonDBChild
         $this->showFormButtons($options);
 
         return true;
+    }
+
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => 'number',
+            'tickets_id' => 'number',
+            'name' => 'string',
+            'begin_date' => '',
+            'end_date' => '',
+            'actiontime' => 'number',
+            'cost_time' => 'number',
+            'cost_fixed' => 'number',
+            'cost_material' => 'number',
+            'comment' => 'string',
+            'budgets_id' => 'number'
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key); 
+            }else{
+                //Si la key existe en $_POST
+
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se enviaron los siguientes campos en la petición. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        $selector_fields_outrange = [];
+        $selector_ids_incorrect = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['tickets_id'] != 0 && Ticket::getById($input['tickets_id']) == false){
+            array_push($selector_ids_incorrect,'tickets_id');
+        }else if($input['budgets_id'] != 0 && Budget::getById($input['budgets_id']) == false){
+            array_push($selector_ids_incorrect,'budgets_id');
+        }
+
+
+        if($input['cost_fixed'] > 9999){
+            array_push($selector_fields_outrange,'cost_fixed sobrepasó el máximo permitido');
+        }else if($input['cost_time'] > 9999){
+            array_push($selector_fields_outrange,'cost_time sobrepasó el máximo permitido');
+        }else if($input['cost_material'] > 9999){
+            array_push($selector_fields_outrange,'cost_material sobrepasó el máximo permitido');
+        }else if($input['actiontime'] > 86400){
+            array_push($selector_fields_outrange,'actiontime sobrepasó el máximo permitido de tiempo');
+        }
+
+        $timeunixDate = strtotime($input['begin_date']);
+        $timeunixTTR = strtotime($input['end_date']);
+
+        if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate > $timeunixTTR){
+                array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
+            }
+        }
+
+
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Los siguientes campos de selección fueron enviados con valores inconsistentes. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
     }
 
 
