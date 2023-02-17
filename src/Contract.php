@@ -1867,6 +1867,7 @@ class Contract extends CommonDBTM
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -1879,13 +1880,13 @@ class Contract extends CommonDBTM
         }
 
         if($input['duration'] > 120){
-            array_push($selector_ids_incorrect,'duration fuera de rango');
+            array_push($selector_fields_outrange,'duration fuera de rango');
         }else if($input['notice'] > 120){
-            array_push($selector_ids_incorrect,'notice fuera de rango');
+            array_push($selector_fields_outrange,'notice fuera de rango');
         }else if($input['periodicity'] > 60){
-            array_push($selector_ids_incorrect,'periodicity fuera de rango');
+            array_push($selector_fields_outrange,'periodicity fuera de rango');
         }else if($input['renewal'] > 2 || $input['renewal'] < 0 ){
-            array_push($selector_ids_incorrect,'renewal fuera de rango');
+            array_push($selector_fields_outrange,'renewal fuera de rango');
         }
 
        
@@ -1898,7 +1899,15 @@ class Contract extends CommonDBTM
             Session::addMessageAfterRedirect($message, false, ERROR);
         }
 
-        if(count($selector_ids_incorrect)){
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
             return false;
         }
         else{

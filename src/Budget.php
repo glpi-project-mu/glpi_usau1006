@@ -979,8 +979,8 @@ class Budget extends CommonDropdown
 
     public function checkAppliedBusinessRules(array &$input):bool{
         $selector_fields_outrange = [];
-        if($input['value'] > 99999999999){
-            array_push($selector_fields_outrange,'value');
+        if($input['value'] > 999999999){
+            array_push($selector_fields_outrange,'value sobrepasó el máximo permitido');
         }
 
         $timeunixDate = strtotime($input['begin_date']);
@@ -989,7 +989,7 @@ class Budget extends CommonDropdown
         if( $timeunixDate !== false && $timeunixTTR !== false){
 
             if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'DATE mayor a TimeToResolve');
+                array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
             }
         }
 

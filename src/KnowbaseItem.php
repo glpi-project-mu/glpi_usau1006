@@ -2551,7 +2551,7 @@ class KnowbaseItem extends CommonDBVisible implements ExtraVisibilityCriteria
         if( $timeunixDate !== false && $timeunixTTR !== false){
 
             if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'V. Since mayor a V. Until');
+                array_push($selector_fields_outrange,"'Visible Since' no debe ser mayor a 'Visible Until'");
             }
         }
 

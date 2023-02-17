@@ -6636,7 +6636,7 @@ HTML;
         if( $timeunixDate !== false && $timeunixTTR !== false){
 
             if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'ValidSince mayor a ValidUntil');
+                array_push($selector_fields_outrange,"'Visible Since' no debe ser mayor a 'Visible Until'");
             }
         }
 

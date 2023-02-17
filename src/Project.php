@@ -2803,10 +2803,37 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
         else if($input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
             array_push($selector_ids_incorrect,'groups_id');
         }
+
+        //----------------------------
+        $plannedStartDate = strtotime($input['plan_start_date']);
+        $plannedEndDate = strtotime($input['plan_end_date']);
+        $realStartDate = strtotime($input['real_start_date']);
+        $realEndDate = strtotime($input['real_end_date']);
+
+        
        
         if($input['priority'] < 1 || $input['priority'] > 6){
             array_push($selector_fields_outrange,'priority');
         }
+
+        if(empty($input['plan_start_date']) || empty($input['plan_end_date']) || 
+        empty($input['real_start_date']) || empty($input['real_end_date']) ){
+            array_push($selector_fields_outrange,'campo de fecha enviado con null');
+        }else{
+            if($plannedStartDate !== false && $plannedEndDate !== false){
+                if($plannedStartDate > $plannedEndDate){
+                    array_push($selector_fields_outrange,"'Planned Date' no debe ser mayor a 'Planned End'");
+                }
+            }else if($realStartDate !== false && $realEndDate !== false){
+                if($realStartDate > $realEndDate){
+                    array_push($selector_fields_outrange,"'Real Date' no debe ser mayor a 'Real End'");
+                }
+            }
+        }
+
+        
+
+        
 
         if(isset($input['percent_done'])){
             if($input['percent_done'] > 100){

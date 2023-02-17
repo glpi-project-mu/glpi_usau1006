@@ -602,6 +602,7 @@ class Database extends CommonDBChild
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -610,7 +611,9 @@ class Database extends CommonDBChild
             array_push($selector_ids_incorrect,'databaseinstances_id');
         }
        
-        
+        if($input['size'] > 99999){
+            array_push($selector_fields_outrange,"Size MB no debe ser mayor a '99999'");
+        }
     
         if(count($selector_ids_incorrect)){
             $message = sprintf(
@@ -620,7 +623,15 @@ class Database extends CommonDBChild
             Session::addMessageAfterRedirect($message, false, ERROR);
         }
 
-        if(count($selector_ids_incorrect)){
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
             return false;
         }
         else{

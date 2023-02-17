@@ -1228,10 +1228,23 @@ class Reminder extends CommonDBVisible implements
             array_push($selector_ids_incorrect,'users_id');
         }
         
+        $timeunixDate = strtotime($input['begin_view_date']);
+        $timeunixTTR = strtotime($input['end_view_date']);
        
         if($input['state'] < 1 || $input['state'] > 3){
             array_push($selector_fields_outrange,'state');
         }
+        else if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate > $timeunixTTR){
+                array_push($selector_fields_outrange,"'Begin Date' no debe ser mayor a 'End Date'");
+            }
+        }
+
+       
+
+        
+
 
         
         if(count($selector_fields_outrange)){

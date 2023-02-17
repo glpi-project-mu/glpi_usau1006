@@ -1675,7 +1675,7 @@ class Change extends CommonITILObject
         if( $timeunixDate !== false && $timeunixTTR !== false){
 
             if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'DATE mayor a TimeToResolve');
+                array_push($selector_fields_outrange,"'Opening Date' no debe ser mayor a 'Time to Resolve'");
             }
         }
 
