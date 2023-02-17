@@ -897,7 +897,100 @@ class Budget extends CommonDropdown
         echo "</table></div>";
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
 
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => 'number',
+            'name' => 'string',
+            'budgettypes_id' => 'number',
+            'value' => 'number',
+            'begin_date' => '',
+            'end_date' => '',
+            'comment' => 'string',
+            'locations_id' => 'number'
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key); 
+            }else{
+                //Si la key existe en $_POST
+
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se enviaron los siguientes campos en la petición. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        $selector_fields_outrange = [];
+        if($input['value'] > 99999999999){
+            array_push($selector_fields_outrange,'value');
+        }
+
+        $timeunixDate = strtotime($input['begin_date']);
+        $timeunixTTR = strtotime($input['end_date']);
+
+        if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate > $timeunixTTR){
+                array_push($selector_fields_outrange,'DATE mayor a TimeToResolve');
+            }
+        }
+
+
+        
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Los siguientes campos de selección fueron enviados con valores inconsistentes. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+    
     public static function getIcon()
     {
         return "ti ti-calculator";

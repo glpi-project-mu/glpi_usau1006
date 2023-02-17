@@ -511,6 +511,148 @@ class Monitor extends CommonDBTM
         return $tab;
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+        'entities_id' => 'number',		
+        '_glpi_csrf_token' => 'string',		
+        //'is_recursive' => 'bool',		
+        'name' => 'string',
+        'states_id' => 'number',
+        'locations_id' => 'number',
+        'monitortypes_id' => 'number',
+        'users_id_tech' => 'number',
+        'manufacturers_id' => 'number',
+        'groups_id_tech' => 'number',
+        'monitormodels_id' => 'number',
+        'contact_num' => 'string',
+        'serial' => 'string',
+        'contact' => 'string',
+        'otherserial' => 'string',
+        'is_global' => 'number',
+        'size' => 'number',
+        'groups_id' => 'number',
+        'uuid' => 'string',
+        'comment' => 'string',
+        'autoupdatesystems_id' => 'number',
+        'have_micro' => 'bool',
+        'have_speaker' => 'bool',
+        'have_subd' => 'bool',
+        'have_bnc' => 'bool',
+        'have_dvi' => 'bool',
+        'have_hdmi' => 'bool',
+        'have_displayport' => 'bool',
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key);
+                break;       
+            }else{
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se envio el siguiente campo en la petición HTTP. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        
+        $selector_ids_incorrect = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+            array_push($selector_ids_incorrect,'states_id');
+        }
+        else if($input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+            array_push($selector_ids_incorrect,'locations_id');
+        }
+        else if($input['monitortypes_id'] != 0 && MonitorType::getById($input['monitortypes_id']) == false){
+            array_push($selector_ids_incorrect,'monitortypes_id');
+        }
+        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+            array_push($selector_ids_incorrect,'users_id_tech');
+        }
+        else if($input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
+            array_push($selector_ids_incorrect,'manufacturers_id');
+        }
+        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+            array_push($selector_ids_incorrect,'groups_id_tech');
+        }
+        else if($input['monitormodels_id'] != 0 && MonitorModel::getById($input['monitormodels_id']) == false){
+            array_push($selector_ids_incorrect,'monitormodels_id');
+        }
+        else if($input['users_id'] != 0 && User::getById($input['users_id']) == false){
+            array_push($selector_ids_incorrect,'users_id');
+        }
+        else if($input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
+            array_push($selector_ids_incorrect,'groups_id');
+        }
+        else if($input['autoupdatesystems_id'] != 0 && AutoUpdateSystem::getById($input['autoupdatesystems_id']) == false){
+            array_push($selector_ids_incorrect,'autoupdatesystems_id');
+        }
+       
+
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
 
     public static function getIcon()
     {

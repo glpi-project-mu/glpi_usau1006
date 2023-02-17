@@ -819,6 +819,132 @@ class Domain extends CommonDBTM
         return "fas fa-globe-americas";
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'is_active' => 'bool',
+            'date_domaincreation' => '',
+            'domaintypes_id' => 'number',
+            'date_expiration' => '',
+            'users_id_tech' => 'number',
+            'groups_id_tech' => 'number',
+            'comment' => 'string'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key);
+                break;       
+            }else{
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se envio el siguiente campo en la petición HTTP. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        
+        $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['domaintypes_id'] != 0 && DomainType::getById($input['domaintypes_id']) == false){
+            array_push($selector_ids_incorrect,'domaintypes_id');
+        }
+        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+            array_push($selector_ids_incorrect,'users_id_tech');
+        }
+        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+            array_push($selector_ids_incorrect,'groups_id_tech');
+        }
+
+        $timeunixDate = strtotime($input['date_domaincreation']);
+        $timeunixTTR = strtotime($input['date_expiration']);
+
+        if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate > $timeunixTTR){
+                array_push($selector_fields_outrange,'DomainCreation mayor a DateExpiration');
+            }
+        }
+        
+       
+        
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
     public function post_updateItem($history = 1)
     {
         $this->cleanAlerts([Alert::END, Alert::NOTICE]);
