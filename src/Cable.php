@@ -407,6 +407,126 @@ class Cable extends CommonDBTM
         return true;
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            'name' => 'string',
+            'states_id' => 'number',
+            'cabletypes_id' => 'number',
+            'users_id_tech' => 'number',
+            'otherserial' => 'string',
+            'comment' => 'string',
+            'cablestrands_id' => 'number',
+            'color' => 'hexcolor',
+            'itemtype_endpoint_a' => 'string',
+            'items_id_endpoint_a' => 'number',
+            'socketmodels_id_endpoint_a' => 'number',
+            'sockets_id_endpoint_a' => 'number',
+            'itemtype_endpoint_b' => 'string',
+            'items_id_endpoint_b' => 'number',
+            'socketmodels_id_endpoint_b' => 'number',
+            'sockets_id_endpoint_b' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key);
+                break;       
+            }else{
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'hexcolor' && !preg_match('/^#[a-f0-9]{6}$/i', $input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+               
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se envio el siguiente campo en la petición HTTP. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        
+        $selector_ids_incorrect = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+            array_push($selector_ids_incorrect,'states_id');
+        }
+        else if($input['cabletypes_id'] != 0 && CableType::getById($input['cabletypes_id']) == false){
+            array_push($selector_ids_incorrect,'cabletypes_id');
+        }
+        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+            array_push($selector_ids_incorrect,'users_id_tech');
+        }
+        else if($input['cablestrands_id'] != 0 && CableStrand::getById($input['cablestrands_id']) == false){
+            array_push($selector_ids_incorrect,'cablestrands_id');
+        }
+       
+        
+       
+       
+    
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+
     public static function getIcon()
     {
         return "ti ti-line";

@@ -917,7 +917,144 @@ JAVASCRIPT;
          </div>"; // .grid-stack-item
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
 
+        $fields_necessary = [
+        'entities_id' => 'number',		
+        '_glpi_csrf_token' => 'string',		
+        //'is_recursive' => 'bool',		
+        'name' => 'string',
+        'states_id' => 'number',
+        'locations_id' => 'number',
+        'racktypes_id' => 'number',
+        'users_id_tech' => 'number',
+        'manufacturers_id' => 'number',
+        'groups_id_tech' => 'number',
+        'rackmodels_id' => 'number',
+        'serial' => 'string',
+        'otherserial' => 'string',
+        'comment' => 'string',
+        'dcrooms_id' => 'number',
+        'room_orientation' => 'number', //1 a 4
+        'number_units' => 'number', 
+        'width' => 'number',
+        'height' => 'number',
+        'depth' => 'number',
+        'max_power' => 'number',
+        'mesured_power'=> 'number',
+        'max_weight'=>'number',
+        'bgcolor' => 'hexcolor',
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key);
+                break;       
+            }else{
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'hexcolor' && !preg_match('/^#[a-f0-9]{6}$/i', $input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se envio el siguiente campo en la petición HTTP. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        
+        $selector_ids_incorrect = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+            array_push($selector_ids_incorrect,'states_id');
+        }
+        else if($input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+            array_push($selector_ids_incorrect,'locations_id');
+        }
+        else if($input['racktypes_id'] != 0 && RackType::getById($input['racktypes_id']) == false){
+            array_push($selector_ids_incorrect,'racktypes_id');
+        }
+        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+            array_push($selector_ids_incorrect,'users_id_tech');
+        }
+        else if($input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
+            array_push($selector_ids_incorrect,'manufacturers_id');
+        }
+        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+            array_push($selector_ids_incorrect,'groups_id_tech');
+        }
+        else if($input['rackmodels_id'] != 0 && RackModel::getById($input['rackmodels_id']) == false){
+            array_push($selector_ids_incorrect,'rackmodels_id');
+        }
+        else if($input['dcrooms_id'] != 0 && DCRoom::getById($input['dcrooms_id']) == false){
+            array_push($selector_ids_incorrect,'dcrooms_id');
+        }
+
+        IF($input['room_orientation'] < 1 || $input['room_orientation'] > 4){
+            array_push($selector_ids_incorrect,'room_orientation');
+        }
+       
+       
+    
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+    
     public static function getIcon()
     {
         return "ti ti-server";

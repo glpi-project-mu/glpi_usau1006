@@ -1777,6 +1777,136 @@ class Contract extends CommonDBTM
         }
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'states_id' => 'number',
+            'contracttypes_id' => 'number',
+            'comment' => 'string',
+            'begin_date' => '',
+            'num' => 'string',
+            'duration' => 'number', //up to 120
+            'notice' => 'number',//up to 120
+            'accounting_number' => 'string',
+            'periodicity' => 'number', //up to 60
+            'billing' => 'number',
+            'renewal' => 'number',//0 - 2
+            'max_links_allowed' => 'number',//up to 200000
+            'alert' => 'number',
+
+            'week_begin_hour' => '',
+            'week_end_hour' => '',
+            'use_saturday' => 'bool',
+            'saturday_begin_hour' => '',
+            'saturday_end_hour' => '',
+            'use_sunday' => 'bool',
+            'sunday_begin_hour' => '',
+            'sunday_end_hour' => ''
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(!isset($input[$key])){
+                array_push($mandatory_missing, $key);
+                break;       
+            }else{
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                
+               
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+        if (count($mandatory_missing)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('No se envio el siguiente campo en la petición HTTP. Por favor corregir: %s'),
+                implode(", ", $mandatory_missing)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+
+        if(count($mandatory_missing) || count($incorrect_format)){
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        
+        $selector_ids_incorrect = [];
+
+        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+            array_push($selector_ids_incorrect,'states_id');
+        }
+        else if($input['contracttypes_id'] != 0 && ContractType::getById($input['contracttypes_id']) == false){
+            array_push($selector_ids_incorrect,'contracttypes_id');
+        }
+
+        if($input['duration'] > 120){
+            array_push($selector_ids_incorrect,'duration fuera de rango');
+        }else if($input['notice'] > 120){
+            array_push($selector_ids_incorrect,'notice fuera de rango');
+        }else if($input['periodicity'] > 60){
+            array_push($selector_ids_incorrect,'periodicity fuera de rango');
+        }else if($input['renewal'] > 2 || $input['renewal'] < 0 ){
+            array_push($selector_ids_incorrect,'renewal fuera de rango');
+        }
+
+       
+    
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
     public static function getIcon()
     {
         return "ti ti-writing-sign";

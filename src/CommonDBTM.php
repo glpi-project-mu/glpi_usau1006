@@ -1322,6 +1322,10 @@ class CommonDBTM extends CommonGLPI
                 $this->fields['date_mod'] = $_SESSION["glpi_currenttime"];
             }
 
+            if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
+                return false;
+            }
+
             if ($this->checkUnicity(true, $options)) {
                 if ($this->addToDB() !== false) {
                     $this->post_addItem();
@@ -1384,6 +1388,12 @@ class CommonDBTM extends CommonGLPI
         return false;
     }
 
+    public function checkAgainIfMandatoryFieldsAreCorrect(array $input):bool{
+        /** 
+         * Override this method
+        */
+        return true;
+    }
 
     /**
      * Get the link to an item
@@ -1598,6 +1608,10 @@ class CommonDBTM extends CommonGLPI
 
        //Process business rules for assets
         $this->assetBusinessRules(\RuleAsset::ONUPDATE);
+
+        if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
+            return false;
+        }
 
        // Valid input for update
         if ($this->checkUnicity(false, $options)) {
