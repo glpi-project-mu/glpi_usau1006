@@ -485,30 +485,91 @@ class Cable extends CommonDBTM
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+    
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            'name' => 'string',
+            'states_id' => 'number',
+            'cabletypes_id' => 'number',
+            'users_id_tech' => 'number',
+            'otherserial' => 'string',
+            'comment' => 'string',
+            'cablestrands_id' => 'number',
+            'color' => 'hexcolor',
+            'itemtype_endpoint_a' => 'string',
+            'items_id_endpoint_a' => 'number',
+            'socketmodels_id_endpoint_a' => 'number',
+            'sockets_id_endpoint_a' => 'number',
+            'itemtype_endpoint_b' => 'string',
+            'items_id_endpoint_b' => 'number',
+            'socketmodels_id_endpoint_b' => 'number',
+            'sockets_id_endpoint_b' => 'number',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            
+            if(array_key_exists($key,$input)){
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'hexcolor' && !preg_match('/^#[a-f0-9]{6}$/i', $input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }     
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+        else if(array_key_exists('states_id', $input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
             array_push($selector_ids_incorrect,'states_id');
         }
-        else if($input['cabletypes_id'] != 0 && CableType::getById($input['cabletypes_id']) == false){
+        else if(array_key_exists('cabletypes_id', $input) && $input['cabletypes_id'] != 0 && CableType::getById($input['cabletypes_id']) == false){
             array_push($selector_ids_incorrect,'cabletypes_id');
         }
-        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+        else if(array_key_exists('users_id_tech', $input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
             array_push($selector_ids_incorrect,'users_id_tech');
         }
-        else if($input['cablestrands_id'] != 0 && CableStrand::getById($input['cablestrands_id']) == false){
+        else if(array_key_exists('cablestrands_id', $input) && $input['cablestrands_id'] != 0 && CableStrand::getById($input['cablestrands_id']) == false){
             array_push($selector_ids_incorrect,'cablestrands_id');
+        }
+        else if(array_key_exists('id', $input) && $input['id'] != 0 && Cable::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'cable_id');
         }
        
         
-       
-       
-    
         if(count($selector_ids_incorrect)){
             $message = sprintf(
                 __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),

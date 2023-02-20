@@ -1000,39 +1000,111 @@ JAVASCRIPT;
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+
+        $incorrect_format = [];
+
+        $fields_necessary = [
+        'entities_id' => 'number',		
+        '_glpi_csrf_token' => 'string',		
+        //'is_recursive' => 'bool',		
+        'name' => 'string',
+        'states_id' => 'number',
+        'locations_id' => 'number',
+        'racktypes_id' => 'number',
+        'users_id_tech' => 'number',
+        'manufacturers_id' => 'number',
+        'groups_id_tech' => 'number',
+        'rackmodels_id' => 'number',
+        'serial' => 'string',
+        'otherserial' => 'string',
+        'comment' => 'string',
+        'dcrooms_id' => 'number',
+        'room_orientation' => 'number', //1 a 4
+        'number_units' => 'number', 
+        'width' => 'number',
+        'height' => 'number',
+        'depth' => 'number',
+        'max_power' => 'number',
+        'mesured_power'=> 'number',
+        'max_weight'=>'number',
+        'bgcolor' => 'hexcolor',
+        'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'hexcolor' && !preg_match('/^#[a-f0-9]{6}$/i', $input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }      
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+        else if(array_key_exists('states_id', $input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
             array_push($selector_ids_incorrect,'states_id');
         }
-        else if($input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+        else if(array_key_exists('locations_id', $input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
             array_push($selector_ids_incorrect,'locations_id');
         }
-        else if($input['racktypes_id'] != 0 && RackType::getById($input['racktypes_id']) == false){
+        else if(array_key_exists('racktypes_id', $input) && $input['racktypes_id'] != 0 && RackType::getById($input['racktypes_id']) == false){
             array_push($selector_ids_incorrect,'racktypes_id');
         }
-        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+        else if(array_key_exists('users_id_tech', $input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
             array_push($selector_ids_incorrect,'users_id_tech');
         }
-        else if($input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
+        else if(array_key_exists('manufacturers_id', $input) && $input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
             array_push($selector_ids_incorrect,'manufacturers_id');
         }
-        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+        else if(array_key_exists('groups_id_tech', $input) && $input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
             array_push($selector_ids_incorrect,'groups_id_tech');
         }
-        else if($input['rackmodels_id'] != 0 && RackModel::getById($input['rackmodels_id']) == false){
+        else if(array_key_exists('rackmodels_id', $input) && $input['rackmodels_id'] != 0 && RackModel::getById($input['rackmodels_id']) == false){
             array_push($selector_ids_incorrect,'rackmodels_id');
         }
-        else if($input['dcrooms_id'] != 0 && DCRoom::getById($input['dcrooms_id']) == false){
+        else if(array_key_exists('dcrooms_id', $input) && $input['dcrooms_id'] != 0 && DCRoom::getById($input['dcrooms_id']) == false){
             array_push($selector_ids_incorrect,'dcrooms_id');
         }
+        else if(array_key_exists('id', $input) && $input['id'] != 0 && Rack::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'rack_id');
+        }
 
-        IF($input['room_orientation'] < 1 || $input['room_orientation'] > 4){
+        if(array_key_exists('room_orientation', $input) && $input['room_orientation'] < 1 || $input['room_orientation'] > 4){
             array_push($selector_ids_incorrect,'room_orientation');
         }
        

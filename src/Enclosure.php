@@ -355,35 +355,90 @@ class Enclosure extends CommonDBTM
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+       
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            "entities_id" => "number",
+            "_glpi_csrf_token" => "string",
+            //"is_recursive" => 'bool',
+            "name" => "string",
+            "states_id" => "number",
+            "locations_id" => "number",
+            "users_id_tech" => "number",
+            "manufacturers_id" => "number",
+            "groups_id_tech" => "number",
+            "enclosuremodels_id" => "number",
+            "serial" => "string",
+            "otherserial" => "string",
+            "comment" => "string",
+            "power_supplies" => "number",
+            "id" => "number",
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }     
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+        else if(array_key_exists('states_id', $input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
             array_push($selector_ids_incorrect,'states_id');
         }
-        else if($input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+        else if(array_key_exists('locations_id', $input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
             array_push($selector_ids_incorrect,'locations_id');
         }
-        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+        else if(array_key_exists('users_id_tech', $input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
             array_push($selector_ids_incorrect,'users_id_tech');
         }
-        else if($input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
+        else if(array_key_exists('manufacturers_id', $input) && $input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
             array_push($selector_ids_incorrect,'manufacturers_id');
         }
-        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+        else if(array_key_exists('groups_id_tech', $input) && $input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
             array_push($selector_ids_incorrect,'groups_id_tech');
         }
-        else if($input['enclosuremodels_id'] != 0 && EnclosureModel::getById($input['enclosuremodels_id']) == false){
+        else if(array_key_exists('enclosuremodels_id', $input) && $input['enclosuremodels_id'] != 0 && EnclosureModel::getById($input['enclosuremodels_id']) == false){
             array_push($selector_ids_incorrect,'enclosuremodels_id');
+        }
+        else if(array_key_exists('id', $input) && $input['id'] != 0 && Enclosure::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'enclosure_id');
         }
         
        
-       
-    
         if(count($selector_ids_incorrect)){
             $message = sprintf(
                 __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
