@@ -75,28 +75,35 @@ class RecurrentChange extends CommonITILRecurrent
             //'is_recursive' => 'number',
             'name' => 'string',
             'comment' => 'string',
-            'is_active' => 'number',
+            'is_active' => 'bool',
             'changetemplates_id' => 'number',
             'begin_date' => '',
             'end_date' => '',
             'periodicity' => 'number',
             'create_before' => 'number',
-            'calendars_id' => 'number',
+            'calendars_id' => 'number'
             ];
 
 
         foreach($fields_necessary as $key => $value){
             
             if(!isset($input[$key])){
-                array_push($mandatory_missing, $key); 
+                array_push($mandatory_missing, $key);
+                break; 
             }else{
                 //Si la key existe en $_POST
 
                 if($value == 'number' && !is_numeric($input[$key]) ){
                     array_push($incorrect_format, $key);
+                    break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
                     array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
                 }
             }
         }
@@ -130,38 +137,101 @@ class RecurrentChange extends CommonITILRecurrent
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => 'number',
+            'name' => 'string',
+            'comment' => 'string',
+            'is_active' => 'bool',
+            'changetemplates_id' => 'number',
+            'begin_date' => '',
+            'end_date' => '',
+            'periodicity' => 'number',
+            'create_before' => 'number',
+            'calendars_id' => 'number',
+            'id' => 'number'
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         $selector_fields_outrange = [];
         
-        if($input['is_active'] < 0 || $input['is_active'] > 1){
-            array_push($selector_fields_outrange,'is_active');
-        }
-
-        else if($input['periodicity'] < 0 || $input['periodicity'] > 315576000 ){
+       
+        if(array_key_exists('periodicity',$input) && $input['periodicity'] < 0 || $input['periodicity'] > 315576000 ){
             array_push($selector_fields_outrange,'periodicity');
         }
 
-        else if($input['create_before'] < 0 || $input['create_before'] > 1209600 ){
+        else if(array_key_exists('create_before',$input) && $input['create_before'] < 0 || $input['create_before'] > 1209600 ){
             array_push($selector_fields_outrange,'create_before');
         }
 
-        $timeunixDate = strtotime($input['begin_date']);
-        $timeunixTTR = strtotime($input['end_date']);
-
-        if( $timeunixDate !== false && $timeunixTTR !== false){
-
-            if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'StarDate mayor a EndDate');
+        if(array_key_exists('begin_date',$input) && array_key_exists('end_date',$input) ){
+            
+            $timeunixDate = strtotime($input['begin_date']);
+            $timeunixTTR = strtotime($input['end_date']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Star Date' no debe ser mayor a a 'End Date'");
+                }
             }
         }
 
         $selector_ids_incorrect=[];
 
-        if($input['calendars_id'] != 0 && Calendar::getById($input['calendars_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if(array_key_exists('calendars_id',$input) && $input['calendars_id'] != 0 && Calendar::getById($input['calendars_id']) == false){
             array_push($selector_ids_incorrect,'calendars_id');
         }
-        else if($input['changetemplates_id'] != 0 && ChangeTemplate::getById($input['changetemplates_id']) == false){
+        else if(array_key_exists('changetemplates_id',$input) && $input['changetemplates_id'] != 0 && ChangeTemplate::getById($input['changetemplates_id']) == false){
             array_push($selector_ids_incorrect,'changetemplates_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && RecurrentChange::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'recurrentchange_id');
         }
 
         if(count($selector_fields_outrange)){

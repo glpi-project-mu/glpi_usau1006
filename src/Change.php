@@ -1605,15 +1605,18 @@ class Change extends CommonITILObject
         foreach($fields_necessary as $key => $value){
             
             if(!isset($input[$key])){
-                array_push($mandatory_missing, $key); 
+                array_push($mandatory_missing, $key);
+                break; 
             }else{
                 //Si la key existe en $_POST
 
                 if($value == 'number' && !is_numeric($input[$key]) ){
                     array_push($incorrect_format, $key);
+                    break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
                     array_push($incorrect_format, $key);
+                    break;
                 }
             }
         }
@@ -1647,45 +1650,127 @@ class Change extends CommonITILObject
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'id' => 'number',		
+            '_glpi_csrf_token' => 'string',		
+            '_skip_default_actor' => 'number',		
+            '_changetemplate' => 'number',		
+            '_predefined_fields' => 'string',
+            'date' => '',
+            'time_to_resolve' => '',
+            'itilcategories_id' => 'number',
+            'status' => 'number',			
+            'urgency' => 'number',		
+            'impact' => 'number',		
+            'priority' => 'number',		 
+            'actiontime' => 'number',
+            '_notifications_actorname' => '',		
+            '_notifications_actortype' => '',		
+            '_notifications_actorindex' => '',		
+            '_notifications_alternative_email' => '',
+            'impactcontent' => '',		
+            'controlistcontent' => '',		
+            'rolloutplancontent' => '',
+            'backoutplancontent' => '',
+            'checklistcontent' => '',
+
+            'name' => 'string',		
+            'content' => 'string',		
+            'entities_id' => 'number',	
+            //'is_recursive' => 'number',		
+            
+            'validatortype' => 'string',
+            '_add_validation' => 'number',		
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key, $input)){
+
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+
+       
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+
+      
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         $selector_fields_outrange = [];
         
-        if($input['status'] < 1 || $input['status'] > 14){
+        if(array_key_exists('status',$input) && ($input['status'] < 1 || $input['status'] > 8)){
             array_push($selector_fields_outrange,'status');
         }
-        else if($input['urgency'] < 1 || $input['urgency'] > 5){
+        else if(array_key_exists('urgency',$input) && ($input['urgency'] < 1 || $input['urgency'] > 5)){
             array_push($selector_fields_outrange,'urgency');
         }
-        else if($input['impact'] < 1 || $input['impact'] > 5){
+        else if(array_key_exists('impact',$input) && ($input['impact'] < 1 || $input['impact'] > 5)){
             array_push($selector_fields_outrange,'impact');
         }
-        else if($input['priority'] < 1 || $input['priority'] > 6){
+        else if(array_key_exists('priority',$input) && ($input['priority'] < 1 || $input['priority'] > 6)){
             array_push($selector_fields_outrange,'priority');
         }
-        else if($input['actiontime'] < 0 || $input['actiontime'] > 86400 ){
+        else if(array_key_exists('actiontime',$input) && ($input['actiontime'] < 0 || $input['actiontime'] > 86400) ){
             array_push($selector_fields_outrange,'actiontime/total duration');
         }
-        else if($input['is_recursive'] < 0 || $input['is_recursive'] > 1){
+        /*else if($input['is_recursive'] < 0 || $input['is_recursive'] > 1){
             array_push($selector_fields_outrange,'is_recursive solo puede ser 0 o 1');
-        }
+        }*/
 
-        $timeunixDate = strtotime($input['date']);
-        $timeunixTTR = strtotime($input['time_to_resolve']);
-
-        if( $timeunixDate !== false && $timeunixTTR !== false){
-
-            if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,"'Opening Date' no debe ser mayor a 'Time to Resolve'");
+        if(array_key_exists('date',$input) && array_key_exists('time_to_resolve',$input) ){
+            $timeunixDate = strtotime($input['date']);
+            $timeunixTTR = strtotime($input['time_to_resolve']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Opening Date' no debe ser mayor a 'Time to Resolve'");
+                }
             }
         }
 
         $selector_ids_incorrect=[];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['itilcategories_id'] != 0 && ITILCategory::getById($input['itilcategories_id']) == false){
+        else if(array_key_exists('itilcategories_id',$input) && $input['itilcategories_id'] != 0 && ITILCategory::getById($input['itilcategories_id']) == false){
             array_push($selector_ids_incorrect,'itilcategories_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Problem::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'change_id');
+        }
+        else if(array_key_exists('users_id_recipient',$input) && $input['users_id_recipient'] != 0 && User::getById($input['users_id_recipient']) == false){
+            array_push($selector_ids_incorrect,'users_id_recipient');
         }
 
         if(count($selector_fields_outrange)){

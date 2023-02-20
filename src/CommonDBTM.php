@@ -1397,6 +1397,12 @@ class CommonDBTM extends CommonGLPI
         return true;
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        /** 
+         * Override this method
+        */
+        return true;
+    }
     /**
      * Get the link to an item
      *
@@ -1594,6 +1600,9 @@ class CommonDBTM extends CommonGLPI
            // Input from the interface
            // Save this data to be available if add fail
             $this->saveInput();
+            if(!$this->checkAllFieldsInUpdate($this->input)){
+                return false;
+            }
         }
 
         if (isset($this->input['update'])) {
