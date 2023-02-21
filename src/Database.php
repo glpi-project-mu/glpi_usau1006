@@ -599,19 +599,78 @@ class Database extends CommonDBChild
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        $mandatory_missing = [];
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'is_active' => 'bool',
+            'databaseinstances_id' => 'number',
+            'size' => 'number',
+            'is_onbackup' => 'bool',
+            'date_lastbackup' => '',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                
+            }
+
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }
+        else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['databaseinstances_id'] != 0 && DatabaseInstance::getById($input['databaseinstances_id']) == false){
+        else if(array_key_exists('databaseinstances_id',$input) && $input['databaseinstances_id'] != 0 && DatabaseInstance::getById($input['databaseinstances_id']) == false){
             array_push($selector_ids_incorrect,'databaseinstances_id');
         }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Database::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'database_id');
+        }
        
-        if($input['size'] > 99999){
+        if(array_key_exists('size',$input) && $input['size'] > 99999){
             array_push($selector_fields_outrange,"Size MB no debe ser mayor a '99999'");
         }
     

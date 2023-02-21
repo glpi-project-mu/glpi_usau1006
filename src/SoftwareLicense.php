@@ -1375,59 +1375,121 @@ class SoftwareLicense extends CommonTreeDropdown
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+       
+        $incorrect_format = [];
+        
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            'softwares_id' => 'number',
+            'name' => '',
+            'states_id' => 'number',
+            'softwarelicenses_id' => 'number',
+            'locations_id' => 'number',
+            'softwarelicensetypes_id' => 'number',
+            'users_id_tech' => 'number',
+            'manufacturers_id' => 'number',
+            'groups_id_tech' => 'number',
+            'serial' => '',
+            'otherserial' => '',
+            'users_id' => 'number',
+            'groups_id' => 'number',
+            'comment' => '',
+            'softwareversions_id_use' => 'number',
+            'softwareversions_id_buy' => 'number',
+            'number' => 'number',
+            'allow_overquota' => 'bool',
+            'id' => 'number'
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
-        $selector_fields_outrange = [];
-
+        $selector_ids_incorrect = [];
         
-        
-        
-        if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
-            array_push($selector_fields_outrange,'states_id');
+
+        if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['softwares_id'] != 0 && Software::getById($input['softwares_id']) == false){
-            array_push($selector_fields_outrange,'softwares_id');
+        if(array_key_exists('states_id', $input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
+            array_push($selector_ids_incorrect,'states_id');
         }
-        else if($input['softwarelicenses_id'] != 0 && SoftwareLicense::getById($input['softwarelicenses_id']) == false){
-            array_push($selector_fields_outrange,'softwarelicenses_id');
+        else if(array_key_exists('softwares_id', $input) && $input['softwares_id'] != 0 && Software::getById($input['softwares_id']) == false){
+            array_push($selector_ids_incorrect,'softwares_id');
         }
-        else if($input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
-            array_push($selector_fields_outrange,'locations_id');
+        else if(array_key_exists('softwarelicenses_id', $input) && $input['softwarelicenses_id'] != 0 && SoftwareLicense::getById($input['softwarelicenses_id']) == false){
+            array_push($selector_ids_incorrect,'softwarelicenses_id');
         }
-        else if($input['softwarelicensetypes_id'] != 0 && SoftwareLicenseType::getById($input['softwarelicensetypes_id']) == false){
-            array_push($selector_fields_outrange,'softwarelicensetypes_id');
+        else if(array_key_exists('locations_id', $input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+            array_push($selector_ids_incorrect,'locations_id');
         }
-        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
-            array_push($selector_fields_outrange,'users_id_tech');
+        else if(array_key_exists('softwarelicensetypes_id', $input) && $input['softwarelicensetypes_id'] != 0 && SoftwareLicenseType::getById($input['softwarelicensetypes_id']) == false){
+            array_push($selector_ids_incorrect,'softwarelicensetypes_id');
         }
-        else if($input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
-            array_push($selector_fields_outrange,'manufacturers_id');
+        else if(array_key_exists('users_id_tech', $input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+            array_push($selector_ids_incorrect,'users_id_tech');
         }
-        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
-            array_push($selector_fields_outrange,'groups_id_tech');
+        else if(array_key_exists('manufacturers_id', $input) && $input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
+            array_push($selector_ids_incorrect,'manufacturers_id');
         }
-        else if($input['users_id'] != 0 && User::getById($input['users_id']) == false){
-            array_push($selector_fields_outrange,'users_id');
+        else if(array_key_exists('groups_id_tech', $input) && $input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+            array_push($selector_ids_incorrect,'groups_id_tech');
         }
-        else if($input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
-            array_push($selector_fields_outrange,'groups_id');
+        else if(array_key_exists('users_id', $input) && $input['users_id'] != 0 && User::getById($input['users_id']) == false){
+            array_push($selector_ids_incorrect,'users_id');
         }
-        else if($input['softwareversions_id_use'] != 0 && SoftwareVersion::getById($input['softwareversions_id_use']) == false){
-            array_push($selector_fields_outrange,'softwareversions_id_use');
+        else if(array_key_exists('groups_id', $input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
+            array_push($selector_ids_incorrect,'groups_id');
         }
-        else if($input['softwareversions_id_buy'] != 0 && SoftwareVersion::getById($input['softwareversions_id_buy']) == false){
-            array_push($selector_fields_outrange,'softwareversions_id_buy');
+        else if(array_key_exists('softwareversions_id_use', $input) && $input['softwareversions_id_use'] != 0 && SoftwareVersion::getById($input['softwareversions_id_use']) == false){
+            array_push($selector_ids_incorrect,'softwareversions_id_use');
+        }
+        else if(array_key_exists('softwareversions_id_buy', $input) && $input['softwareversions_id_buy'] != 0 && SoftwareVersion::getById($input['softwareversions_id_buy']) == false){
+            array_push($selector_ids_incorrect,'softwareversions_id_buy');
+        }
+        else if(array_key_exists('id', $input) && $input['id'] != 0 && SoftwareLicense::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'softwarelicense_id');
         }
 
 
-        if($input['allow_overquota'] < 0 || $input['allow_overquota'] > 1){
-            array_push($selector_fields_outrange,'allow_overquota solo puede 0 o 1');
-        }
-
-        
-        if(count($selector_fields_outrange)){
+        if(count($selector_ids_incorrect)){
             $message = sprintf(
                 __('Los siguientes campos fueron enviados con Id incorrecto. Por favor corregir: %s'),
-                implode(", ", $selector_fields_outrange)
+                implode(", ", $selector_ids_incorrect)
             );
             Session::addMessageAfterRedirect($message, false, WARNING);
             return false;

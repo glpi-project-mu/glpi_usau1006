@@ -829,7 +829,7 @@ class Domain extends CommonDBTM
             //'is_recursive' => '',
             'name' => 'string',
             'is_active' => 'bool',
-            'date_domaincreation' => '',
+            'date_domaincreation' => 'date',
             'domaintypes_id' => 'number',
             'date_expiration' => '',
             'users_id_tech' => 'number',
@@ -854,6 +854,10 @@ class Domain extends CommonDBTM
                     break;
                 }
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
                     array_push($incorrect_format, $key);
                     break;
                 }
@@ -890,36 +894,102 @@ class Domain extends CommonDBTM
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'is_active' => 'bool',
+            'date_domaincreation' => 'date',
+            'domaintypes_id' => 'number',
+            'date_expiration' => '',
+            'users_id_tech' => 'number',
+            'groups_id_tech' => 'number',
+            'comment' => 'string',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+            
+           
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['domaintypes_id'] != 0 && DomainType::getById($input['domaintypes_id']) == false){
+        else if(array_key_exists('domaintypes_id',$input) && $input['domaintypes_id'] != 0 && DomainType::getById($input['domaintypes_id']) == false){
             array_push($selector_ids_incorrect,'domaintypes_id');
         }
-        else if($input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
+        else if(array_key_exists('users_id_tech',$input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
             array_push($selector_ids_incorrect,'users_id_tech');
         }
-        else if($input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
+        else if(array_key_exists('groups_id_tech',$input) && $input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
             array_push($selector_ids_incorrect,'groups_id_tech');
         }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Domain::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'domain_id');
+        }
 
-        $timeunixDate = strtotime($input['date_domaincreation']);
-        $timeunixTTR = strtotime($input['date_expiration']);
+        if(array_key_exists('date_domaincreation',$input) && array_key_exists('date_expiration',$input)){
 
-        if( $timeunixDate !== false && $timeunixTTR !== false){
-
-            if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,'DomainCreation mayor a DateExpiration');
+            $timeunixDate = strtotime($input['date_domaincreation']);
+            $timeunixTTR = strtotime($input['date_expiration']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'DomainCreation' no puede ser mayor a 'DateExpiration'");
+                }
             }
         }
+
         
-       
-        
+    
         if(count($selector_fields_outrange)){
             $message = sprintf(
                 __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),

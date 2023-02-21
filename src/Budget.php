@@ -977,32 +977,108 @@ class Budget extends CommonDropdown
         }
     }
 
-    public function checkAppliedBusinessRules(array &$input):bool{
-        $selector_fields_outrange = [];
-        if($input['value'] > 999999999){
-            array_push($selector_fields_outrange,'value sobrepasó el máximo permitido');
-        }
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
 
-        $timeunixDate = strtotime($input['begin_date']);
-        $timeunixTTR = strtotime($input['end_date']);
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => 'number',
+            'name' => 'string',
+            'budgettypes_id' => 'number',
+            'value' => 'number',
+            'begin_date' => '',
+            'end_date' => '',
+            'comment' => 'string',
+            'locations_id' => 'number',
+            'id' => 'number'
+            ];
 
-        if( $timeunixDate !== false && $timeunixTTR !== false){
 
-            if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
             }
         }
 
+        //REGLA DE NOGOCIO:
 
-        
-        if(count($selector_fields_outrange)){
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
             $message = sprintf(
-                __('Los siguientes campos de selección fueron enviados con valores inconsistentes. Por favor corregir: %s'),
-                implode(", ", $selector_fields_outrange)
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
             );
             Session::addMessageAfterRedirect($message, false, WARNING);
             return false;
         }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
+    public function checkAppliedBusinessRules(array &$input):bool{
+        $selector_fields_outrange = [];
+        $selector_ids_incorrect = [];
+
+        if(array_key_exists('value',$input) && $input['value'] > 999999999){
+            array_push($selector_fields_outrange,'value sobrepasó el máximo permitido');
+        }
+
+        if(array_key_exists('begin_date',$input) && array_key_exists('end_date',$input) ){
+            $timeunixDate = strtotime($input['begin_date']);
+            $timeunixTTR = strtotime($input['end_date']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
+                }
+            }
+        }
+
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+            array_push($selector_ids_incorrect,'entities_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Budget::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'budget_id');
+        }
+        else if(array_key_exists('budgettypes_id',$input) && $input['budgettypes_id'] != 0 && BudgetType::getById($input['budgettypes_id']) == false){
+            array_push($selector_ids_incorrect,'budgettypes_id');
+        }
+        else if(array_key_exists('locations_id',$input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+            array_push($selector_ids_incorrect,'locations_id');
+        }
+
+        
+
+
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
+
+        if(count($selector_ids_incorrect)){
+            $message = sprintf(
+                __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
+                implode(", ", $selector_ids_incorrect)
+            );
+            Session::addMessageAfterRedirect($message, false, ERROR);
+        }
+
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
+            return false;
+        }
+        else{
             return true;
         }
 

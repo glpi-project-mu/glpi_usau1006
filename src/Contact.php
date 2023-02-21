@@ -554,18 +554,78 @@ class Contact extends CommonDBTM
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'firstname' => 'string',
+            'contacttypes_id' => 'number',
+            'usertitles_id' => 'number',
+            'registration_number' => 'string',
+            'phone' => 'string',
+            'phone2' => 'string',
+            'mobile' => 'string',
+            'fax' => 'string',
+            'email' => 'string',
+            'address' => 'string',
+            'town' => 'string',
+            'postcode' => 'string',
+            'state' => 'string',
+            'country' => 'string',
+            'comment' => 'string',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                 //Si la key existe en $_POST
+                 if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }      
+            }
+        }
+
+        //REGLA DE NOGOCIO
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['contacttypes_id'] != 0 && ContactType::getById($input['contacttypes_id']) == false){
+        else if(array_key_exists('contacttypes_id',$input) && $input['contacttypes_id'] != 0 && ContactType::getById($input['contacttypes_id']) == false){
             array_push($selector_ids_incorrect,'contacttypes_id');
         }
-        else if($input['usertitles_id'] != 0 && UserTitle::getById($input['usertitles_id']) == false){
+        else if(array_key_exists('usertitles_id',$input) && $input['usertitles_id'] != 0 && UserTitle::getById($input['usertitles_id']) == false){
             array_push($selector_ids_incorrect,'usertitles_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Contact::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'id');
         }
         
     

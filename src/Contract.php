@@ -1864,32 +1864,139 @@ class Contract extends CommonDBTM
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+       
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'states_id' => 'number',
+            'contracttypes_id' => 'number',
+            'comment' => 'string',
+            'begin_date' => '',
+            'num' => 'string',
+            'duration' => 'number', //up to 120
+            'notice' => 'number',//up to 120
+            'accounting_number' => 'string',
+            'periodicity' => 'number', //up to 60
+            'billing' => 'number',
+            'renewal' => 'number',//0 - 2
+            'max_links_allowed' => 'number',//up to 200000
+            'alert' => 'number',
+
+            'week_begin_hour' => '',
+            'week_end_hour' => '',
+            'use_saturday' => 'bool',
+            'saturday_begin_hour' => '',
+            'saturday_end_hour' => '',
+            'use_sunday' => 'bool',
+            'sunday_begin_hour' => '',
+            'sunday_end_hour' => '',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['states_id'] != 0 && State::getById($input['states_id']) == false){
+        else if(array_key_exists('states_id',$input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
             array_push($selector_ids_incorrect,'states_id');
         }
-        else if($input['contracttypes_id'] != 0 && ContractType::getById($input['contracttypes_id']) == false){
+        else if(array_key_exists('contracttypes_id',$input) && $input['contracttypes_id'] != 0 && ContractType::getById($input['contracttypes_id']) == false){
             array_push($selector_ids_incorrect,'contracttypes_id');
         }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Contract::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'contract_id');
+        }
 
-        if($input['duration'] > 120){
+        if(array_key_exists('duration',$input) && $input['duration'] > 120){
             array_push($selector_fields_outrange,'duration fuera de rango');
-        }else if($input['notice'] > 120){
+        }else if(array_key_exists('notice',$input) && $input['notice'] > 120){
             array_push($selector_fields_outrange,'notice fuera de rango');
-        }else if($input['periodicity'] > 60){
+        }else if(array_key_exists('periodicity',$input) && $input['periodicity'] > 60){
             array_push($selector_fields_outrange,'periodicity fuera de rango');
-        }else if($input['renewal'] > 2 || $input['renewal'] < 0 ){
+        }else if(array_key_exists('renewal',$input) && $input['renewal'] > 2 || $input['renewal'] < 0 ){
             array_push($selector_fields_outrange,'renewal fuera de rango');
         }
 
-       
+        
+        if(array_key_exists('week_begin_hour',$input) && array_key_exists('week_end_hour',$input)){
+            $timeunixDate = strtotime($input['week_begin_hour']);
+            $timeunixTTR = strtotime($input['week_end_hour']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Start' no debe ser mayor a 'End' en 'Support Hours on week'");
+                }
+            }
+        }
+        if(array_key_exists('saturday_begin_hour',$input) && array_key_exists('saturday_end_hour',$input)){
+            $timeunixDate = strtotime($input['saturday_begin_hour']);
+            $timeunixTTR = strtotime($input['saturday_end_hour']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Start' no debe ser mayor a 'End' en 'Support Hours on saturday'");
+                }
+            }
+        }
+        if(array_key_exists('sunday_begin_hour',$input) && array_key_exists('sunday_end_hour',$input)){
+            $timeunixDate = strtotime($input['sunday_begin_hour']);
+            $timeunixTTR = strtotime($input['sunday_end_hour']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Start' no debe ser mayor a 'End' en 'Support Hours on sunday'");
+                }
+            }
+        }
+
     
         if(count($selector_ids_incorrect)){
             $message = sprintf(
