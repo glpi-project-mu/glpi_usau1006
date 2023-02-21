@@ -51,9 +51,9 @@ $budget = new Budget();
 if (isset($_POST["add"])) {
     $budget->check(-1, CREATE, $_POST);
     $newId = HandlerSubmitForm::add($budget, 'control_queue_budgets');
-    if ($newID) {
+    if ($newId) {
         Event::log(
-            $newID,
+            $newId,
             "budget",
             4,
             "financial",
