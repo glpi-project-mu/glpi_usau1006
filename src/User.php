@@ -6542,8 +6542,8 @@ HTML;
             'timezone' => '',
             'is_active' => 'bool',
             //'_useremails' => 'string',
-            'begin_date' => '',
-            'end_date' => '',
+            'begin_date' => 'date',
+            'end_date' => 'date',
             'phone' => 'string',
             'mobile' => 'string',
             'usercategories_id' => 'number',
@@ -6573,6 +6573,10 @@ HTML;
                     break;
                 }
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
                     array_push($incorrect_format, $key);
                     break;
                 }
@@ -6609,25 +6613,111 @@ HTML;
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+      
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            'name' => 'string',
+            'realname' => 'string',
+            'firstname' => 'string',
+            'password' => 'string',
+            'timezone' => '',
+            'is_active' => 'bool',
+            //'_useremails' => 'string',
+            'begin_date' => 'date',
+            'end_date' => 'date',
+            'phone' => 'string',
+            'mobile' => 'string',
+            'usercategories_id' => 'number',
+            'phone2' => 'string',
+            'comment' => 'string',
+            'registration_number' => 'string',
+            'usertitles_id' => 'number',
+            
+            'locations_id' => 'number',
+            'profiles_id' => 'number',
+            'groups_id' => 'number',
+            'users_id_supervisor' => 'number',
+            '_reset_personal_token' => 'bool',
+            '_reset_api_token' => 'bool',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }     
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['usercategories_id'] != 0 && UserCategory::getById($input['usercategories_id']) == false){
+        else if(array_key_exists('usercategories_id',$input) && $input['usercategories_id'] != 0 && UserCategory::getById($input['usercategories_id']) == false){
             array_push($selector_ids_incorrect,'usercategories_id');
         }
-        else if($input['usertitles_id'] != 0 && UserTitle::getById($input['usertitles_id']) == false){
+        else if(array_key_exists('usertitles_id',$input) && $input['usertitles_id'] != 0 && UserTitle::getById($input['usertitles_id']) == false){
             array_push($selector_ids_incorrect,'usertitles_id');
         }
-        else if($input['_profiles_id'] != 0 && Profile::getById($input['_profiles_id']) == false){
+        else if(array_key_exists('_profiles_id',$input) && $input['_profiles_id'] != 0 && Profile::getById($input['_profiles_id']) == false){
             array_push($selector_ids_incorrect,'_profiles_id');
         }
-        else if($input['_entities_id'] != 0 && Entity::getById($input['_entities_id']) == false){
+        else if(array_key_exists('_entities_id',$input) && $input['_entities_id'] != 0 && Entity::getById($input['_entities_id']) == false){
             array_push($selector_ids_incorrect,'_entities_id');
+        }
+        else if(array_key_exists('locations_id',$input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
+            array_push($selector_ids_incorrect,'locations_id');
+        }
+        else if(array_key_exists('profiles_id',$input) && $input['profiles_id'] != 0 && Profile::getById($input['profiles_id']) == false){
+            array_push($selector_ids_incorrect,'profiles_id');
+        }
+        else if(array_key_exists('groups_id',$input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
+            array_push($selector_ids_incorrect,'groups_id');
+        }
+        else if(array_key_exists('users_id_supervisor',$input) && $input['users_id_supervisor'] != 0 && User::getById($input['users_id_supervisor']) == false){
+            array_push($selector_ids_incorrect,'users_id_supervisor');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && User::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'user_id');
         }
 
         $timeunixDate = strtotime($input['begin_date']);
