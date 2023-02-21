@@ -925,8 +925,8 @@ class Budget extends CommonDropdown
             'name' => 'string',
             'budgettypes_id' => 'number',
             'value' => 'number',
-            'begin_date' => '',
-            'end_date' => '',
+            'begin_date' => 'date',
+            'end_date' => 'date',
             'comment' => 'string',
             'locations_id' => 'number'
             ];
@@ -944,6 +944,10 @@ class Budget extends CommonDropdown
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
                     array_push($incorrect_format, $key);
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, 'Start Date');
+                    break;
                 }
             }
         }
@@ -988,8 +992,8 @@ class Budget extends CommonDropdown
             'name' => 'string',
             'budgettypes_id' => 'number',
             'value' => 'number',
-            'begin_date' => '',
-            'end_date' => '',
+            'begin_date' => 'date',
+            'end_date' => 'date',
             'comment' => 'string',
             'locations_id' => 'number',
             'id' => 'number'
@@ -1004,6 +1008,10 @@ class Budget extends CommonDropdown
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
                     array_push($incorrect_format, $key);
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, 'Start Date');
+                    break;
                 }
             }
         }

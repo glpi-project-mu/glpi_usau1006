@@ -1789,7 +1789,7 @@ class Contract extends CommonDBTM
             'states_id' => 'number',
             'contracttypes_id' => 'number',
             'comment' => 'string',
-            'begin_date' => '',
+            'begin_date' => 'date',
             'num' => 'string',
             'duration' => 'number', //up to 120
             'notice' => 'number',//up to 120
@@ -1828,6 +1828,10 @@ class Contract extends CommonDBTM
                 }
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
                     array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, 'Start Date');
                     break;
                 }
                 
@@ -1876,7 +1880,7 @@ class Contract extends CommonDBTM
             'states_id' => 'number',
             'contracttypes_id' => 'number',
             'comment' => 'string',
-            'begin_date' => '',
+            'begin_date' => 'date',
             'num' => 'string',
             'duration' => 'number', //up to 120
             'notice' => 'number',//up to 120
@@ -1913,6 +1917,10 @@ class Contract extends CommonDBTM
                 }
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
                     array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, 'Start Date');
                     break;
                 }
             }
