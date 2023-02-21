@@ -520,8 +520,8 @@ abstract class CommonITILCost extends CommonDBChild
             //'is_recursive' => 'number',
             'tickets_id' => 'number',
             'name' => 'string',
-            'begin_date' => '',
-            'end_date' => '',
+            'begin_date' => 'date',
+            'end_date' => 'date',
             'actiontime' => 'number',
             'cost_time' => 'number',
             'cost_fixed' => 'number',
@@ -543,6 +543,10 @@ abstract class CommonITILCost extends CommonDBChild
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
                     array_push($incorrect_format, $key);
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
                 }
             }
         }
@@ -576,39 +580,102 @@ abstract class CommonITILCost extends CommonDBChild
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+      
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => 'number',
+            'tickets_id' => 'number',
+            'name' => 'string',
+            'begin_date' => 'date',
+            'end_date' => 'date',
+            'actiontime' => 'number',
+            'cost_time' => 'number',
+            'cost_fixed' => 'number',
+            'cost_material' => 'number',
+            'comment' => 'string',
+            'budgets_id' => 'number',
+            'id' => 'number'
+            ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+                //Si la key existe en $_POST
+
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('Los siguientes campos fueron enviados con formato incorrecto. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         $selector_fields_outrange = [];
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['tickets_id'] != 0 && Ticket::getById($input['tickets_id']) == false){
+        else if(array_key_exists('tickets_id',$input) && $input['tickets_id'] != 0 && Ticket::getById($input['tickets_id']) == false){
             array_push($selector_ids_incorrect,'tickets_id');
-        }else if($input['budgets_id'] != 0 && Budget::getById($input['budgets_id']) == false){
+        }
+        else if(array_key_exists('budgets_id',$input) && $input['budgets_id'] != 0 && Budget::getById($input['budgets_id']) == false){
             array_push($selector_ids_incorrect,'budgets_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && self::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'id');
         }
 
 
-        if($input['cost_fixed'] > 9999){
+        if(array_key_exists('cost_fixed',$input) && $input['cost_fixed'] > 9999){
             array_push($selector_fields_outrange,'cost_fixed sobrepasó el máximo permitido');
-        }else if($input['cost_time'] > 9999){
+        }else if(array_key_exists('cost_time',$input) && $input['cost_time'] > 9999){
             array_push($selector_fields_outrange,'cost_time sobrepasó el máximo permitido');
-        }else if($input['cost_material'] > 9999){
+        }else if(array_key_exists('cost_material',$input) && $input['cost_material'] > 9999){
             array_push($selector_fields_outrange,'cost_material sobrepasó el máximo permitido');
-        }else if($input['actiontime'] > 86400){
+        }else if(array_key_exists('actiontime',$input) && $input['actiontime'] > 86400){
             array_push($selector_fields_outrange,'actiontime sobrepasó el máximo permitido de tiempo');
         }
 
-        $timeunixDate = strtotime($input['begin_date']);
-        $timeunixTTR = strtotime($input['end_date']);
-
-        if( $timeunixDate !== false && $timeunixTTR !== false){
-
-            if($timeunixDate > $timeunixTTR){
-                array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
+        if(array_key_exists('begin_date',$input) && array_key_exists('end_date',$input)){
+            $timeunixDate = strtotime($input['begin_date']);
+            $timeunixTTR = strtotime($input['end_date']);
+    
+            if( $timeunixDate !== false && $timeunixTTR !== false){
+    
+                if($timeunixDate > $timeunixTTR){
+                    array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
+                }
             }
         }
+        
 
 
         if(count($selector_fields_outrange)){

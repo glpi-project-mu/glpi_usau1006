@@ -2689,6 +2689,10 @@ PluginFormcreatorTranslatableInterface
                array_push($incorrect_format, $key);
                break;
               }
+              else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+               array_push($incorrect_format, $key);
+               break;
+            }
               
           }
       }
@@ -2722,16 +2726,87 @@ PluginFormcreatorTranslatableInterface
       }
   }
 
+  public function checkAllFieldsInUpdate(array $input):bool{
+   
+   $incorrect_format = [];
+
+   $fields_necessary = [
+       'entities_id' => 'number',
+       '_glpi_csrf_token' => 'string',
+       'name' => 'string',
+       'is_active'=>'bool',
+       'plugin_formcreator_categories_id' => 'number',
+       'helpdesk_home' => 'bool',
+       'icon' => 'string',
+       'icon_color' => 'hexcolor',
+       'background_color' => 'hexcolor',
+       'description' => 'string',
+       'content' => 'string',
+       'is_default' => 'bool',
+       'is_visible' => 'bool',
+       'language'   => 'string',
+       'id' => 'number'
+       //'is_recursive' => '',
+   ];
+
+
+   foreach($fields_necessary as $key => $value){
+       
+       if(array_key_exists($key,$input)){
+           //Si la key existe en $_POST
+           if($value == 'number' && !is_numeric($input[$key]) ){
+               array_push($incorrect_format, $key);
+               break;
+           }
+           else if($value == 'string' && !is_string($input[$key]) ){
+               array_push($incorrect_format, $key);
+               break;
+           }
+           else if($value == 'hexcolor' && !preg_match('/^#[a-f0-9]{6}$/i', $input[$key]) ){
+            array_push($incorrect_format, $key);
+            break;
+           }
+           else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+            array_push($incorrect_format, $key);
+            break;
+            }
+       }
+   }
+
+   //REGLA DE NOGOCIO:
+
+   if (count($incorrect_format)) {
+       //TRANS: %s are the fields concerned
+       $message = sprintf(
+           __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+           implode(", ", $incorrect_format)
+       );
+       Session::addMessageAfterRedirect($message, false, WARNING);
+       return false;
+   }else{
+      return $this->checkAppliedBusinessRules($input);
+  }
+
+
+   
+}
+
   public function checkAppliedBusinessRules(array &$input):bool{
       
       $selector_ids_incorrect = [];
       $selector_fields_outrange = [];
 
-      if($input['plugin_formcreator_categories_id'] != 0 && PluginFormcreatorCategory::getById($input['plugin_formcreator_categories_id']) == false){
+      if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+         array_push($selector_ids_incorrect,'entities_id');
+      }
+      else if(array_key_exists('plugin_formcreator_categories_id',$input) && $input['plugin_formcreator_categories_id'] != 0 && PluginFormcreatorCategory::getById($input['plugin_formcreator_categories_id']) == false){
           array_push($selector_ids_incorrect,'plugin_formcreator_categories_id');
       }
+      else if(array_key_exists('id',$input) && $input['id'] != 0 && PluginFormCreatorForm::getById($input['id']) == false){
+         array_push($selector_ids_incorrect,'id');
+      }
       
-      if(empty($input['name'])){
+      if(array_key_exists('name',$input) && empty($input['name'])){
          array_push($selector_fields_outrange,'name');
       }
       
