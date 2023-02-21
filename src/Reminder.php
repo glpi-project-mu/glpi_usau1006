@@ -1161,7 +1161,7 @@ class Reminder extends CommonDBVisible implements
             //'is_recursive' => '',
             'users_id' => 'number',
             'name' => 'string',
-            'begin_view_date' => '',
+            'begin_view_date' => 'date',
             'end_view_date' => '',
             'state' => 'number', //0,1,2
             'text' => 'string'
@@ -1180,6 +1180,10 @@ class Reminder extends CommonDBVisible implements
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
                     array_push($incorrect_format, $key);
                     break;
                 }
@@ -1216,22 +1220,78 @@ class Reminder extends CommonDBVisible implements
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'users_id' => 'number',
+            'name' => 'string',
+            'begin_view_date' => 'date',
+            'end_view_date' => '',
+            'state' => 'number', //0,1,2
+            'text' => 'string',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+
+                //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }      
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['users_id'] != 0 && User::getById($input['users_id']) == false){
+        else if(array_key_exists('users_id',$input) && $input['users_id'] != 0 && User::getById($input['users_id']) == false){
             array_push($selector_ids_incorrect,'users_id');
+        }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Reminder::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'reminder_id');
         }
         
         $timeunixDate = strtotime($input['begin_view_date']);
         $timeunixTTR = strtotime($input['end_view_date']);
        
-        if($input['state'] < 1 || $input['state'] > 3){
+        if(array_key_exists('state',$input) && ($input['state'] < 0 || $input['state'] > 2)){
             array_push($selector_fields_outrange,'state');
         }
         else if( $timeunixDate !== false && $timeunixTTR !== false){
@@ -1240,11 +1300,6 @@ class Reminder extends CommonDBVisible implements
                 array_push($selector_fields_outrange,"'Begin Date' no debe ser mayor a 'End Date'");
             }
         }
-
-       
-
-        
-
 
         
         if(count($selector_fields_outrange)){

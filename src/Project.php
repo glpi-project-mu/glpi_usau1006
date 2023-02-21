@@ -1549,7 +1549,8 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
                 $date = $_SESSION['glpi_currenttime'];
             }
             Html::showDateTimeField("date", ['value' => $date,
-                'maybeempty' => false
+                'maybeempty' => false,
+                'required' => true
             ]);
             echo "</td>";
             if ($ID && !$from_template) {
@@ -2713,7 +2714,7 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
             'name' => 'string',
-            'date' => '',
+            'date' => 'date',
             'code' => 'string',
             'priority' => 'number',
             'projects_id' => 'number',
@@ -2722,10 +2723,10 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
             'projecttypes_id' => 'number',
             'users_id' => 'number',
             'groups_id' => 'number',
-            'plan_start_date' => '',
-            'real_start_date' => '',
-            'plan_end_date' => '',
-            'real_end_date' => '',
+            'plan_start_date' => 'date',
+            'real_start_date' => 'date',
+            'plan_end_date' => 'date',
+            'real_end_date' => 'date',
             'content' => 'string',
             'comment' => 'string'
         ];
@@ -2747,6 +2748,10 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
                     break;
                 }
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
                     array_push($incorrect_format, $key);
                     break;
                 }
@@ -2783,26 +2788,97 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
         }
     }
 
+    public function checkAllFieldsInUpdate(array $input):bool{
+        
+        $incorrect_format = [];
+
+        $fields_necessary = [
+            'entities_id' => 'number',
+            '_glpi_csrf_token' => 'string',
+            //'is_recursive' => '',
+            'name' => 'string',
+            'date' => 'date',
+            'code' => 'string',
+            'priority' => 'number',
+            'projects_id' => 'number',
+            'projectstates_id' => 'number',
+            'auto_percent_done' => 'bool',
+            'projecttypes_id' => 'number',
+            'users_id' => 'number',
+            'groups_id' => 'number',
+            'plan_start_date' => 'date',
+            'real_start_date' => 'date',
+            'plan_end_date' => 'date',
+            'real_end_date' => 'date',
+            'content' => 'string',
+            'comment' => 'string',
+            'id' => 'number'
+        ];
+
+
+        foreach($fields_necessary as $key => $value){
+            
+            if(array_key_exists($key,$input)){
+               //Si la key existe en $_POST
+                if($value == 'number' && !is_numeric($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'string' && !is_string($input[$key]) ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }
+                else if($value == 'date' && strtotime($input[$key]) == false ){
+                    array_push($incorrect_format, $key);
+                    break;
+                }     
+            }
+        }
+
+        //REGLA DE NOGOCIO:
+
+        if (count($incorrect_format)) {
+            //TRANS: %s are the fields concerned
+            $message = sprintf(
+                __('El siguiente campo fue enviado con tipo de dato incorrecto al esperado. Por favor corregir: %s'),
+                implode(", ", $incorrect_format)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+            return false;
+        }else{
+            return $this->checkAppliedBusinessRules($input);
+        }
+
+    }
+
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
         $selector_fields_outrange = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['projects_id'] != 0 && Project::getById($input['projects_id']) == false){
+        else if(array_key_exists('projects_id',$input) && $input['projects_id'] != 0 && Project::getById($input['projects_id']) == false){
             array_push($selector_ids_incorrect,'projects_id');
         }
-        else if($input['projectstates_id'] != 0 && ProjectState::getById($input['projectstates_id']) == false){
+        else if(array_key_exists('projectstates_id',$input) && $input['projectstates_id'] != 0 && ProjectState::getById($input['projectstates_id']) == false){
             array_push($selector_ids_incorrect,'projectstates_id');
         }
-        else if($input['projecttypes_id'] != 0 && ProjectType::getById($input['projecttypes_id']) == false){
+        else if(array_key_exists('projecttypes_id',$input) && $input['projecttypes_id'] != 0 && ProjectType::getById($input['projecttypes_id']) == false){
             array_push($selector_ids_incorrect,'projecttypes_id');
         }
-        else if($input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
+        else if(array_key_exists('groups_id',$input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
             array_push($selector_ids_incorrect,'groups_id');
         }
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Project::getById($input['id']) == false){
+            array_push($selector_ids_incorrect,'project_id');
+        }
+
 
         //----------------------------
         $plannedStartDate = strtotime($input['plan_start_date']);
@@ -2812,27 +2888,20 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
 
         
        
-        if($input['priority'] < 1 || $input['priority'] > 6){
+        if((array_key_exists('priority',$input) && ($input['priority'] < 1 || $input['priority'] > 6))){
             array_push($selector_fields_outrange,'priority');
         }
 
-        if(empty($input['plan_start_date']) || empty($input['plan_end_date']) || 
-        empty($input['real_start_date']) || empty($input['real_end_date']) ){
-            array_push($selector_fields_outrange,'campo de fecha enviado con null');
-        }else{
-            if($plannedStartDate !== false && $plannedEndDate !== false){
-                if($plannedStartDate > $plannedEndDate){
-                    array_push($selector_fields_outrange,"'Planned Date' no debe ser mayor a 'Planned End'");
-                }
-            }else if($realStartDate !== false && $realEndDate !== false){
-                if($realStartDate > $realEndDate){
-                    array_push($selector_fields_outrange,"'Real Date' no debe ser mayor a 'Real End'");
-                }
+       
+        if($plannedStartDate !== false && $plannedEndDate !== false){
+            if($plannedStartDate > $plannedEndDate){
+                array_push($selector_fields_outrange,"'Planned Date' no debe ser mayor a 'Planned End'");
+            }
+        }else if($realStartDate !== false && $realEndDate !== false){
+            if($realStartDate > $realEndDate){
+                array_push($selector_fields_outrange,"'Real Date' no debe ser mayor a 'Real End'");
             }
         }
-
-        
-
         
 
         if(isset($input['percent_done'])){
