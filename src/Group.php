@@ -1197,13 +1197,13 @@ class Group extends CommonTreeDropdown
         
         $selector_ids_incorrect = [];
 
-        if($input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
-        else if($input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
+        else if(array_key_exists('groups_id', $input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
             array_push($selector_ids_incorrect,'groups_id');
         }
-        else if($input['id'] != 0 && Group::getById($input['id']) == false){
+        else if(array_key_exists('id', $input) && $input['id'] != 0 && Group::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'id');
         }
         
