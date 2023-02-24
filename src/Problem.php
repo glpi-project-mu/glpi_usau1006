@@ -1779,6 +1779,11 @@ class Problem extends CommonITILObject
             $timeunixTTR = strtotime($input['time_to_resolve']);
     
             if( $timeunixDate !== false && $timeunixTTR !== false){
+                if($timeunixDate < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Opening Date' no debe ser inferior a '1990-01-01'");
+                }else if($timeunixTTR < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Time to Resolve' no debe ser inferior a '1990-01-01'");
+                }
     
                 if($timeunixDate > $timeunixTTR){
                     array_push($selector_fields_outrange,"'Opening Date' no debe ser mayor a 'Time to Resolve'");

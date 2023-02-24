@@ -1440,6 +1440,7 @@ class SoftwareLicense extends CommonTreeDropdown
 
     public function checkAppliedBusinessRules(array &$input):bool{
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
         
 
         if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
@@ -1483,6 +1484,17 @@ class SoftwareLicense extends CommonTreeDropdown
         }
         else if(array_key_exists('id', $input) && $input['id'] != 0 && SoftwareLicense::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'softwarelicense_id');
+        }
+
+        if(array_key_exists('expire',$input) && !empty($input['expire'])){
+
+            $time = strtotime($input['expire']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'Expiration' no puede ser inferior a '1990-01-01'");
+            }
+            
         }
 
 

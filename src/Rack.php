@@ -1072,6 +1072,7 @@ JAVASCRIPT;
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -1105,10 +1106,39 @@ JAVASCRIPT;
         }
 
         if(array_key_exists('room_orientation', $input) && $input['room_orientation'] < 1 || $input['room_orientation'] > 4){
-            array_push($selector_ids_incorrect,'room_orientation');
+            array_push($selector_fields_outrange,'room_orientation');
         }
+        else if(array_key_exists('number_units',$input) && $input['number_units'] < 1){
+            array_push($selector_fields_outrange,'number_units');
+        }
+        else if(array_key_exists('height',$input) && $input['height'] < 0){
+            array_push($selector_fields_outrange,'height');
+        }
+        else if(array_key_exists('max_power',$input) && $input['max_power'] < 0){
+            array_push($selector_fields_outrange,'max_power');
+        }
+        else if(array_key_exists('max_weight',$input) && $input['max_weight'] < 0){
+            array_push($selector_fields_outrange,'max_weight');
+        }
+        else if(array_key_exists('width',$input) && $input['width'] < 0){
+            array_push($selector_fields_outrange,'width');
+        }
+        else if(array_key_exists('depth',$input) && $input['depth'] < 0){
+            array_push($selector_fields_outrange,'depth');
+        }
+        else if(array_key_exists('mesured_power',$input) && $input['mesured_power'] < 0){
+            array_push($selector_fields_outrange,'mesured_power');
+        }
+
+
        
-       
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
     
         if(count($selector_ids_incorrect)){
             $message = sprintf(
@@ -1118,7 +1148,7 @@ JAVASCRIPT;
             Session::addMessageAfterRedirect($message, false, ERROR);
         }
 
-        if(count($selector_ids_incorrect)){
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
             return false;
         }
         else{

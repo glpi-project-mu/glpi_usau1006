@@ -1751,7 +1751,12 @@ class Change extends CommonITILObject
             $timeunixTTR = strtotime($input['time_to_resolve']);
     
             if( $timeunixDate !== false && $timeunixTTR !== false){
-    
+                if($timeunixDate < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Opening Date' no debe ser inferior a '1990-01-01'");
+                }else if($timeunixTTR < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Time to Resolve' no debe ser inferior a '1990-01-01'");
+                }
+                
                 if($timeunixDate > $timeunixTTR){
                     array_push($selector_fields_outrange,"'Opening Date' no debe ser mayor a 'Time to Resolve'");
                 }
@@ -1766,7 +1771,7 @@ class Change extends CommonITILObject
         else if(array_key_exists('itilcategories_id',$input) && $input['itilcategories_id'] != 0 && ITILCategory::getById($input['itilcategories_id']) == false){
             array_push($selector_ids_incorrect,'itilcategories_id');
         }
-        else if(array_key_exists('id',$input) && $input['id'] != 0 && Problem::getById($input['id']) == false){
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && Change::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'change_id');
         }
         else if(array_key_exists('users_id_recipient',$input) && $input['users_id_recipient'] != 0 && User::getById($input['users_id_recipient']) == false){

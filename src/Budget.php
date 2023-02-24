@@ -1035,7 +1035,7 @@ class Budget extends CommonDropdown
         $selector_fields_outrange = [];
         $selector_ids_incorrect = [];
 
-        if(array_key_exists('value',$input) && $input['value'] > 999999999){
+        if(array_key_exists('value',$input) && ($input['value'] > 999999999 || $input['value'] < 0)){
             array_push($selector_fields_outrange,'value sobrepasó el máximo permitido');
         }
 
@@ -1044,7 +1044,11 @@ class Budget extends CommonDropdown
             $timeunixTTR = strtotime($input['end_date']);
     
             if( $timeunixDate !== false && $timeunixTTR !== false){
-    
+                if($timeunixDate < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Start Date' no debe ser inferior a '1990-01-01'");
+                }else if($timeunixTTR < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'End date' no debe ser inferior a '1990-01-01'");
+                }
                 if($timeunixDate > $timeunixTTR){
                     array_push($selector_fields_outrange,"'Start Date' no debe ser mayor a 'End date'");
                 }

@@ -988,6 +988,7 @@ class Certificate extends CommonDBTM
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -1002,24 +1003,34 @@ class Certificate extends CommonDBTM
             array_push($selector_ids_incorrect,'certificatetypes_id');
         }
         else if(array_key_exists('users_id_tech',$input) && $input['users_id_tech'] != 0 && User::getById($input['users_id_tech']) == false){
-            array_push($selector_fields_outrange,'users_id_tech');
+            array_push($selector_ids_incorrect,'users_id_tech');
         }
         else if(array_key_exists('manufacturers_id',$input) && $input['manufacturers_id'] != 0 && Manufacturer::getById($input['manufacturers_id']) == false){
-            array_push($selector_fields_outrange,'manufacturers_id');
+            array_push($selector_ids_incorrect,'manufacturers_id');
         }
         else if(array_key_exists('groups_id_tech',$input) && $input['groups_id_tech'] != 0 && Group::getById($input['groups_id_tech']) == false){
-            array_push($selector_fields_outrange,'groups_id_tech');
+            array_push($selector_ids_incorrect,'groups_id_tech');
         } 
         else if(array_key_exists('users_id',$input) && $input['users_id'] != 0 && User::getById($input['users_id']) == false){
-            array_push($selector_fields_outrange,'users_id');
+            array_push($selector_ids_incorrect,'users_id');
         }
         else if(array_key_exists('groups_id',$input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
-            array_push($selector_fields_outrange,'groups_id');
+            array_push($selector_ids_incorrect,'groups_id');
         }
         else if(array_key_exists('id',$input) && $input['id'] != 0 && Certificate::getById($input['id']) == false){
-            array_push($selector_fields_outrange,'certificate_id');
+            array_push($selector_ids_incorrect,'certificate_id');
         }
        
+        if(array_key_exists('date_expiration',$input) && !empty($input['date_expiration'])){
+
+            $time = strtotime($input['date_expiration']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'Expiration Date' no puede ser inferior a '1990-01-01'");
+            }
+            
+        }
         
     
         if(count($selector_ids_incorrect)){

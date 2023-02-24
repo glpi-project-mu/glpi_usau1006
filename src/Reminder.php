@@ -1296,6 +1296,12 @@ class Reminder extends CommonDBVisible implements
         }
         else if( $timeunixDate !== false && $timeunixTTR !== false){
 
+            if($timeunixDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Begin Date' no debe ser inferior a '1990-01-01'");
+            }else if($timeunixTTR < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'End Date' no debe ser inferior a '1990-01-01'");
+            }
+
             if($timeunixDate > $timeunixTTR){
                 array_push($selector_fields_outrange,"'Begin Date' no debe ser mayor a 'End Date'");
             }

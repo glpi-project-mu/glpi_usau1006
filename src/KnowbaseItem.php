@@ -2604,7 +2604,7 @@ class KnowbaseItem extends CommonDBVisible implements ExtraVisibilityCriteria
         else if(array_key_exists('users_id',$input) && $input['users_id'] != 0 && User::getById($input['users_id']) == false){
             array_push($selector_ids_incorrect,'users_id');
         }
-        else if(array_key_exists('id',$input) && $input['id'] != 0 && User::getById($input['id']) == false){
+        else if(array_key_exists('id',$input) && $input['id'] != 0 && KnowbaseItem::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'knowbaseitem_id');
         }
         
@@ -2612,6 +2612,12 @@ class KnowbaseItem extends CommonDBVisible implements ExtraVisibilityCriteria
         $timeunixTTR = strtotime($input['end_date']);
 
         if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Begin Date' no debe ser inferior a '1990-01-01'");
+            }else if($timeunixTTR < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'End Date' no debe ser inferior a '1990-01-01'");
+            }
 
             if($timeunixDate > $timeunixTTR){
                 array_push($selector_fields_outrange,"'Visible Since' no debe ser mayor a 'Visible Until'");

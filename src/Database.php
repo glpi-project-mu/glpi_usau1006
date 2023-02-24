@@ -670,8 +670,18 @@ class Database extends CommonDBChild
             array_push($selector_ids_incorrect,'database_id');
         }
        
-        if(array_key_exists('size',$input) && $input['size'] > 99999){
-            array_push($selector_fields_outrange,"Size MB no debe ser mayor a '99999'");
+        if(array_key_exists('size',$input) && ($input['size'] > 99999 || $input['size'] < 0) ){
+            array_push($selector_fields_outrange,"Size MB está fuera de su rango");
+        }
+        if(array_key_exists('date_lastbackup',$input) && !empty($input['date_lastbackup'])){
+
+            $time = strtotime($input['date_lastbackup']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'Last backup date ' no puede ser inferior a '1990-01-01'");
+            }
+            
         }
     
         if(count($selector_ids_incorrect)){

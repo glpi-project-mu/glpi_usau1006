@@ -2879,6 +2879,17 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
             array_push($selector_ids_incorrect,'project_id');
         }
 
+        if(array_key_exists('date',$input) && !empty($input['date'])){
+
+            $time = strtotime($input['date']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'Creation Date' no puede ser inferior a '1990-01-01'");
+            }
+            
+        }
+
 
         //----------------------------
         $plannedStartDate = strtotime($input['plan_start_date']);
@@ -2894,10 +2905,24 @@ class Project extends CommonDBTM implements ExtraVisibilityCriteria
 
        
         if($plannedStartDate !== false && $plannedEndDate !== false){
+
+            if($plannedStartDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Planned Date' no debe ser inferior a '1990-01-01'");
+            }else if($plannedEndDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Planned End' no debe ser inferior a '1990-01-01'");
+            }
+
             if($plannedStartDate > $plannedEndDate){
                 array_push($selector_fields_outrange,"'Planned Date' no debe ser mayor a 'Planned End'");
             }
         }else if($realStartDate !== false && $realEndDate !== false){
+
+            if($realStartDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Real Date' no debe ser inferior a '1990-01-01'");
+            }else if($realEndDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Real End' no debe ser inferior a '1990-01-01'");
+            }
+
             if($realStartDate > $realEndDate){
                 array_push($selector_fields_outrange,"'Real Date' no debe ser mayor a 'Real End'");
             }

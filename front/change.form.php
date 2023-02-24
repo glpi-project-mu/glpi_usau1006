@@ -54,10 +54,10 @@ $change = new Change();
 if (isset($_POST["add"])) {
     $change->check(-1, CREATE, $_POST);
 
-    $newID = HandlerSubmitForm::add($change, 'control_queue_changes'); 
+    $newId = HandlerSubmitForm::add($change, 'control_queue_changes'); 
     if($newId){
         Event::log(
-            $newID,
+            $newId,
             "change",
             4,
             "maintain",

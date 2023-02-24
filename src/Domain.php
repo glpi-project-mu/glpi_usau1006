@@ -981,9 +981,14 @@ class Domain extends CommonDBTM
             $timeunixTTR = strtotime($input['date_expiration']);
     
             if( $timeunixDate !== false && $timeunixTTR !== false){
-    
+                if($timeunixDate < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Registration Date' no debe ser inferior a '1990-01-01'");
+                }else if($timeunixTTR < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Expiration Date' no debe ser inferior a '1990-01-01'");
+                }
+
                 if($timeunixDate > $timeunixTTR){
-                    array_push($selector_fields_outrange,"'DomainCreation' no puede ser mayor a 'DateExpiration'");
+                    array_push($selector_fields_outrange,"'Registration Date' no puede ser mayor a 'Expiration Date'");
                 }
             }
         }

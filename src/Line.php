@@ -245,7 +245,9 @@ class Line extends CommonDBTM
             }else{
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -304,7 +306,7 @@ class Line extends CommonDBTM
             'users_id' => 'number',
             'groups_id' => 'number',
             'comment' => 'string',
-            'caller_num' => 'string',
+            'caller_num' => 'number',
             'caller_name' => 'string',
             'lineoperators_id' => 'number',
             'id' => 'number'
@@ -316,7 +318,9 @@ class Line extends CommonDBTM
             if(array_key_exists($key,$input)){
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -354,25 +358,25 @@ class Line extends CommonDBTM
             array_push($selector_ids_incorrect,'entities_id');
         }
         else if(array_key_exists('states_id',$input) && $input['states_id'] != 0 && State::getById($input['states_id']) == false){
-            array_push($selector_fields_outrange,'states_id');
+            array_push($selector_ids_incorrect,'states_id');
         }
         else if(array_key_exists('locations_id',$input) && $input['locations_id'] != 0 && Location::getById($input['locations_id']) == false){
-            array_push($selector_fields_outrange,'locations_id');
+            array_push($selector_ids_incorrect,'locations_id');
         }
         else if(array_key_exists('linetypes_id',$input) && $input['linetypes_id'] != 0 && LineType::getById($input['linetypes_id']) == false){
-            array_push($selector_fields_outrange,'linetypes_id');
+            array_push($selector_ids_incorrect,'linetypes_id');
         }
         else if(array_key_exists('users_id',$input) && $input['users_id'] != 0 && User::getById($input['users_id']) == false){
-            array_push($selector_fields_outrange,'users_id');
+            array_push($selector_ids_incorrect,'users_id');
         }
         else if(array_key_exists('groups_id',$input) && $input['groups_id'] != 0 && Group::getById($input['groups_id']) == false){
-            array_push($selector_fields_outrange,'groups_id');
+            array_push($selector_ids_incorrect,'groups_id');
         }
         else if(array_key_exists('lineoperators_id',$input) && $input['lineoperators_id'] != 0 && LineOperator::getById($input['lineoperators_id']) == false){
-            array_push($selector_fields_outrange,'lineoperators_id');
+            array_push($selector_ids_incorrect,'lineoperators_id');
         }
         else if(array_key_exists('id',$input) && $input['id'] != 0 && Line::getById($input['id']) == false){
-            array_push($selector_fields_outrange,'line_id');
+            array_push($selector_ids_incorrect,'line_id');
         }
         
         

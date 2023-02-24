@@ -212,7 +212,12 @@ class RecurrentChange extends CommonITILRecurrent
             $timeunixTTR = strtotime($input['end_date']);
     
             if( $timeunixDate !== false && $timeunixTTR !== false){
-    
+                if($timeunixDate < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'Start Date' no debe ser inferior a '1990-01-01'");
+                }else if($timeunixTTR < strtotime('1990-01-01')){
+                    array_push($selector_fields_outrange,"'End Date' no debe ser inferior a '1990-01-01'");
+                }
+                
                 if($timeunixDate > $timeunixTTR){
                     array_push($selector_fields_outrange,"'Star Date' no debe ser mayor a a 'End Date'");
                 }

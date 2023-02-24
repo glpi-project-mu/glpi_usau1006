@@ -1007,6 +1007,7 @@ class Consumable extends CommonDBChild
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -1029,7 +1030,21 @@ class Consumable extends CommonDBChild
         else if(array_key_exists('id', $input) && $input['id'] != 0 && Consumable::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'consumable_id');
         }
+
+        if(array_key_exists('alarm_threshold', $input) && ($input['alarm_threshold'] > 100 || $input['alarm_threshold'] < -1)){
+            array_push($selector_fields_outrange,'alarm_threshold');
+        }
+        else if(array_key_exists('stock_target', $input) && $input['stock_target'] < 0 ){
+            array_push($selector_fields_outrange,'stock_target');
+        }
         
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
     
         if(count($selector_ids_incorrect)){
             $message = sprintf(
@@ -1039,7 +1054,7 @@ class Consumable extends CommonDBChild
             Session::addMessageAfterRedirect($message, false, ERROR);
         }
 
-        if(count($selector_ids_incorrect)){
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
             return false;
         }
         else{

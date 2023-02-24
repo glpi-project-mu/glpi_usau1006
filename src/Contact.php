@@ -490,15 +490,15 @@ class Contact extends CommonDBTM
             'firstname' => 'string',
             'contacttypes_id' => 'number',
             'usertitles_id' => 'number',
-            'registration_number' => 'string',
-            'phone' => 'string',
-            'phone2' => 'string',
-            'mobile' => 'string',
+            'registration_number' => 'number',
+            'phone' => 'number',
+            'phone2' => 'number',
+            'mobile' => 'number',
             'fax' => 'string',
             'email' => 'string',
             'address' => 'string',
             'town' => 'string',
-            'postcode' => 'string',
+            'postcode' => 'number',
             'state' => 'string',
             'country' => 'string',
             'comment' => 'string',
@@ -513,7 +513,9 @@ class Contact extends CommonDBTM
             }else{
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -566,15 +568,15 @@ class Contact extends CommonDBTM
             'firstname' => 'string',
             'contacttypes_id' => 'number',
             'usertitles_id' => 'number',
-            'registration_number' => 'string',
-            'phone' => 'string',
-            'phone2' => 'string',
-            'mobile' => 'string',
+            'registration_number' => 'number',
+            'phone' => 'number',
+            'phone2' => 'number',
+            'mobile' => 'number',
             'fax' => 'string',
             'email' => 'string',
             'address' => 'string',
             'town' => 'string',
-            'postcode' => 'string',
+            'postcode' => 'number',
             'state' => 'string',
             'country' => 'string',
             'comment' => 'string',
@@ -587,7 +589,9 @@ class Contact extends CommonDBTM
             if(array_key_exists($key,$input)){
                  //Si la key existe en $_POST
                  if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){

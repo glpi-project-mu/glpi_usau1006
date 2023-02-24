@@ -7121,6 +7121,16 @@ JAVASCRIPT;
         else if(array_key_exists('actiontime',$input) && ($input['actiontime'] < 0 || $input['actiontime'] > 86400 )){
             array_push($selector_fields_outrange,'actiontime/total duration');
         }
+        else if(array_key_exists('date',$input) && !empty($input['date'])){
+
+            $time = strtotime($input['date']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'date' no puede ser inferior a '1990-01-01'");
+            }
+            
+        }
 
         $selector_ids_incorrect = [];
 

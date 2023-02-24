@@ -412,6 +412,7 @@ class Enclosure extends CommonDBTM
     public function checkAppliedBusinessRules(array &$input):bool{
         
         $selector_ids_incorrect = [];
+        $selector_fields_outrange = [];
 
         if(array_key_exists('entities_id', $input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
@@ -437,8 +438,18 @@ class Enclosure extends CommonDBTM
         else if(array_key_exists('id', $input) && $input['id'] != 0 && Enclosure::getById($input['id']) == false){
             array_push($selector_ids_incorrect,'enclosure_id');
         }
+
+        if(array_key_exists('power_supplies', $input) && ($input['power_supplies'] < 0)){
+            array_push($selector_fields_outrange,'power_supplies');
+        }
         
-       
+        if(count($selector_fields_outrange)){
+            $message = sprintf(
+                __('Se detectó al menos un campo fuera de su rango establecido. Por favor corregir: %s'),
+                implode(", ", $selector_fields_outrange)
+            );
+            Session::addMessageAfterRedirect($message, false, WARNING);
+        }
         if(count($selector_ids_incorrect)){
             $message = sprintf(
                 __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),
@@ -447,7 +458,7 @@ class Enclosure extends CommonDBTM
             Session::addMessageAfterRedirect($message, false, ERROR);
         }
 
-        if(count($selector_ids_incorrect)){
+        if(count($selector_fields_outrange) || count($selector_ids_incorrect)){
             return false;
         }
         else{

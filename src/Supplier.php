@@ -619,14 +619,14 @@ class Supplier extends CommonDBTM
             //'is_recursive' => '',
             'name' => 'string',
             'suppliertypes_id' => 'number',
-            'registration_number' => 'string',
-            'phonenumber' => 'string',
+            'registration_number' => 'number',
+            'phonenumber' => 'number',
             'fax' => 'string',
             'website' => 'string',
             'email' => 'string',
             'address' => 'string',
             'town' => 'string',
-            'postcode' => 'string',
+            'postcode' => 'number',
             'state' => 'string',
             'country' => 'string',
             'comment' => 'string',
@@ -642,7 +642,9 @@ class Supplier extends CommonDBTM
             }else{
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -697,14 +699,14 @@ class Supplier extends CommonDBTM
             //'is_recursive' => '',
             'name' => 'string',
             'suppliertypes_id' => 'number',
-            'registration_number' => 'string',
-            'phonenumber' => 'string',
+            'registration_number' => 'number',
+            'phonenumber' => 'number',
             'fax' => 'string',
             'website' => 'string',
             'email' => 'string',
             'address' => 'string',
             'town' => 'string',
-            'postcode' => 'string',
+            'postcode' => 'number',
             'state' => 'string',
             'country' => 'string',
             'comment' => 'string',
@@ -718,7 +720,9 @@ class Supplier extends CommonDBTM
             if(array_key_exists($key,$input)){
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -761,7 +765,7 @@ class Supplier extends CommonDBTM
             array_push($selector_ids_incorrect,'supplier_id');
         }
         
-        
+
         if(count($selector_ids_incorrect)){
             $message = sprintf(
                 __('Se detectó al menos un campo con Id incorrecto. Por favor corregir: %s'),

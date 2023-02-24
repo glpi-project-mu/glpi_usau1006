@@ -69,7 +69,7 @@ if (isset($_POST["add"])) {
         if ($_SESSION['glpibackcreated'] && (!isset($_POST['itemtype']) || !isset($_POST['items_id']))) {
             Html::redirect($doc->getLinkURL());
         }
-    } else if (HandlerSubmitForm::add($doc, 'control_queue_documents')) {
+    } else if ($newID = HandlerSubmitForm::add($doc, 'control_queue_documents')) {
         Event::log(
             $newID,
             "documents",

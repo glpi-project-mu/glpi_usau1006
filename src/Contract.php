@@ -1789,11 +1789,11 @@ class Contract extends CommonDBTM
             'states_id' => 'number',
             'contracttypes_id' => 'number',
             'comment' => 'string',
-            'begin_date' => 'date',
-            'num' => 'string',
+            'begin_date' => '',
+            'num' => 'number',
             'duration' => 'number', //up to 120
             'notice' => 'number',//up to 120
-            'accounting_number' => 'string',
+            'accounting_number' => 'number',
             'periodicity' => 'number', //up to 60
             'billing' => 'number',
             'renewal' => 'number',//0 - 2
@@ -1819,7 +1819,9 @@ class Contract extends CommonDBTM
             }else{
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -1880,11 +1882,11 @@ class Contract extends CommonDBTM
             'states_id' => 'number',
             'contracttypes_id' => 'number',
             'comment' => 'string',
-            'begin_date' => 'date',
-            'num' => 'string',
+            'begin_date' => '',
+            'num' => 'number',
             'duration' => 'number', //up to 120
             'notice' => 'number',//up to 120
-            'accounting_number' => 'string',
+            'accounting_number' => 'number',
             'periodicity' => 'number', //up to 60
             'billing' => 'number',
             'renewal' => 'number',//0 - 2
@@ -1908,7 +1910,9 @@ class Contract extends CommonDBTM
             if(array_key_exists($key,$input)){
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -1968,6 +1972,17 @@ class Contract extends CommonDBTM
             array_push($selector_fields_outrange,'periodicity fuera de rango');
         }else if(array_key_exists('renewal',$input) && $input['renewal'] > 2 || $input['renewal'] < 0 ){
             array_push($selector_fields_outrange,'renewal fuera de rango');
+        }
+
+        if(array_key_exists('begin_date',$input) && !empty($input['begin_date'])){
+
+            $time = strtotime($input['begin_date']);
+            $min_time = strtotime('1990-01-01');
+            
+            if($time != false && $time < $min_time){
+                array_push($selector_fields_outrange,"'Start Date' no puede ser inferior a '1990-01-01'");
+            }
+            
         }
 
         

@@ -2559,6 +2559,7 @@ HTML;
             echo "<td><label for='showdate$untilrand'>" . __('Valid until') . "</label></td><td>";
             Html::showDateTimeField("end_date", ['value'       => $this->fields["end_date"],
                 'rand'        => $untilrand,
+                'required' => 'true',
                 //'maybeempty'  => true,
                 'max' => '2099-12-31',
                 'min' => '1990-01-01',
@@ -6544,11 +6545,11 @@ HTML;
             //'_useremails' => 'string',
             'begin_date' => 'date',
             'end_date' => 'date',
-            'phone' => 'string',
-            'mobile' => 'string',
+            'phone' => 'number',
+            'mobile' => 'number',
             'usercategories_id' => 'number',
-            'phone2' => 'string',
-            'comment' => 'string',
+            'phone2' => 'number',
+            'comment' => 'number',
             'registration_number' => 'string',
             'usertitles_id' => 'number',
             '_is_recursive' => 'bool',
@@ -6565,7 +6566,9 @@ HTML;
             }else{
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -6629,12 +6632,12 @@ HTML;
             //'_useremails' => 'string',
             'begin_date' => 'date',
             'end_date' => 'date',
-            'phone' => 'string',
-            'mobile' => 'string',
+            'phone' => 'number',
+            'mobile' => 'number',
             'usercategories_id' => 'number',
-            'phone2' => 'string',
+            'phone2' => 'number',
             'comment' => 'string',
-            'registration_number' => 'string',
+            'registration_number' => 'number',
             'usertitles_id' => 'number',
             
             'locations_id' => 'number',
@@ -6652,7 +6655,9 @@ HTML;
             if(array_key_exists($key,$input)){
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
+                    if(!empty($input[$key])){
+                        array_push($incorrect_format, $key);
+                    }
                     break;
                 }
                 else if($value == 'string' && !is_string($input[$key]) ){
@@ -6724,6 +6729,12 @@ HTML;
         $timeunixTTR = strtotime($input['end_date']);
 
         if( $timeunixDate !== false && $timeunixTTR !== false){
+
+            if($timeunixDate < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Visible Since' no debe ser inferior a '1990-01-01'");
+            }else if($timeunixTTR < strtotime('1990-01-01')){
+                array_push($selector_fields_outrange,"'Visible Until' no debe ser inferior a '1990-01-01'");
+            }
 
             if($timeunixDate > $timeunixTTR){
                 array_push($selector_fields_outrange,"'Visible Since' no debe ser mayor a 'Visible Until'");
