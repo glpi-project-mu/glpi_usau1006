@@ -29,6 +29,7 @@
  */
 
 include('../../../inc/includes.php');
+include('../../../src/Toolbox/HandlerSubmitForm.php');
 
 $dropdown = new PluginOauthimapApplication();
 
