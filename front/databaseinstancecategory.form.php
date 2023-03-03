@@ -35,7 +35,7 @@
 
 include('../inc/includes.php');
 include('../src/Toolbox/HandlerSubmitForm.php');
-include('../src/Toolbox/HandlerSubmitForm.php');
+
 
 $dropdown = new DatabaseInstanceCategory();
 include(GLPI_ROOT . "/front/dropdown.common.form.php");
