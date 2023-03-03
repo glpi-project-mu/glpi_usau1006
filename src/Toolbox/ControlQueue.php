@@ -60,7 +60,7 @@ Class ControlQueue {
 
             if (
                 (($time2 - $time1 === 0) && ($time3 - $time1 === 0))
-                || ($time3 - $time2 === 0)
+                //|| ($time3 - $time2 === 0)
                 ) 
             {
                 return true;

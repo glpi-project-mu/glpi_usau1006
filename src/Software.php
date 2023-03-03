@@ -1157,7 +1157,7 @@ class Software extends CommonDBTM
         $incorrect_format = [];
 
         $fields_necessary = [
-        'entities_id' => 'number',		
+        //'entities_id' => 'number',		
         '_glpi_csrf_token' => 'string',		
         //'is_recursive' => 'bool',		
         'name' => 'string',

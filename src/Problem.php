@@ -1619,7 +1619,7 @@ class Problem extends CommonITILObject
         '_predefined_fields' => 'string',		
         'name' => 'string',		
         'content' => 'string',		
-        'entities_id' => 'number',
+        //'entities_id' => 'number',
         //'is_recursive' => 'number',		
         'date' => '',
         'time_to_resolve' => '',		

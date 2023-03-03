@@ -1782,7 +1782,7 @@ class Contract extends CommonDBTM
         $incorrect_format = [];
 
         $fields_necessary = [
-            'entities_id' => 'number',
+            //'entities_id' => 'number',
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
             'name' => 'string',
@@ -1833,7 +1833,7 @@ class Contract extends CommonDBTM
                     break;
                 }
                 else if($value == 'date' && strtotime($input[$key]) == false ){
-                    array_push($incorrect_format, 'Start Date');
+                    array_push($incorrect_format, $key);
                     break;
                 }
                 
@@ -1924,7 +1924,7 @@ class Contract extends CommonDBTM
                     break;
                 }
                 else if($value == 'date' && strtotime($input[$key]) == false ){
-                    array_push($incorrect_format, 'Start Date');
+                    array_push($incorrect_format, $key);
                     break;
                 }
             }

@@ -141,7 +141,7 @@ class Item_DeviceSimcard extends Item_Devices
         $incorrect_format = [];
 
         $fields_necessary = [
-            'entities_id' => 'number',
+            //'entities_id' => 'number',
             '_glpi_csrf_token' => 'string',
             'itemtype' => '',
             'devicesimcards_id' => 'number',

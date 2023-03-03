@@ -7008,7 +7008,7 @@ JAVASCRIPT;
         '_predefined_fields' => 'string',		
         'name' => 'string',		
         'content' => 'string',		
-        'entities_id' => 'number',		
+        //'entities_id' => 'number',		
         'date' => '',		
         'type' => 'number',		
         'itilcategories_id' => 'number',		
