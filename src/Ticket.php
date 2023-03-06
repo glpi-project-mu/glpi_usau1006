@@ -954,7 +954,9 @@ class Ticket extends CommonITILObject
             || Session::getCurrentInterface() == 'central'
         ) {
             $this->addStandardTab('Log', $ong, $options);
+            $this->addStandardTab('User_Log', $ong, $options);
         }
+        
 
         return $ong;
     }
