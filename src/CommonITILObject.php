@@ -4253,7 +4253,7 @@ abstract class CommonITILObject extends CommonDBTM
             'field'              => 'name',
             'datatype'           => 'dropdown',
             'right'              => 'own_ticket',
-            'name'               => __('Technician'),
+            'name'               => __('Technician'),//punto de guardado
             'forcegroupby'       => true,
             'massiveaction'      => false,
             'joinparams'         => [

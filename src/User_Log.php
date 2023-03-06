@@ -81,7 +81,7 @@ class User_Log extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return __('Historical Users');
+        return __('Assignment History');
     }
 
 
@@ -93,7 +93,9 @@ class User_Log extends CommonDBTM
             $nb = countElementsInTable(
                 'glpi_logs',
                 ['itemtype' => $item->getType(),
-                    'items_id' => $item->getID()
+                    'items_id' => $item->getID(),
+                    'itemtype_link' => ['User','Group'],
+                    'id_search_option' => [5,8]
                 ]
             );
         }
@@ -305,8 +307,10 @@ class User_Log extends CommonDBTM
         $sql_filters = self::convertFiltersValuesToSqlCriteria($filters);
 
        // Total Number of events
-        $total_number    = countElementsInTable("glpi_logs", ['items_id' => $items_id, 'itemtype' => $itemtype ]);
-        $filtered_number = countElementsInTable("glpi_logs", ['items_id' => $items_id, 'itemtype' => $itemtype ] + $sql_filters);
+        $total_number    = countElementsInTable("glpi_logs", ['items_id' => $items_id, 'itemtype' => $itemtype,'itemtype_link' => ['User','Group'],
+        'id_search_option' => [5,8] ]);
+        $filtered_number = countElementsInTable("glpi_logs", ['items_id' => $items_id, 'itemtype' => $itemtype,'itemtype_link' => ['User','Group'],
+        'id_search_option' => [5,8] ] + $sql_filters);
 
         TemplateRenderer::getInstance()->display('components/logs.html.twig', [
             'total_number'      => $total_number,
@@ -363,7 +367,8 @@ class User_Log extends CommonDBTM
             'WHERE'  => [
                 'items_id'  => $items_id,
                 'itemtype'  => $itemtype,
-                'itemtype_link' => 'User'
+                'itemtype_link' => ['User','Group'],
+                'id_search_option' => [5,8] //osea technician
             ] + $sqlfilters,
             'ORDER'  => 'id DESC'
         ];
