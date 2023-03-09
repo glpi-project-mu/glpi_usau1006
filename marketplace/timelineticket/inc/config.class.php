@@ -61,6 +61,7 @@ class PluginTimelineticketConfig extends CommonDBTM {
 
       echo Html::submit(_sx('button', 'Reconstruct states timeline for all tickets', 'timelineticket'), ['name' => 'reconstructStates', 'class' => 'btn btn-primary']);
       echo Html::submit(_sx('button', 'Reconstruct groups timeline for all tickets', 'timelineticket'), ['name' => 'reconstructGroups', 'class' => 'btn btn-primary']);
+      echo Html::submit(_sx('button', 'Reconstruct users timeline for all tickets', 'timelineticket'), ['name' => 'reconstructUsers', 'class' => 'btn btn-primary']);
       echo "<br/><br/><div class='alert alert-important alert-warning d-flex'>";
       echo  __('Warning : it may be that the reconstruction of groups does not reflect reality because it concern only groups which have the Requester flag to No and Assigned flag to Yes', 'timelineticket');
       echo "</div>";
