@@ -422,5 +422,71 @@ class PluginTimelineticketAssignUser extends CommonDBTM {
       $ptAssignUser->update($input);
 
    }
+
+   function reconstrucTimeline($id = 0) {
+      global $DB;
+
+      if ($id == 0 ) {
+         $query = "TRUNCATE `" . $this->getTable() . "`";
+         $DB->query($query);
+      } else {
+         $query = "DELETE FROM `" . $this->getTable() . "` 
+                  WHERE `tickets_id` = $id";
+         $DB->query($query);
+      }
+      $where = "";
+      if ($id > 0 ) {
+         $where = "WHERE `id` = $id ";
+      }
+      $query  = "SELECT `id`
+               FROM `glpi_tickets` $where";
+      $result = $DB->query($query);
+
+      while ($data = $DB->fetchArray($result)) {
+
+         $queryUser = "SELECT * FROM `glpi_logs`";
+         $queryUser .= " WHERE `itemtype_link` = 'User'";
+         $queryUser .= " AND `items_id` = " . $data['id'];
+         $queryUser .= " AND `itemtype` = 'Ticket'";
+         $queryUser .= " AND id_search_option in (0,5)";//ticket assigned to: user technician
+         $queryUser .= " ORDER BY date_mod ASC";
+
+         $resultUser = $DB->query($queryUser);
+
+         if ($resultUser) {
+            while ($dataUser = $DB->fetchArray($resultUser)) {
+               if ($dataUser['new_value'] != null) {
+                  $start     = Toolbox::strpos($dataUser['new_value'], "(");
+                  $end       = Toolbox::strpos($dataUser['new_value'], ")");
+                  $length    = $end - $start;
+                  $users_id = Toolbox::substr($dataUser['new_value'], $start + 1, $length - 1);
+
+                  $user = new User();
+                  if ($user->getFromDB($users_id)) {
+                  
+                        $ticket = new Ticket();
+                        $ticket->getFromDB($data['id']);
+                        $this->createUser($ticket, $dataUser['date_mod'], $users_id, 'new');
+                     
+                  }
+               } else if ($dataUser['old_value'] != null) {
+                  $start     = Toolbox::strpos($dataUser['old_value'], "(");
+                  $end       = Toolbox::strpos($dataUser['old_value'], ")");
+                  $length    = $end - $start;
+                  $users_id = Toolbox::substr($dataUser['old_value'], $start + 1, $length - 1);
+
+                  $user = new User();
+                  if ($user->getFromDB($users_id)) {
+                     
+                        $ticket = new Ticket();
+                        $ticket->getFromDB($data['id']);
+                        $this->createUser($ticket, $dataUser['date_mod'], $users_id, 'delete');
+                     
+                  }
+               }
+            }
+         }
+      }
+   }
 }
 

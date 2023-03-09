@@ -61,11 +61,20 @@ if (Session::haveRight("config", READ)
       $ptGroup->reconstrucTimeline();
       Html::back();
 
-   } else if (isset($_POST["reconstructTicket"])) {
+   } else if (isset($_POST["reconstructUsers"])){
+      ini_set("max_execution_time", "0");
+      ini_set("memory_limit", "-1");
+      $ptUser = new PluginTimelineticketAssignUser();
+      $ptUser->reconstrucTimeline();
+      Html::back();
+   } 
+   else if (isset($_POST["reconstructTicket"])) {
       ini_set("max_execution_time", "0");
       ini_set("memory_limit", "-1");
       $ptState = new PluginTimelineticketState();
       $ptState->reconstructTimeline($_POST['tickets_id']);
+      $ptUser = new PluginTimelineticketAssignUser();
+      $ptUser->reconstrucTimeline($_POST['tickets_id']);
       $ptGroup = new PluginTimelineticketAssignGroup();
       $ptGroup->reconstrucTimeline($_POST['tickets_id']);
       Html::back();
