@@ -501,6 +501,7 @@ class PluginTimelineticketAssignGroup extends CommonDBTM {
          $queryGroup .= " WHERE `itemtype_link` = 'Group'";
          $queryGroup .= " AND `items_id` = " . $data['id'];
          $queryGroup .= " AND `itemtype` = 'Ticket'";
+         $queryGroup .= " AND id_search_option in (0,8)";//ticket assigned to: technician groups
          $queryGroup .= " ORDER BY date_mod ASC";
 
          $resultGroup = $DB->query($queryGroup);
