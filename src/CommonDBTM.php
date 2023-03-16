@@ -1267,9 +1267,15 @@ class CommonDBTM extends CommonGLPI
             // Save this data to be available if add fail
             $this->saveInput();
 
-            if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
-                return false;
+            //If input is not from LDAP
+            if(!array_key_exists('user_dn',$this->input) || !array_key_exists('_ldap_rules',$this->input)){
+                
+                if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
+                    return false;
+                }
             }
+
+            
         }
 
         if (isset($this->input['add'])) {
