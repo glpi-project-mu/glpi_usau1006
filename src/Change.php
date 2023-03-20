@@ -1601,6 +1601,14 @@ class Change extends CommonITILObject
             'checklistcontent' => '',		
             ];
 
+        //Si no tenemos permiso para asignar validacion lo quitamos
+        $rightname = TicketValidation::$rightname;
+        $rightvalue = ($input['type'] == Ticket::INCIDENT_TYPE)? TicketValidation::CREATEINCIDENT : TicketValidation::CREATEREQUEST;
+        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id'])){
+            unset($fields_necessary['validatortype']);
+            unset($fields_necessary['_add_validation']);
+        }
+
 
         foreach($fields_necessary as $key => $value){
             

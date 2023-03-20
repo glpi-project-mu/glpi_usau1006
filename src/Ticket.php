@@ -2445,7 +2445,7 @@ class Ticket extends CommonITILObject
         $rightname = ITILFollowup::$rightname;
 
         return (
-            Profile::haveUserRight($user_id, $rightname, ITILFollowup::ADDMYTICKET, $entity_id)
+            Profile::haveUserRight($user_id, $rightname, ITILFollowup::ADDMYTICKET, $entity_id)//checkpoint
             && ($this->isUser(CommonITILActor::REQUESTER, $user_id)
                || (
                   isset($this->fields['users_id_recipient'])
@@ -7009,37 +7009,61 @@ JAVASCRIPT;
         '_tickettemplate' => 'number',		
         '_predefined_fields' => 'string',		
         'name' => 'string',		
-        'content' => 'string',		
-        //'entities_id' => 'number',		
+        'content' => 'string',			
         'date' => '',		
-        'type' => 'number',		
+        'type' => 'number',
         'itilcategories_id' => 'number',		
         'status' => 'number',		
         'requesttypes_id' => 'number',		
         'urgency' => 'number',		
         'impact' => 'number',		
-        'priority' => 'number',		
-        //'locations_id' => 'number',		
-        //'_contracts_id' => 'number',		
-        'actiontime' => 'number',		
-        'validatortype' => 'string',		
-        '_add_validation' => 'number',	
+        'actiontime' => 'number',
+
+        'priority' => 'number',
+
+        'validatortype' => 'string',
+        '_add_validation' => 'number',
+
         '_notifications_actorname' => '',		
         '_notifications_actortype' => '',		
         '_notifications_actorindex' => '',		
         '_notifications_alternative_email' => '',		
+        
         'my_items' => '',		
         'itemtype' => 'string',		
+        
         'items_id' => 'number',		
-        //'time_to_own' => '',		
         'slas_id_tto' => 'number',		
-        //'time_to_resolve' => '',		
         'slas_id_ttr' => 'number',		
-        //'internal_time_to_own' => '',		
         'olas_id_tto' => 'number',		
-        //'internal_time_to_resolve' => '',		
         'olas_id_ttr' => 'number'
         ];
+
+        //Quitamos los fields generales segun el perfil
+
+        //Si no tenemos permiso para asignar validacion lo quitamos
+        $rightname = TicketValidation::$rightname;
+        $rightvalue = ($input['type'] == Ticket::INCIDENT_TYPE)? TicketValidation::CREATEINCIDENT : TicketValidation::CREATEREQUEST;
+        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id'])){
+            unset($fields_necessary['validatortype']);
+            unset($fields_necessary['_add_validation']);
+        }
+
+        //Si no tenemos permiso para asignar activos lo quitamos
+        $can_add_items = $_SESSION["glpiactiveprofile"]["helpdesk_hardware"] & pow(2, Ticket::HELPDESK_MY_HARDWARE) || $_SESSION["glpiactiveprofile"]["helpdesk_hardware"] & pow(2, Ticket::HELPDESK_ALL_HARDWARE);
+        if(!$can_add_items){
+            unset($fields_necessary['my_items']);
+            unset($fields_necessary['itemtype']);
+        }
+
+        //si no tenemos permiso para cambiar la prioridad lo quitamos
+        $canpriority   = (bool) Session::haveRight(self::$rightname, self::CHANGEPRIORITY);
+        if(!$canpriority){
+            unset($fields_necessary['priority']);
+        }
+
+
+        //unset($fields_necessary['validatortype']);
 
         
         foreach($fields_necessary as $key => $value){
