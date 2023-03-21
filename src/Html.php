@@ -3850,13 +3850,13 @@ JS;
                // inline toolbar configuration
                menubar: false,
                toolbar: richtext_layout == 'classic'
-                  ? 'bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link | fullscreen'
+                  ? 'styles | bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link | fullscreen'
                   : false,
                quickbars_insert_toolbar: richtext_layout == 'inline'
                   ? 'emoticons quicktable quickimage quicklink | bullist numlist | outdent indent '
                   : false,
                quickbars_selection_toolbar: richtext_layout == 'inline'
-                  ? 'bold italic | forecolor backcolor '
+                  ? 'bold italic | styles | forecolor backcolor '
                   : false,
                contextmenu: richtext_layout == 'classic'
                   ? false
