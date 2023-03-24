@@ -1604,29 +1604,37 @@ class Change extends CommonITILObject
         //Si no tenemos permiso para asignar validacion lo quitamos
         $rightname = TicketValidation::$rightname;
         $rightvalue = ($input['type'] == Ticket::INCIDENT_TYPE)? TicketValidation::CREATEINCIDENT : TicketValidation::CREATEREQUEST;
-        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id'])){
+        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id']?? 0)){
             unset($fields_necessary['validatortype']);
             unset($fields_necessary['_add_validation']);
         }
 
 
+        //unset($fields_necessary['validatortype']);
+        /** @var CommonDBTM $assignedtemplate */
+        $assignedtemplate = unserialize($_SESSION['current_itil_template']);
+
         foreach($fields_necessary as $key => $value){
             
-            if(!isset($input[$key])){
-                array_push($mandatory_missing, $key);
-                break; 
-            }else{
-                //Si la key existe en $_POST
+            if(!$assignedtemplate->isHiddenField($key)){
 
-                if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
-                }
-                else if($value == 'string' && !is_string($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
+                if(!array_key_exists($key,$input)){
+                    array_push($mandatory_missing, $key);
+                    break; 
+                }else{
+                    //Si la key existe en $_POST
+    
+                    if($value == 'number' && !is_numeric($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
+                    else if($value == 'string' && !is_string($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
                 }
             }
+            
         }
 
         //REGLA DE NOGOCIO:

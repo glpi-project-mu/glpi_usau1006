@@ -3850,7 +3850,7 @@ JS;
                // inline toolbar configuration
                menubar: false,
                toolbar: richtext_layout == 'classic'
-                  ? 'styles | bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link | fullscreen'
+                  ? 'styles | bold italic | forecolor backcolor | bullist numlist outdent indent | emoticons table link | fullscreen code'
                   : false,
                quickbars_insert_toolbar: richtext_layout == 'inline'
                   ? 'emoticons quicktable quickimage quicklink | bullist numlist | outdent indent '
@@ -3860,7 +3860,7 @@ JS;
                   : false,
                contextmenu: richtext_layout == 'classic'
                   ? false
-                  : 'copy paste | emoticons table link | undo redo | fullscreen',
+                  : 'copy paste | emoticons table link | undo redo | fullscreen code',
 
                // Content settings
                entity_encoding: 'raw',

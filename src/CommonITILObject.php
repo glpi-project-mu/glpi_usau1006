@@ -429,6 +429,8 @@ abstract class CommonITILObject extends CommonDBTM
             ($ID ? $this->fields['entities_id'] : $options['entities_id'])
         );
 
+        $_SESSION['current_itil_template'] = serialize($tt);
+        
         $predefined_fields = $this->setPredefinedFields($tt, $options, static::getDefaultValues());
         $this->initForm($this->fields['id'], $options);
 

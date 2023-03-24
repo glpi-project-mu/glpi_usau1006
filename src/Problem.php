@@ -1638,24 +1638,32 @@ class Problem extends CommonITILObject
         'symptomcontent' => ''		
         ];
 
+        //unset($fields_necessary['validatortype']);
+        /** @var CommonDBTM $assignedtemplate */
+        $assignedtemplate = unserialize($_SESSION['current_itil_template']);
+
 
         foreach($fields_necessary as $key => $value){
             
-            if(!isset($input[$key])){
-                array_push($mandatory_missing, $key);
-                break; 
-            }else{
-                //Si la key existe en $_POST
+            if(!$assignedtemplate->isHiddenField($key)){
 
-                if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
-                }
-                else if($value == 'string' && !is_string($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
+                if(!array_key_exists($key,$input)){
+                    array_push($mandatory_missing, $key);
+                    break; 
+                }else{
+                    //Si la key existe en $_POST
+    
+                    if($value == 'number' && !is_numeric($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
+                    else if($value == 'string' && !is_string($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
                 }
             }
+            
         }
 
         //REGLA DE NOGOCIO:

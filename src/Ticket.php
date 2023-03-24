@@ -40,6 +40,7 @@ use Glpi\ContentTemplates\TemplateManager;
 use Glpi\Event;
 use Glpi\RichText\RichText;
 use Glpi\Toolbox\Sanitizer;
+use tests\units\ITILTemplate;
 
 /**
  * Ticket Class
@@ -4346,6 +4347,8 @@ JAVASCRIPT;
             ($ID ? $this->fields['entities_id'] : $options['entities_id'])
         );
 
+        $_SESSION['current_itilticket_template'] = serialize($tt);
+
         // override current fields in options with template fields and return the array of these predefined fields
         $predefined_fields = $this->setPredefinedFields($tt, $options, self::getDefaultValues());
 
@@ -7044,7 +7047,7 @@ JAVASCRIPT;
         //Si no tenemos permiso para asignar validacion lo quitamos
         $rightname = TicketValidation::$rightname;
         $rightvalue = ($input['type'] == Ticket::INCIDENT_TYPE)? TicketValidation::CREATEINCIDENT : TicketValidation::CREATEREQUEST;
-        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id'])){
+        if(!Profile::haveUserRight(Session::getLoginUserID(), $rightname, $rightvalue, $input['entities_id']?? 0)){
             unset($fields_necessary['validatortype']);
             unset($fields_necessary['_add_validation']);
         }
@@ -7064,38 +7067,57 @@ JAVASCRIPT;
 
 
         //unset($fields_necessary['validatortype']);
-
-        
+        /** @var CommonDBTM $assignedtemplate */
+        $assignedtemplate = unserialize($_SESSION['current_itilticket_template']);
+    
         foreach($fields_necessary as $key => $value){
             
-            if(!array_key_exists($key,$input)){
+            if(!$assignedtemplate->isHiddenField($key)){
+                if(!array_key_exists($key,$input)){
 
-                /*Toolbox::logInFile(
+                    /*Toolbox::logInFile(
+                        'content_post',
+                        sprintf(
+                            __('%1$s: %2$s'),
+                            basename(__FILE__,'.php'),
+                            sprintf(
+                                __('INPUT: %s') . "\n",
+                                var_export($input,true)
+                            )
+                        )
+                    );*/
+    
+                    array_push($mandatory_missing, $key);
+                    break;       
+                }else{
+                    //Si la key existe en $_POST
+                    if($value == 'number' && !is_numeric($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
+                    else if($value == 'string' && !is_string($input[$key]) ){
+                        array_push($incorrect_format, $key);
+                        break;
+                    }
+                }
+            }
+            /*else{
+                Toolbox::logInFile(
                     'content_post',
                     sprintf(
                         __('%1$s: %2$s'),
                         basename(__FILE__,'.php'),
                         sprintf(
-                            __('INPUT: %s') . "\n",
-                            var_export($input,true)
+                            __('No se evaluará el campo: %s') . "\n",
+                            $key
                         )
                     )
-                );*/
+                );
+            }*/
 
-                array_push($mandatory_missing, $key);
-                break;       
-            }else{
-                //Si la key existe en $_POST
-                if($value == 'number' && !is_numeric($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
-                }
-                else if($value == 'string' && !is_string($input[$key]) ){
-                    array_push($incorrect_format, $key);
-                    break;
-                }
-            }
+            
         }
+        
 
         //REGLA DE NOGOCIO:
 

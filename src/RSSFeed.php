@@ -1262,7 +1262,7 @@ class RSSFeed extends CommonDBVisible implements ExtraVisibilityCriteria
        
         if(array_key_exists('refresh_rated',$input) && $input['refresh_rate'] < 1 || $input['refresh_rate'] > 86400){
             array_push($selector_fields_outrange,'refresh_rate');
-        }else if(array_key_exists('max_items',$input) && $input['max_items'] < 1 || $input['max_items'] > 100){
+        }else if(array_key_exists('max_items',$input) && $input['max_items'] < 0 || $input['max_items'] > 100){
             array_push($selector_fields_outrange,'max_items');
         }
 
