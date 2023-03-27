@@ -1609,10 +1609,15 @@ class Change extends CommonITILObject
             unset($fields_necessary['_add_validation']);
         }
 
-
+        
         //unset($fields_necessary['validatortype']);
         /** @var CommonDBTM $assignedtemplate */
         $assignedtemplate = unserialize($_SESSION['current_itil_template']);
+
+        //Excepciones que no coinciden con su name input
+        if($assignedtemplate->isHiddenField('_add_validation')){
+            unset($fields_necessary['validatortype']);
+        }
 
         foreach($fields_necessary as $key => $value){
             

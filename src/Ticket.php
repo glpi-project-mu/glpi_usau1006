@@ -7069,7 +7069,25 @@ JAVASCRIPT;
         //unset($fields_necessary['validatortype']);
         /** @var CommonDBTM $assignedtemplate */
         $assignedtemplate = unserialize($_SESSION['current_itilticket_template']);
+        
+        /*Toolbox::logInFile(
+            'content_post',
+            sprintf(
+                __('%1$s: %2$s'),
+                basename(__FILE__,'.php'),
+                sprintf(
+                    __('INPUT: %s') . "\n",
+                    var_export($assignedtemplate->hidden,true)
+                )
+            )
+        );*/
     
+        //Excepciones que no coinciden con su name input
+        if($assignedtemplate->isHiddenField('_add_validation')){
+            unset($fields_necessary['validatortype']);
+        }
+
+
         foreach($fields_necessary as $key => $value){
             
             if(!$assignedtemplate->isHiddenField($key)){
