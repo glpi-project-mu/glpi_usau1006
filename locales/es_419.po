@@ -13467,11 +13467,11 @@ msgstr "Campo Login"
 
 #: templates/pages/login.html.twig
 msgid "Login source"
-msgstr ""
+msgstr "Fuente de ingreso"
 
 #: templates/pages/login.html.twig
 msgid "Login to your account"
-msgstr ""
+msgstr "Inicia sesión con tu cuenta"
 
 #: src/Auth.php:628
 msgid "Login with external token disabled"
@@ -20333,7 +20333,7 @@ msgstr "Lado PDUs"
 
 #: templates/pages/login.html.twig
 msgid "Sign in"
-msgstr ""
+msgstr "Ingresar"
 
 #: templates/components/form/computerantivirus.html.twig
 #: src/ComputerAntivirus.php:130 src/ComputerAntivirus.php:210

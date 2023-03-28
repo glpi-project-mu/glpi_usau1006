@@ -39,8 +39,8 @@ phpunit.xml
 /config/define.php
 /nbproject
 .composer.hash
-/**/*.min.css
-/css_compiled/
+/marketplace/**/*.min.css
+
 /css/compiled/
 /css/lib/
 /**/*.min.js

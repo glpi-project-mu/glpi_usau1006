@@ -60,12 +60,13 @@
 
          <div class="container-tight py-6" {% if style is not null %}style="{{ style }}"{% endif %}>
             <div class="text-center">
-               <div class="col-md">
-                  <span class="glpi-logo mb-4" title="GLPI"></span>
+               <div class="col-md d-flex justify-content-between flex-wrap logos-header">
+                  <span class="glpi-logo mb-4" title="MSI"></span>
+                  <span class="minedu-logo mb-4" title="MINEDU"></span>
                </div>
             </div>
             <div class="card card-md">
-               <div class="card-body">
+               <div class="card-body mb-3 mt-3">
                {% block content_block %}{% endblock %}
                </div>
             </div>
