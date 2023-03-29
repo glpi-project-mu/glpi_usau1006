@@ -9,7 +9,7 @@ function generate_string($input, $strength = 10) {
     return $random_string;
 }
 function getImageCaptcha()  {
-  $image = imagecreatetruecolor(200, 50);
+  $image = imagecreatetruecolor(240, 50);
 
   imageantialias($image, true);
 
@@ -42,7 +42,7 @@ function getImageCaptcha()  {
 
   for($i = 0; $i < $string_length; $i++) {
     $letter_space = 170/$string_length;
-    $initial = 15;
+    $initial = 50;
     
     imagettftext($image, 24, rand(-15, 15), $initial + $i*$letter_space, rand(25, 45), $textcolors[rand(0, 1)], $fonts[array_rand($fonts)], $captcha_string[$i]);
   }
