@@ -35,7 +35,7 @@ function getImageCaptcha()  {
   $white = imagecolorallocate($image, 255, 255, 255);
   $textcolors = [$black, $white];
 
-  $fonts = [__DIR__.'/fonts/Acme.ttf', __DIR__.'/fonts/Ubuntu.ttf', __DIR__.'/fonts/Merriweather.ttf', __DIR__.'/fonts/Roboto.ttf'];
+  $fonts = [__DIR__.'/fonts/SignikaNegative.ttf', __DIR__.'/fonts/Ubuntu.ttf', __DIR__.'/fonts/OpenSans.ttf', __DIR__.'/fonts/Roboto.ttf'];
 
   $string_length = 6;
   $captcha_string = generate_string('ABCDEFGHJKLMNPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz', $string_length);
