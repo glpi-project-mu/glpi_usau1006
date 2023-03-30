@@ -1,0 +1,80 @@
+{
+    "packages": [
+        {
+            "name": "szymach/c-pchart",
+            "version": "v3.0.10",
+            "version_normalized": "3.0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/szymach/c-pchart.git",
+                "reference": "daf0912e0bd9069508a87a4419e4735a34e09698"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/szymach/c-pchart/zipball/daf0912e0bd9069508a87a4419e4735a34e09698",
+                "reference": "daf0912e0bd9069508a87a4419e4735a34e09698",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": "^5.4|^7.0|^8.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^4.1.22",
+                "codeception/module-asserts": "^1.3",
+                "codeception/module-filesystem": "^1.0",
+                "phpunit/phpunit": "^5.7|^9.5",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "time": "2021-09-25T16:34:55+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev",
+                    "2.0": "2.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "constants.php"
+                ],
+                "psr-4": {
+                    "CpChart\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Damien Pogolotti",
+                    "homepage": "http://www.pchart.net",
+                    "role": "Creator of the original pChart library"
+                },
+                {
+                    "name": "Piotr Szymaszek",
+                    "homepage": "https://github.com/szymach",
+                    "role": "Developer of the CpChart wrapper package"
+                }
+            ],
+            "description": "Port of \"pChart\" library into PHP 5+",
+            "homepage": "https://github.com/szymach/c-pchart",
+            "keywords": [
+                "CpChart",
+                "c-pChart",
+                "charts",
+                "pchart",
+                "statistics"
+            ],
+            "support": {
+                "issues": "https://github.com/szymach/c-pchart/issues",
+                "source": "https://github.com/szymach/c-pchart/tree/v3.0.10"
+            },
+            "install-path": "../szymach/c-pchart"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}
