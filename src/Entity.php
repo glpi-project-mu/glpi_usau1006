@@ -4139,7 +4139,7 @@ class Entity extends CommonTreeDropdown
         
         $selector_ids_incorrect = [];
 
-        if(array_key_exists('entities_id',$input) && $input['entities_id'] != 0 && Entity::getById($input['entities_id']) == false){
+        if(array_key_exists('entities_id',$input) && ($input['entities_id'] != 0 && $input['entities_id'] != null) && Entity::getById($input['entities_id']) == false){
             array_push($selector_ids_incorrect,'entities_id');
         }
         if(array_key_exists('id',$input) && $input['id'] != 0 && Entity::getById($input['id']) == false){

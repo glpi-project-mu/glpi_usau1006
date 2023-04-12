@@ -37,6 +37,8 @@
  *
  * @since 9.2
  **/
+include('../src/Toolbox/HandlerSubmitForm.php');
+
 class GLPIUploadHandler extends UploadHandler
 {
     protected function get_error_message($error)
@@ -144,7 +146,10 @@ class GLPIUploadHandler extends UploadHandler
             ],
             false
         );
-        $response       = $upload_handler->post(false);
+
+        $response = HandlerSubmitForm::post($upload_handler,"upload_queue");
+
+        //$response       = $upload_handler->post(false);
 
        // clean compute display filesize
         if (isset($response[$pname]) && is_array($response[$pname])) {
