@@ -1973,6 +1973,8 @@ class Document extends CommonDBTM
             //'entities_id' => 'number',
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
+            'itemtype' => 'string',
+            'items_id' => 'number',
             'name' => 'string',
             'documentcategories_id' => 'number',
             'link' => 'string',
@@ -1984,10 +1986,7 @@ class Document extends CommonDBTM
 
         foreach($fields_necessary as $key => $value){
             
-            if(!isset($input[$key])){
-                array_push($mandatory_missing, $key);
-                break;       
-            }else{
+            if(array_key_exists($key,$input)){
                 //Si la key existe en $_POST
                 if($value == 'number' && !is_numeric($input[$key]) ){
                     array_push($incorrect_format, $key);
@@ -2000,8 +1999,7 @@ class Document extends CommonDBTM
                 else if($value == 'bool' && !($input[$key] == '0' || $input[$key] == '1') ){
                     array_push($incorrect_format, $key);
                     break;
-                }
-                
+                }     
             }
         }
 
@@ -2040,6 +2038,8 @@ class Document extends CommonDBTM
 
         $fields_necessary = [
             'entities_id' => 'number',
+            'itemtype' => 'string',
+            'items_id' => 'number',
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
             'name' => 'string',
