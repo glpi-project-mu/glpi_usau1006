@@ -7032,10 +7032,10 @@ JAVASCRIPT;
         '_notifications_actorindex' => '',		
         '_notifications_alternative_email' => '',		
         
-        'my_items' => '',		
-        'itemtype' => 'string',		
-        
-        'items_id' => 'number',		
+        //'my_items' => '',		
+        'itemtype' => '',		
+        //'items_id' => 'number',
+
         'slas_id_tto' => 'number',		
         'slas_id_ttr' => 'number',		
         'olas_id_tto' => 'number',		
