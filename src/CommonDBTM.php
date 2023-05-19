@@ -1270,9 +1270,14 @@ class CommonDBTM extends CommonGLPI
             //If input is not from LDAP
             if(!array_key_exists('user_dn',$this->input) || !array_key_exists('_ldap_rules',$this->input)){
                 
-                if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
-                    return false;
-                }
+                //if input is not from selfservice
+                if(!array_key_exists('_from_helpdesk',$this->input)){
+
+                    if(!$this->checkAgainIfMandatoryFieldsAreCorrect($this->input)){
+                         return false;
+                     }
+                 }
+                 
             }
 
             
