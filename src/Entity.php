@@ -4038,7 +4038,7 @@ class Entity extends CommonTreeDropdown
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
             'name' => 'string',
-            'comment' => 'string'
+            //'comment' => 'string'
         ];
 
 
@@ -4100,7 +4100,7 @@ class Entity extends CommonTreeDropdown
             '_glpi_csrf_token' => 'string',
             //'is_recursive' => '',
             'name' => 'string',
-            'comment' => 'string',
+            //'comment' => 'string',
             'id' => 'number'
         ];
 
