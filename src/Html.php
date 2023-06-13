@@ -4985,7 +4985,7 @@ JAVASCRIPT
 
         $image = sprintf('<img src="%1$s" %2$s %3$s />', $path, Html::parseAttributes($options), $class);
         if ($url) {
-            return Html::link($image, $url);
+            return 'Html::link($image, $url)';
         }
         return $image;
     }
@@ -5577,6 +5577,7 @@ HTML;
         $display .= Html::scriptBlock("
       $(function() {
          var fileindex{$p['rand']} = 0;
+
          $('#fileupload{$p['rand']}').fileupload({
             dataType: 'json',
             pasteZone: " . ($p['pasteZone'] !== false
@@ -5592,13 +5593,44 @@ HTML;
             maxChunkSize: {$max_chunk_size},
             add: function (e, data) {
                // randomize filename
+               
+               editor = tinyMCE.get('{$p['editor_id']}');
+
                for (var i = 0; i < data.files.length; i++) {
                   data.files[i].uploadName = uniqid('', true) + data.files[i].name;
+                 if(data.files[i].size > {$max_file_size}){
+                    //console.log(data.files[i])
+                    alert('Lo sentimos, pero la imagen '+ data.files[i].name+' que intenta pegar supera el peso máximo permitido por el servidor. Por ello, no se ha adjuntado.');
+                    
+                    const uploaded_image = uploaded_images.find(
+                        function (entry) {
+                            return entry.filename === data.files[i].name;
+                        }
+                    );
+                    //ya tenemos el Id de imagen subida
+                    //console.log(uploaded_image.upload_id)
+
+                    var images = Array.from(editor.contentDocument.getElementsByTagName('img'));
+                    var imageToDelete = images.find(function(image) {
+                        return image.getAttribute('data-upload_id') === uploaded_image.upload_id;
+                    });
+
+                    //console.log(imageToDelete)
+                    if (imageToDelete) {
+                        imageToDelete.parentNode.removeChild(imageToDelete);
+                        editor.setContent(editor.getContent());
+                    }
+                    
+                 }
+                // call default handler
+      
+                 $.blueimp.fileupload.prototype.options.add.call(this, e, data);
+                 
                }
-               // call default handler
-               $.blueimp.fileupload.prototype.options.add.call(this, e, data);
+
             },
             done: function (event, data) {
+
                handleUploadedFile(
                   data.files, // files as blob
                   data.result._uploader_{$p['name']}, // response from '/ajax/fileupload.php'
@@ -5621,7 +5653,9 @@ HTML;
                         $('#progress{$p['rand']}').show();
                         $('#progress{$p['rand']} .uploadbar')
                            .text(file.error)
-                           .css('width', '100%');
+                           .css('width', '100%')
+                           .delay(4000)
+                           .fadeOut('slow');
                         return;
                      }
                   }
