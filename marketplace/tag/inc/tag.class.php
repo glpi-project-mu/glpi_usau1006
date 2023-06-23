@@ -829,10 +829,10 @@ class PluginTagTag extends CommonDropdown {
       $fields_necessary = [
           //'entities_id' => 'number',
           '_glpi_csrf_token' => 'string',
-          'name' => 'string',
-          'comment'=>'string',
+          //'name' => 'string',
+          //'comment'=>'string',
           //'is_recursive' => '',
-          'color' => 'hexcolor',
+          //'color' => 'hexcolor',
       ];
 
 
