@@ -46,14 +46,14 @@ function checkRightsToGenerateReport():bool{
     date_default_timezone_set("America/Lima");
     $current_time = date("Y-m-d H:i:s"); 
 
-    if($_SESSION['n_reports_generated'] == 10){
+    if($_SESSION['n_reports_generated'] == 20){
         $_SESSION['n_reports_generated'] = 0;
 
         
         $_SESSION['until_waited_datetime'] = date("H:i:s", strtotime($current_time.' +180 seconds')); 
     }
 
-    if($_SESSION['total_reports_generated'] == 20){
+    if($_SESSION['total_reports_generated'] == 40){
         $_SESSION['total_reports_generated'] = 0;
         Session::cleanOnLogout();
         Session::redirectIfNotLoggedIn();
@@ -80,7 +80,7 @@ function checkRightsToGenerateReport():bool{
 
         
         Session::addMessageAfterRedirect($msg_redirect,false,INFO,true);
-        Session::addMessageAfterRedirect('10 generaciones de reportes más y se cerrará la sesión.',false,WARNING,false);
+        Session::addMessageAfterRedirect('20 generaciones de reportes más y se cerrará la sesión.',false,WARNING,false);
         Html::back();
         return false; 
     }else{
