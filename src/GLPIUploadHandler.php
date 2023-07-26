@@ -37,7 +37,8 @@
  *
  * @since 9.2
  **/
-include('../src/Toolbox/HandlerSubmitForm.php');
+include('Toolbox/HandlerSubmitForm.php');
+
 
 class GLPIUploadHandler extends UploadHandler
 {
