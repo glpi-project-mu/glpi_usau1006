@@ -80,7 +80,10 @@ class Document_Item extends CommonDBRelation
         return parent::canCreateItem();
     }
 
-
+    public static function canCreate(){
+        return true;
+    }
+    
     public function prepareInputForAdd($input)
     {
 
