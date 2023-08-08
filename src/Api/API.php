@@ -1828,6 +1828,10 @@ abstract class API
                 $object      = $this->inputObjectToArray($object);
                 $current_res = [];
 
+                /*$failed++;
+                    $current_res = ['id'      => false,
+                        'a' => json_encode($item->can(-1, CREATE, $object))
+                ];*/
                //check rights
                 if (!$item->can(-1, CREATE, $object)) {
                     $failed++;

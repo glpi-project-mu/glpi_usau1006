@@ -485,7 +485,7 @@ class APIRest extends API
             }
             $this->format = "json";
         } else if (strpos($content_type, "multipart/form-data") !== false) {
-            if (count($_FILES) <= 0) {
+            /*if (count($_FILES) <= 0) {
                // likely uploaded files is too big so $_REQUEST will be empty also.
                // see http://us.php.net/manual/en/ini.core.php#ini.post-max-size
                 $this->returnError(
@@ -494,7 +494,7 @@ class APIRest extends API
                     "ERROR_UPLOAD_FILE_TOO_BIG_POST_MAX_SIZE",
                     false
                 );
-            }
+            }*/
 
            // with this content_type, php://input is empty... (see http://php.net/manual/en/wrappers.php.php)
             if (!$uploadManifest = json_decode($_REQUEST['uploadManifest'])) {
