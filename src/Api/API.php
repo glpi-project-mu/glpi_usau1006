@@ -70,6 +70,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Ticket;
 use Toolbox;
 use User;
+use Glpi\Application\View\Extension\DocumentExtension;
 
 abstract class API
 {
@@ -613,7 +614,14 @@ abstract class API
         }
 
         $fields = $item->fields;
+        $docsitos = new DocumentExtension();
 
+        //Si es del tipo documento retornamos su filesize
+        if($item instanceof Document){
+            $fields['filesize'] =  $docsitos->getDocumentSize($fields['filepath']);
+            return $fields;
+        }
+        
        // avoid disclosure of critical fields
         $item::unsetUndisclosedFields($fields);
 
@@ -839,6 +847,7 @@ abstract class API
             isset($params['with_documents'])
             && $params['with_documents']
         ) {
+
             $fields['_documents'] = [];
             if (
                 !($item instanceof CommonITILObject)
@@ -891,6 +900,7 @@ abstract class API
                     'WHERE'     => $doc_criteria,
                 ]);
                 foreach ($doc_iterator as $data) {
+                    $data['filesize'] = $docsitos->getDocumentSize($data['filepath']);
                     $fields['_documents'][] = $data;
                 }
             }
