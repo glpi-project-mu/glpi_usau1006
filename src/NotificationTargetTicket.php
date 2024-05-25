@@ -157,6 +157,7 @@ class NotificationTargetTicket extends NotificationTargetCommonITILObject
 
     public function getDataForObject(CommonDBTM $item, array $options, $simple = false)
     {
+        global $DB;
        // Common ITIL data
         $data = parent::getDataForObject($item, $options, $simple);
 
@@ -167,6 +168,95 @@ class NotificationTargetTicket extends NotificationTargetCommonITILObject
                             $options['additionnaloption']['usertype'],
                             "ticket_" . $item->getField("id") . "_TicketValidation$1"
                         );
+
+        //Chequeamos si nuestra tabla existe
+        $query_verify_table = "SELECT COUNT(*) AS table_exists
+        FROM information_schema.tables 
+        WHERE table_schema = DATABASE() 
+        AND table_name = 'glpi_plugin_fields_ticketsiagies'";
+
+        $result = $DB->query($query_verify_table);
+        $table_exists = $DB->result($result, 0, "table_exists");
+
+       
+        if($table_exists){
+           
+            $ticket_id = $item->getField("id");
+
+            $query = "SELECT fields.name 
+            FROM glpi_plugin_fields_fields fields 
+            WHERE fields.type LIKE 'text'";
+
+            foreach ($DB->request($query) as $row) {
+
+                $fieldname = $row['name'];
+                
+                $queryfield =  "SELECT ts.$fieldname
+                FROM glpi_plugin_fields_ticketsiagies ts
+                INNER JOIN glpi_tickets tickets
+                ON tickets.id = ts.items_id 
+                WHERE tickets.id = $ticket_id";
+
+                $result = $DB->query($queryfield);
+
+                $value = "";
+
+
+               //while($result->num_rows == 0){
+
+                $result = $DB->query($queryfield);
+                $value = $DB->result($result, 0, $fieldname);
+
+               // sleep(1);
+               //}
+                
+               $data["##ticketsiagies.$fieldname##"] = $value;
+               
+
+                /*Toolbox::logInFile(
+                    'php-errors',
+                    sprintf(
+                        __('%1$s: %2$s'),
+                        "Fieldname",
+                        sprintf(
+                            $fieldname . "\n",
+                            GLPI_LOG_DIR . '/php-errors.log'
+                        )
+                    )
+                );
+
+                Toolbox::logInFile(
+                    'php-errors',
+                    sprintf(
+                        __('%1$s: %2$s'),
+                        "Query ejecutado",
+                        sprintf(
+                            $queryfield . "\n",
+                            GLPI_LOG_DIR . '/php-errors.log'
+                        )
+                    )
+                );
+
+            
+
+                Toolbox::logInFile(
+                    'php-errors',
+                    sprintf(
+                        __('%1$s: %2$s'),
+                        "Filas",
+                        sprintf(
+                            $result->num_rows . "\n",
+                            GLPI_LOG_DIR . '/php-errors.log'
+                        )
+                    )
+                );*/
+
+                
+
+            };
+
+        }
+
         $data['##ticket.globalvalidation##']
                         = TicketValidation::getStatus($item->getField('global_validation'));
         $data['##ticket.type##']
