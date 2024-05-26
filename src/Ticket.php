@@ -726,6 +726,29 @@ class Ticket extends CommonITILObject
         return $right;
     }
 
+    //Sobreescribimos función de notificacion para incluir verificación de PluginFieldsTicketsiagie
+    //y delegarle a este la notificación
+    public function handleNewItemNotifications(): void
+    {
+        global $CFG_GLPI;
+
+        if (!isset($this->input['_disablenotif']) && $CFG_GLPI['use_notifications']) {
+            $this->getFromDB($this->fields['id']); // Reload item to get actual status
+
+            //NotificationEvent::raiseEvent('new', $this);
+            if(class_exists("PluginFieldsTicketsiagie") === false){
+                NotificationEvent::raiseEvent('new', $this);
+            }
+            
+            $status = $this->fields['status'] ?? null;
+            if (in_array($status, $this->getSolvedStatusArray())) {
+                NotificationEvent::raiseEvent('solved', $this);
+            }
+            if (in_array($status, $this->getClosedStatusArray())) {
+                NotificationEvent::raiseEvent('closed', $this);
+            }
+        }
+    }
 
     public function pre_deleteItem()
     {
@@ -2002,6 +2025,7 @@ class Ticket extends CommonITILObject
 
     public function post_addItem()
     {
+        return;
        // Log this event
         $username = 'anonymous';
         if (isset($_SESSION["glpiname"])) {
