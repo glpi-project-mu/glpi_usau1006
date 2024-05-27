@@ -735,8 +735,21 @@ class Ticket extends CommonITILObject
         if (!isset($this->input['_disablenotif']) && $CFG_GLPI['use_notifications']) {
             $this->getFromDB($this->fields['id']); // Reload item to get actual status
 
-            //NotificationEvent::raiseEvent('new', $this);
-            if(class_exists("PluginFieldsTicketsiagie") === false){
+            if(class_exists("PluginFieldsContainer")==true){
+
+                if(false != ($id_container = PluginFieldsContainer::findContainer('Ticket','dom','')))
+                {
+                    $container = PluginFieldsContainer::getById($id_container);
+                    $name_fieldc = $container->fields["name"];
+
+                    if(class_exists("PluginFieldsTicket$name_fieldc") === false){
+                        NotificationEvent::raiseEvent('new', $this);
+                    }
+                }
+                else {
+                    NotificationEvent::raiseEvent('new', $this);
+                }
+            }else{
                 NotificationEvent::raiseEvent('new', $this);
             }
             
@@ -2025,7 +2038,6 @@ class Ticket extends CommonITILObject
 
     public function post_addItem()
     {
-        return;
        // Log this event
         $username = 'anonymous';
         if (isset($_SESSION["glpiname"])) {

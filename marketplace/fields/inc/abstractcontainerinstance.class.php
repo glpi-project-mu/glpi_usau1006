@@ -50,14 +50,7 @@ abstract class PluginFieldsAbstractContainerInstance extends CommonDBTM
             $result = $DB->insert($this->getTable(), $params);
             if ($result) {
 
-                /*Toolbox::logInFile('php-errors', 
-                sprintf(
-                    __('%1$s: %2$s'),
-                    "Probando",
-                    class_exists("PluginFieldsTicketsiagie") ."\n"
-                ) );*/
-
-                ///Nuevo PluginFields, si esta asociado a ticket envia noti
+                ///Nuevo PluginFields, si esta asociado a ticket envia notificacion
                 $item = $this->getById($DB->insertId());
 
                 if($item->fields["itemtype"] == "Ticket"){
