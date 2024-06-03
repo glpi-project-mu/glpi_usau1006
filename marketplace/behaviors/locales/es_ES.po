@@ -56,7 +56,7 @@ msgstr "El plugin \\\"Item's uninstallation\\\" no esta instalado/activado"
 
 #: inc/config.class.php:253
 msgid "Plugin \"OCS Inventory NG\" not installed"
-msgstr ""
+msgstr "Plugin \"OCS Inventory NG\" no está instalado"
 
 #: inc/config.class.php:259
 msgid "Use the associated item's group"
@@ -64,7 +64,7 @@ msgstr "Añadir el grupo del elemento asociado"
 
 #: inc/config.class.php:261
 msgid "Show my assets"
-msgstr ""
+msgstr "Ver mis activos"
 
 #: inc/config.class.php:266
 msgid "Use the requester's group"
@@ -72,7 +72,7 @@ msgstr "Añadir el grupo del solicitante"
 
 #: inc/config.class.php:269
 msgid "Show assets of my groups"
-msgstr ""
+msgstr "Ver los activos de mi grupo"
 
 #: inc/config.class.php:274 inc/config.class.php:350
 msgid "Use the technician's group"
@@ -94,7 +94,7 @@ msgstr "Más notificaciones"
 
 #: inc/config.class.php:290
 msgid "Allow Clone"
-msgstr ""
+msgstr "Permitir clon"
 
 #: inc/config.class.php:295 inc/itilsolution.class.php:80
 #: inc/ticket.class.php:478
@@ -113,7 +113,7 @@ msgstr "El tipo de solución es obligatorio para resolver/cerrar un problema"
 
 #: inc/config.class.php:311 inc/ticket.class.php:530
 msgid "Category is mandatory when you assign a ticket"
-msgstr ""
+msgstr "La categoría es obligatoria cuando se asigna un requerimiento"
 
 #: inc/config.class.php:317 inc/itilsolution.class.php:68
 #: inc/itilsolution.class.php:169 inc/ticket.class.php:460
@@ -122,28 +122,28 @@ msgstr "La descripción de la solución es obligatoria para resolver/cerrar una 
 
 #: inc/config.class.php:322
 msgid "Change's number format"
-msgstr ""
+msgstr "Cambiar el formato de número"
 
 #: inc/config.class.php:332 inc/itilsolution.class.php:94
 #: inc/ticket.class.php:493
 msgid "Technician assigned is mandatory before ticket is solved/closed"
-msgstr ""
+msgstr "El técnico asignado es obligatorio antes de que el requerimiento sea resuelto / cerrado"
 
 #: inc/config.class.php:340 inc/itilsolution.class.php:101
 #: inc/ticket.class.php:501
 msgid ""
 "Group of technicians assigned is mandatory before ticket is solved/closed"
-msgstr ""
+msgstr "El grupo de técnicos asignados es obligatorio antes de que se resuelva/cierre el requerimiento"
 
 #: inc/config.class.php:362 inc/itilsolution.class.php:108
 #: inc/ticket.class.php:508
 msgid "Location is mandatory before ticket is solved/closed"
-msgstr ""
+msgstr "La ubicación es obligatoria antes de que el requerimiento sea resuelto/cerrado"
 
 #: inc/config.class.php:368 inc/tickettask.class.php:58
 #: inc/tickettask.class.php:86
 msgid "Task category is mandatory in a task"
-msgstr ""
+msgstr "La categoría de tarea es obligatoria en una tarea"
 
 #: inc/config.class.php:373
 msgid "Deny change of ticket's creation date"
@@ -167,11 +167,11 @@ msgstr "Usuario único O grupo único"
 
 #: inc/config.class.php:392
 msgid "Block the solving/closing of a the ticket if task do to"
-msgstr ""
+msgstr "Bloquee la resolución/cierre de un requerimiento si la tarea lo hace para"
 
 #: inc/config.class.php:398
 msgid "Add the logged technician when solve ticket"
-msgstr ""
+msgstr "Agregue el técnico registrado cuando resuelva el requerimiento"
 
 #: inc/document_item.class.php:46
 msgid "Add document to ticket"
@@ -233,3 +233,15 @@ msgstr "No se puede guardar, el elemento ha sido actualizado"
 #: inc/tickettask.class.php:96
 msgid "You cannot change status of a task in a solved ticket"
 msgstr ""
+
+#: inc/config.class.php:327
+msgid "Block the solving/closing of a problem if task do to"
+msgstr "Bloquear la resolución/cierre de un problema si la tarea lo hace"
+
+#: inc/config.class.php:368
+msgid "Block the solving/closing of a change if task do to"
+msgstr "Bloquear la resolución/cierre de un cambio si la tarea lo hace"
+
+#: inc/config.class.php:432
+msgid "Technician assignment when adding follow up"
+msgstr "Asignación de técnico al agregar seguimiento"
