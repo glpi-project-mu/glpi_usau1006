@@ -5556,7 +5556,7 @@ HTML;
                       . ($p['multiple'] ? " multiple='multiple'" : "")
                       . ($p['onlyimages'] ? " accept='.gif,.png,.jpg,.jpeg'" : "") . ">";
 
-        $display .= "<span>" . __('Los archivos versionados con puntos (Presentacion v1.1, <br>Reporte Final 10.2.1, etc) no son válidos.') . '</span><br>';
+        $display .= "<span>" . __('Los archivos versionados con puntos (Presentación v1.1, <br>Reporte Final 10.2.1, etc) no son válidos.') . '</span><br>';
 
         $progressall_js = '';
         if (!$p['only_uploaded_files']) {
