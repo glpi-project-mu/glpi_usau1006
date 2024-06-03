@@ -55,6 +55,16 @@ msgid "Reconstruct groups timeline for all tickets"
 msgstr "Reconstruye los grupos de la línea de tiempo de todos los tickets"
 
 #: inc/config.class.php:64
+msgctxt "button"
+msgid "Reconstruct users timeline for all tickets"
+msgstr "Reconstruye los usuarios de la línea de tiempo de todos los tickets"
+
+#: inc/display.class.php:86
+msgctxt "button"
+msgid "Reconstruct history for this ticket"
+msgstr "Reconstruye histórico para este ticket"
+
+#: inc/config.class.php:64
 msgid ""
 "Warning : it may be that the reconstruction of groups does not reflect "
 "reality because it concern only groups which have the Requester flag to No "
