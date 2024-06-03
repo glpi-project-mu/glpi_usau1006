@@ -90,7 +90,7 @@ msgstr "Configurar reporte"
 
 #: inc/config.class.php:92 inc/config.class.php:707 inc/config.class.php:719
 msgid "Curve lines (SVG)"
-msgstr ""
+msgstr "Lineas curva (SVG)"
 
 #: inc/common.class.php:62 inc/common.class.php:63 inc/common.class.php:79
 #: inc/dashboard.class.php:36 ajax/homepage_link.php:37
