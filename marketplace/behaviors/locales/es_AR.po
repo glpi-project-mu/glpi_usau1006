@@ -156,7 +156,7 @@ msgstr "Proteger para actualización simultánea"
 
 #: inc/config.class.php:383
 msgid "Single technician and group"
-msgstr "técnico y grupo simple"
+msgstr "Técnico y grupo simple"
 
 #: inc/config.class.php:385
 msgid "Single user and single group"
@@ -234,3 +234,15 @@ msgstr "No se puede guardad, se debe actualizar el elemento"
 #: inc/tickettask.class.php:96
 msgid "You cannot change status of a task in a solved ticket"
 msgstr "No puede cambiar el estado de una tarea en un ticket resuelto"
+
+#: inc/config.class.php:327
+msgid "Block the solving/closing of a problem if task do to"
+msgstr "Bloquear la resolución/cierre de un problema si la tarea lo hace"
+
+#: inc/config.class.php:368
+msgid "Block the solving/closing of a change if task do to"
+msgstr "Bloquear la resolución/cierre de un cambio si la tarea lo hace"
+
+#: inc/config.class.php:432
+msgid "Technician assignment when adding follow up"
+msgstr "Asignación de técnico al agregar seguimiento"

@@ -30,16 +30,18 @@ msgid ""
 "- some deleted fields may still be present in database (bug introduced in "
 "version %s and fixed in version %s)"
 msgstr ""
+"- Es posible que algunos campos eliminados aún estén presentes en la base de datos (error introducido en "
+"version %s y arreglado en la versión %s)"
 
 #: inc/checkdatabasecommand.class.php:86
 #, php-format
 msgid "-> \"%s.%s\" has been deleted."
-msgstr ""
+msgstr "-> \"%s.%s\" ha sido eliminado."
 
 #: inc/checkdatabasecommand.class.php:87
 #, php-format
 msgid "-> \"%s.%s\" should be deleted."
-msgstr ""
+msgstr "-> \"%s.%s\" debería ser eliminado."
 
 #: inc/field.class.php:514
 msgid "Add a new field"
@@ -76,32 +78,35 @@ msgstr "Verificar la base de datos para detectar inconsistencias."
 
 #: inc/toolbox.class.php:316
 msgid "Component items"
-msgstr ""
+msgstr "Elementos del componente"
 
 #: templates/container_display_conditions.html.twig
 #: inc/containerdisplaycondition.class.php:153
 msgid "Condition to hide block"
 msgid_plural "Conditions to hide block"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Condición para ocultar bloque"
+msgstr[1] "Condiciones para ocultar bloque"
+msgstr[2] "Condiciones para ocultar bloque"
 
 #: inc/container.class.php:506
 msgid ""
 "Container name is too long for database (digits in name are replaced by "
 "characters, try to remove them)"
 msgstr ""
+"El nombre del contenedor es demasiado largo para la base de datos (los dígitos del nombre se reemplazan por "
+"caracteres; intente eliminarlos))"
 
 #: inc/checkdatabasecommand.class.php:80
 #, php-format
 msgid "Database contains orphaned data from %s improperly deleted field(s)."
-msgstr ""
+msgstr "La base de datos contiene datos huérfanos de %s, campos eliminados incorrectamente."
 
 #: inc/checkdatabasecommand.class.php:79
 #, php-format
 msgid ""
 "Database was containing orphaned data from %s improperly deleted field(s)."
 msgstr ""
+"La base de datos contenía datos huérfanos de %s campos eliminados incorrectamente"
 
 #: inc/field.class.php:1186
 msgid "Date"
@@ -113,11 +118,11 @@ msgstr "Fecha & Hora"
 
 #: ajax/field_specific_fields.php:89
 msgid "Default value"
-msgstr ""
+msgstr "Valor predeterminado"
 
 #: ajax/field_specific_fields.php:116
 msgid "Default value will be configurable once field will be created."
-msgstr ""
+msgstr "El valor predeterminado será configurable una vez que se cree el campo."
 
 #: inc/field.class.php:1184
 msgid "Dropdown"
@@ -125,21 +130,27 @@ msgstr "Menú desplegable"
 
 #: inc/checkdatabasecommand.class.php:72
 msgid "Everything is in order - no action needed."
-msgstr ""
+msgstr "Todo está en orden, no es necesario realizar ninguna acción."
 
 #: inc/container.class.php:53 inc/container.class.php:693
 msgid "Export to YAML"
-msgstr ""
+msgstr "Exportar a YAML"
 
 #: templates/forms/status_override.html.twig inc/field.class.php:232
 msgid "Field"
 msgstr "Campo"
+
+#: templates/container_display_conditions.html.twig
+msgid "The engine is used for hide block when main object meets condition"
+msgstr "El motor se utiliza para ocultar el bloque cuando el objeto principal cumple la condición"
 
 #: inc/field.class.php:248 inc/field.class.php:273
 msgid ""
 "Field name is too long for database (digits in name are replaced by "
 "characters, try to remove them)"
 msgstr ""
+"El nombre del campo es demasiado largo para la base de datos (los dígitos del nombre se reemplazan por "
+"caracteres, intenta eliminarlos)"
 
 #: inc/field.class.php:456
 msgid "Fields"
@@ -179,7 +190,7 @@ msgstr "Idioma"
 
 #: ajax/field_specific_fields.php:86
 msgid "Multiple dropdown"
-msgstr ""
+msgstr "Menú desplegable múltiple"
 
 #: hook.php:55 hook.php:59
 msgid "MySQL tables installation"
@@ -195,7 +206,7 @@ msgstr "Ningún campo para este bloque"
 
 #: templates/status_overrides.html.twig
 msgid "No item found"
-msgstr ""
+msgstr "No se encontró ningún elemento"
 
 #: inc/field.class.php:1182
 msgid "Number"
@@ -203,7 +214,7 @@ msgstr "Número"
 
 #: inc/statusoverride.class.php:88
 msgid "Override by status"
-msgstr ""
+msgstr "Anular por estado"
 
 #: templates/forms/status_override.html.twig inc/field.class.php:531
 #: inc/field.class.php:711
@@ -212,20 +223,20 @@ msgstr "Solo lectura"
 
 #: inc/container.class.php:52
 msgid "Regenerate container files"
-msgstr "Regenerar archivos contenedores"
+msgstr "Regenerar archivos del contenedor"
 
 #: inc/container.class.php:156
 msgid "Regenerate containers files"
-msgstr ""
+msgstr "Regenerar archivos contenedores"
 
 #: inc/command/regeneratefilescommand.class.php:41
 msgid "Regenerates containers files."
-msgstr ""
+msgstr "Regenera achivos contenedores"
 
 #: inc/checkdatabasecommand.class.php:96
 #, php-format
 msgid "Run \"%s\" to fix database inconsistencies."
-msgstr ""
+msgstr "Ejecutar \"%s\" las inconsistencias de la base de datos"
 
 #: inc/container.class.php:1403
 msgid "Some URL fields contains invalid links"
@@ -241,7 +252,7 @@ msgstr "Algunos campos numéricos contienen valores no numéricos"
 
 #: templates/status_overrides.html.twig
 msgid "Status overrides"
-msgstr ""
+msgstr "Anulaciones de estado"
 
 #: inc/container.class.php:787
 msgid "Tab"
@@ -257,17 +268,19 @@ msgstr "Texto (línea simple)"
 
 #: hook.php:109
 msgid "The plugin can't be uninstalled when the plugin is disabled"
-msgstr "El plugin no se puede desinstalar el plugin cuando se desactiva"
+msgstr "El plugin no se puede desinstalar cuandp el plugin esta desactivo"
 
 #: inc/checkdatabasecommand.class.php:44
 msgid "This command will check database to detect following inconsistencies:"
-msgstr ""
+msgstr "Este comando verificará la base de datos para detectar las siguientes inconsistencias:"
 
 #: inc/command/regeneratefilescommand.class.php:43
 msgid ""
 "This command will clean up all files generated by the plugin and regenerate "
 "them."
 msgstr ""
+"Este comando limpiará todos los archivos generados por el complemento y los "
+"regenerará."
 
 #: inc/field.class.php:1183
 msgid "URL"
@@ -283,7 +296,7 @@ msgstr "Actualización de los archivos 'desplegables' generados"
 
 #: inc/checkdatabasecommand.class.php:57
 msgid "Use this option to actually fix database"
-msgstr ""
+msgstr "Utilice esta opción para arreglar la base de datos"
 
 #: inc/field.class.php:1185
 msgid "Yes/No"
@@ -312,17 +325,17 @@ msgstr "No se pueden añadir varios bloques con un nombre idéntico en el mismo 
 #: inc/containerdisplaycondition.class.php:495
 #: inc/containerdisplaycondition.class.php:510
 msgid "You must specify an item type, search option and condition."
-msgstr ""
+msgstr "Debe especificar un tipo de artículo, una opción de búsqueda y una condición."
 
 #: inc/containerdisplaycondition.class.php:103
 #: inc/containerdisplaycondition.class.php:137
 msgid "not under"
-msgstr ""
+msgstr "no debajo"
 
 #: inc/containerdisplaycondition.class.php:109
 #: inc/containerdisplaycondition.class.php:131
 msgid "regular expression matches"
-msgstr ""
+msgstr "coincidencias de expresiones regulares"
 
 #: templates/fields.html.twig
 msgid "show"
@@ -331,4 +344,4 @@ msgstr "mostrar"
 #: inc/containerdisplaycondition.class.php:102
 #: inc/containerdisplaycondition.class.php:134
 msgid "under"
-msgstr ""
+msgstr "debajo"

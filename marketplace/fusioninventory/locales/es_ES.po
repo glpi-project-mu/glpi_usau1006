@@ -372,6 +372,9 @@ msgstr "URL base del agente"
 msgid "SNMP credentials"
 msgstr "Credenciales SNMP"
 
+msgid "SNMP credential"
+msgstr "Credencial SNMP"
+
 #: hook.php:262 hook.php:296 inc/item.class.php:165
 #: inc/unmanaged.class.php:232 inc/unmanaged.class.php:484
 msgid "Sysdescr"
@@ -387,6 +390,7 @@ msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "Bloqueo"
 msgstr[1] "Bloqueos"
+msgstr[2] "Bloqueos"
 
 #: hook.php:866 inc/deploygroup.class.php:213 inc/iprange.class.php:393
 msgid "Target a task"
@@ -1797,6 +1801,10 @@ msgstr "Configuración"
 #: inc/profile.class.php:417 inc/menu.class.php:299
 msgid "Computer information"
 msgstr "Información del ordenador"
+
+msgid "Remotework"
+msgstr "Trabajo remoto"
+
 
 #: inc/menu.class.php:163 inc/menu.class.php:172
 #: inc/deploypackage.class.php:158

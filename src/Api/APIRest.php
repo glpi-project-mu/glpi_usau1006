@@ -59,6 +59,33 @@ class APIRest extends API
     public function manageUploadedFiles()
     {
         foreach (array_keys($_FILES) as $filename) {
+
+            if($filename !== 'filename'){
+                return;
+            }
+
+            if (empty($_FILES[$filename]['name'][0]) && 
+                empty($_FILES[$filename]['full_path'][0]) && 
+                empty($_FILES[$filename]['type'][0]) && 
+                empty($_FILES[$filename]['tmp_name'][0])) {
+                return;
+            }
+
+            foreach ($_FILES[$filename] as $key => $value) {
+                if (is_array($value) && count($value) > 1) {
+                    $_FILES[$filename][$key] = array_slice($value, 0, 1);
+                }
+            }
+
+            /*Toolbox::logInFile(
+                'php-errors',
+                sprintf('%1$s: %2$s'."\n",
+                    "Este es el arreglo de archivos con un solo elemento",
+                    json_encode($_FILES[$filename])
+                )
+            );*/
+
+
            // Randomize files names
             $rand_name = uniqid('', true);
             foreach ($_FILES[$filename]['name'] as &$name) {
@@ -69,11 +96,25 @@ class APIRest extends API
             = GLPIUploadHandler::uploadFiles(['name'           => $filename,
                 'print_response' => false
             ]);
+
+
+            /*
+            Esto es para que soporte la subida de más de un archivo, pero requiere
+            profundidad en validaciones
             foreach ($upload_result as $uresult) {
-                 $this->parameters['input']->_filename[] = $uresult[0]->name;
-                 $this->parameters['input']->_prefix_filename[] = $uresult[0]->prefix;
+                foreach($uresult as $e){
+                    $this->parameters['input']->_filename[] = $e->name;
+                    $this->parameters['input']->_prefix_filename[] = $e->prefix;
+                }
+            }*/
+
+
+            foreach ($upload_result as $uresult) {
+                $this->parameters['input']->_filename[] = $uresult[0]->name;
+                $this->parameters['input']->_prefix_filename[] = $uresult[0]->prefix;
             }
-            $this->parameters['upload_result'][] = $upload_result;
+
+            $this->parameters['upload_result'][] = [$upload_result[$filename][0]];
         }
     }
 

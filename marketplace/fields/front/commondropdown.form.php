@@ -30,7 +30,6 @@
 
 include "../../../inc/includes.php";
 include "../../../src/Toolbox/HandlerSubmitForm.php";
-
 if (preg_match('/[a-z]/i', $_REQUEST['ddtype']) !== 1) {
     throw new \RuntimeException(sprintf('Invalid itemtype "%"', $_REQUEST['ddtype']));
 }

@@ -89,7 +89,7 @@ msgstr ""
 
 #: inc/config.class.php:92 inc/config.class.php:707 inc/config.class.php:719
 msgid "Curve lines (SVG)"
-msgstr ""
+msgstr "Lineas curva (SVG)"
 
 #: inc/common.class.php:62 inc/common.class.php:63 inc/common.class.php:79
 #: inc/dashboard.class.php:36 ajax/homepage_link.php:37
@@ -106,20 +106,20 @@ msgstr ""
 
 #: inc/config.class.php:128 inc/config.class.php:761
 msgid "Default delay"
-msgstr ""
+msgstr "Retraso predeterminado"
 
 #: inc/notification.class.php:74 inc/pdf.class.php:43
 msgid "GLPI statistics reports"
-msgstr ""
+msgstr "reportes de estadísticas GLPI"
 
 #: front/popup.php:39 inc/common.class.php:1149 inc/common.class.php:1156
 #: inc/common.class.php:1164
 msgid "General Report - ODT"
-msgstr ""
+msgstr "Reporte General - ODT"
 
 #: inc/other.class.php:118
 msgid "Genericobject plugin logs"
-msgstr ""
+msgstr "Registro del plugin de objeto genérico"
 
 #: inc/notification.class.php:75
 msgid ""
@@ -149,7 +149,7 @@ msgstr ""
 #: inc/notificationtargetnotification.class.php:36 inc/common.class.php:50
 #: inc/notification.class.php:46 setup.php:177
 msgid "More Reporting"
-msgstr ""
+msgstr "Más Informes"
 
 #: inc/graph.class.php:155 inc/graph.class.php:354 inc/graph.class.php:551
 #: inc/graph.class.php:811 inc/graph.class.php:1031 inc/graph.class.php:1260
@@ -158,74 +158,74 @@ msgstr ""
 #: inc/graphpng.class.php:1256 inc/graphpng.class.php:1493
 #: inc/graphpng.class.php:1798 inc/graphpng.class.php:2067
 msgid "No data for this date range !"
-msgstr ""
+msgstr "No hay data para este rango"
 
 #: inc/common.class.php:1165
 msgid "No graphic selected"
-msgstr ""
+msgstr "No hay gráfico seleccionado"
 
 #: inc/common.class.php:1157
 msgid "No model available"
-msgstr ""
+msgstr "No modelo disponible"
 
 #: front/central.php:74 front/central.php:81 inc/common.class.php:331
 #: inc/common.class.php:398 inc/config.class.php:664
 msgid "No report is available !"
-msgstr ""
+msgstr "¡No hay reporte disponible!"
 
 #: inc/notification.class.php:62 inc/notification.class.php:83
 #: inc/notification.class.php:156
 msgid "Notification for \"More Reporting\""
-msgstr ""
+msgstr "Notificación para \"Más informes\""
 
 #: inc/notification.class.php:181
 msgid "Notification(s) sent !"
-msgstr ""
+msgstr "¡Notificacion(es) enviada(s)!"
 
 #: inc/common.class.php:931
 msgid "Number"
-msgstr ""
+msgstr "Números"
 
 #: inc/other.class.php:98
 msgid "OCS Infos"
-msgstr ""
+msgstr "Informaciones OCS"
 
 #: inc/config.class.php:576
 msgid "Object already exists"
-msgstr ""
+msgstr "Ya existe el objeto"
 
 #: inc/config.class.php:493 inc/config.class.php:508
 msgid "On mouse over"
-msgstr ""
+msgstr "Cuando el ratón esté por encima"
 
 #: inc/preference.class.php:124 inc/common.class.php:1150
 msgid "Please, select a model in your preferences"
-msgstr ""
+msgstr "Por favor, seleccione un modelo en tus preferencias"
 
 #: inc/common.class.php:65 inc/common.class.php:66 inc/common.class.php:88
 msgid "Reports list"
-msgstr ""
+msgstr "Lista de reportes"
 
 #: inc/config.class.php:111 inc/config.class.php:734
 msgid "Reverse data array"
-msgstr ""
+msgstr "Matriz de datos invertida"
 
 #: inc/profile.class.php:71 inc/profile.class.php:217
 #: inc/profile.class.php:289
 msgid "Rights management"
-msgstr ""
+msgstr "Gestión de derechos"
 
 #: inc/config.class.php:83 inc/config.class.php:692
 msgid "See area"
-msgstr ""
+msgstr "Ver area"
 
 #: inc/config.class.php:144 inc/config.class.php:672
 msgid "See graphic"
-msgstr ""
+msgstr "Ver gráfico"
 
 #: inc/config.class.php:101
 msgid "See values"
-msgstr ""
+msgstr "Ver valores"
 
 #: inc/dashboard.class.php:130
 msgid "Select a report to add"

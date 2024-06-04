@@ -95,8 +95,8 @@ msgstr "Número de dispositivos no importados por no tener tipo definido"
 #: inc/menu.class.php:471 inc/deployuserinteractiontemplate.class.php:151
 msgid "User interaction template"
 msgid_plural "User interaction templates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Plantilla de interacción del usuario"
+msgstr[1] "Plantillas de interacción del usuario"
 
 #: front/inventorycomputerimportxml.php:73
 msgid "Can't read zip file!"
@@ -368,6 +368,9 @@ msgstr "URL base de agente"
 msgid "SNMP credentials"
 msgstr "Credenciales SNMP"
 
+msgid "SNMP credential"
+msgstr "Credencial SNMP"
+
 #: hook.php:262 hook.php:296 inc/item.class.php:165
 #: inc/unmanaged.class.php:232 inc/unmanaged.class.php:484
 msgid "Sysdescr"
@@ -383,6 +386,7 @@ msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "Bloqueo"
 msgstr[1] "Bloqueos"
+msgstr[2] "Bloqueos"
 
 #: hook.php:866 inc/deploygroup.class.php:213 inc/iprange.class.php:393
 msgid "Target a task"
@@ -1459,7 +1463,7 @@ msgstr "Progreso"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/profile.class.php:302 inc/menu.class.php:353
 msgid "Computer information rules"
-msgstr ""
+msgstr "Reglas informativas de ordenadores"
 
 #: inc/collectrule.class.php:204
 msgid "Registry key"
@@ -1788,7 +1792,10 @@ msgstr "Configuración"
 
 #: inc/profile.class.php:417 inc/menu.class.php:299
 msgid "Computer information"
-msgstr ""
+msgstr "Información del ordenador"
+
+msgid "Remotework"
+msgstr "Trabajo remoto"
 
 #: inc/menu.class.php:163 inc/menu.class.php:172
 #: inc/deploypackage.class.php:158
@@ -1809,11 +1816,11 @@ msgstr ""
 
 #: inc/menu.class.php:228
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "GLPI cron no se ejecuta, ver"
 
 #: inc/menu.class.php:229
 msgid "documentation"
-msgstr ""
+msgstr "documentación"
 
 #: inc/menu.class.php:250
 msgid "Agents management"
@@ -1837,7 +1844,7 @@ msgstr "Tareas"
 
 #: inc/menu.class.php:331
 msgid "Asset skipped during import"
-msgstr ""
+msgstr "Activo omitido durante la importación"
 
 #: inc/menu.class.php:339
 msgid "Computer entity rules"
@@ -1878,7 +1885,7 @@ msgstr "Inv. de SNMP"
 
 #: inc/menu.class.php:502
 msgid "Guide"
-msgstr ""
+msgstr "Guía"
 
 #: inc/menu.class.php:530 inc/menu.class.php:601
 msgid "Statistics"

@@ -30,6 +30,56 @@
 
 abstract class PluginFieldsAbstractContainerInstance extends CommonDBTM
 {
+    //Personalización para incluir notificaciones si esta asociado a un ticket
+    public function addToDB(){
+        global $DB;
+        global $CFG_GLPI;
+
+        $nb_fields = count($this->fields);
+        if ($nb_fields > 0) { 
+            $params = [];
+            foreach ($this->fields as $key => $value) {
+                //FIXME: why is that handled here?
+                if (($this->getType() == 'ProfileRight') && ($value == '')) {
+                    $value = 0;
+                }
+                $params[$key] = $value;
+            }
+
+
+            $result = $DB->insert($this->getTable(), $params);
+            if ($result) {
+
+                ///Nuevo PluginFields, si esta asociado a ticket envia notificacion
+                $item = $this->getById($DB->insertId());
+
+                if($item->fields["itemtype"] == "Ticket"){
+                    $ticket = Ticket::getById($item->fields["items_id"]);
+     
+                    if($ticket){
+                     //enviamos la notificación
+                        if ( !isset($ticket->input['_disablenotif']) && $CFG_GLPI['use_notifications']) {
+                         NotificationEvent::raiseEvent('new', $ticket);
+                        }
+                     }
+                }
+
+                if (
+                    !isset($this->fields['id'])
+                    || is_null($this->fields['id'])
+                    || ($this->fields['id'] == 0)
+                ) {
+                    $this->fields['id'] = $DB->insertId();
+                }
+
+                $this->getFromDB($this->fields[$this->getIndexName()]);
+
+                return $this->fields['id'];
+            }
+        }
+        return false;
+    }
+
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
         if (!is_array($values)) {

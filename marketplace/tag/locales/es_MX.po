@@ -62,3 +62,17 @@ msgstr ""
 #: inc/tag.class.php:693
 msgid "View all tags"
 msgstr "Ver todas las etiquetas"
+
+#: inc/tag.class.php:230
+msgid "Associated item"
+msgid_plural "Associated items"
+msgstr[0] "Elemento asociado"
+msgstr[1] "Elementos asociados"
+msgstr[2] "Elementos asociados"
+
+#: inc/tag.class.php:113 inc/tag.class.php:344
+msgid "Associated item type"
+msgid_plural "Associated item types"
+msgstr[0] "Tipo de elemento asociado"
+msgstr[1] "Tipos de elemento asociado"
+msgstr[2] "Tipos de elemento asociado"

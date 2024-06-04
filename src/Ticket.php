@@ -726,6 +726,42 @@ class Ticket extends CommonITILObject
         return $right;
     }
 
+    //Sobreescribimos función de notificacion para incluir verificación de PluginFieldsTicketsiagie
+    //y delegarle a este la notificación
+    public function handleNewItemNotifications(): void
+    {
+        global $CFG_GLPI;
+
+        if (!isset($this->input['_disablenotif']) && $CFG_GLPI['use_notifications']) {
+            $this->getFromDB($this->fields['id']); // Reload item to get actual status
+
+            if(class_exists("PluginFieldsContainer")==true){
+
+                if(false != ($id_container = PluginFieldsContainer::findContainer('Ticket','dom','')))
+                {
+                    $container = PluginFieldsContainer::getById($id_container);
+                    $name_fieldc = $container->fields["name"];
+
+                    if(class_exists("PluginFieldsTicket$name_fieldc") === false){
+                        NotificationEvent::raiseEvent('new', $this);
+                    }
+                }
+                else {
+                    NotificationEvent::raiseEvent('new', $this);
+                }
+            }else{
+                NotificationEvent::raiseEvent('new', $this);
+            }
+            
+            $status = $this->fields['status'] ?? null;
+            if (in_array($status, $this->getSolvedStatusArray())) {
+                NotificationEvent::raiseEvent('solved', $this);
+            }
+            if (in_array($status, $this->getClosedStatusArray())) {
+                NotificationEvent::raiseEvent('closed', $this);
+            }
+        }
+    }
 
     public function pre_deleteItem()
     {

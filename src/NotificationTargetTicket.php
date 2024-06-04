@@ -154,6 +154,133 @@ class NotificationTargetTicket extends NotificationTargetCommonITILObject
         return $events;
     }
 
+    public function verifyAdditionalTags(){
+
+        global $DB;
+
+        if(class_exists("PluginFieldsContainer")==true){
+
+            if(false != ($id_container = PluginFieldsContainer::findContainer('Ticket','dom','')))
+            {
+                $container = PluginFieldsContainer::getById($id_container);
+                $name_fieldc = $container->fields["name"];
+                $container_id = $container->fields['id'];
+                
+                $query = "SELECT fields.name, fields.label 
+                FROM glpi_plugin_fields_fields fields 
+                WHERE fields.type LIKE 'text'
+                AND fields.plugin_fields_containers_id = $container_id
+                ";
+
+                foreach ($DB->request($query) as $row) {
+
+                    $fieldname = $row['name'];
+                    $labelname = $row['label'];
+                
+                    $key_fieldname = "pluginfields.ticket" . $name_fieldc . "s" .".". str_replace("field", "", $fieldname);
+                    $tags[$key_fieldname] = $labelname;
+                
+                }
+
+                foreach ($tags as $tag => $label) {
+            
+                    $this->addTagToList(['tag'    => $tag,
+                        'label'  => "Campo: ".ucwords(strtolower($label)),
+                        'value'  => true,
+                        'lang'   => false
+                    ]);
+                }
+
+                
+            }
+        }
+
+    }
+
+    public function verifyAdditionalFields(CommonDBTM $item)
+    {
+        global $DB;
+
+        //Realizaremos una verificación para añadir los tags del addditional fields
+        if(class_exists("PluginFieldsContainer")==true){
+
+            if(false != ($id_container = PluginFieldsContainer::findContainer('Ticket','dom','')))
+            {
+                $container = PluginFieldsContainer::getById($id_container);
+                $name_fieldc = $container->fields["name"];
+
+                if(class_exists("PluginFieldsTicket$name_fieldc") != false){
+                    
+                    $class_name = "PluginFieldsTicket$name_fieldc";
+
+                    $pluginFieldsTicketObj = new $class_name;
+
+                    if($pluginFieldsTicketObj instanceof CommonDBTM){
+
+                        $table_name = $pluginFieldsTicketObj::getTable();
+
+                        //Chequeamos si nuestra tabla existe
+                        $query_verify_table = "SELECT COUNT(*) AS table_exists
+                        FROM information_schema.tables 
+                        WHERE table_schema = DATABASE() 
+                        AND table_name = '$table_name'";
+
+                        /*Toolbox::logInFile('php-errors', 
+                        sprintf(
+                            __('%1$s: %2$s'),
+                            "Probando",
+                            $query_verify_table ."\n"
+                        ) );*/
+
+                        $result = $DB->query($query_verify_table);
+                        $table_exists = $DB->result($result, 0, "table_exists");
+
+                        if($table_exists){
+        
+                            $ticket_id = $item->getField("id");
+                            $container_id = $container->fields['id'];
+                
+                            $query = "SELECT fields.name 
+                            FROM glpi_plugin_fields_fields fields 
+                            WHERE fields.type LIKE 'text'
+                            AND fields.plugin_fields_containers_id = $container_id
+                            ";
+                
+                            foreach ($DB->request($query) as $row) {
+
+                                $fieldname = $row['name'];
+
+                                $queryfield =  "SELECT ts.$fieldname
+                                FROM $table_name ts
+                                INNER JOIN glpi_tickets tickets
+                                ON tickets.id = ts.items_id 
+                                WHERE tickets.id = $ticket_id";
+
+                                $result = $DB->query($queryfield);
+                                $value = $DB->result($result, 0, $fieldname);
+                            
+                                $key_fieldname = "##pluginfields.ticket" . $name_fieldc . "s" .".". str_replace("field", "", $fieldname) . "##";
+                                $data[$key_fieldname] = $value;
+
+                            };
+
+                            return $data;
+                
+                        }
+
+                        else return false;
+
+                    }
+                    else return false;
+                    
+                }
+                else return false;
+            }
+        
+        }
+        else return false;
+    }
+
 
     public function getDataForObject(CommonDBTM $item, array $options, $simple = false)
     {
@@ -166,7 +293,15 @@ class NotificationTargetTicket extends NotificationTargetCommonITILObject
                         = $this->formatURL(
                             $options['additionnaloption']['usertype'],
                             "ticket_" . $item->getField("id") . "_TicketValidation$1"
-                        );
+        );
+
+        if($new_fieldkeys = self::verifyAdditionalFields($item)){
+            foreach($new_fieldkeys as $key => $value){
+                $data[$key] = $value;
+            }
+        }
+
+    
         $data['##ticket.globalvalidation##']
                         = TicketValidation::getStatus($item->getField('global_validation'));
         $data['##ticket.type##']
@@ -902,6 +1037,8 @@ class NotificationTargetTicket extends NotificationTargetCommonITILObject
                 'allowed_values' => $label['allowed_values']
             ]);
         }
+
+        self::verifyAdditionalTags();
 
         asort($this->tag_descriptions);
     }

@@ -5158,9 +5158,9 @@ msgstr "Número"
 #: src/DeviceCamera.php:42
 msgid "Camera"
 msgid_plural "Cameras"
-msgstr[0] "Camera"
-msgstr[1] "Cameras"
-msgstr[2] "Cameras"
+msgstr[0] "Cámara"
+msgstr[1] "Cámaras"
+msgstr[2] "Cámaras"
 
 #: src/Group.php:568
 msgid "Can be in charge of a task"
