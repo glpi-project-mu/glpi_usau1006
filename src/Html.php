@@ -5535,7 +5535,8 @@ HTML;
             'editor_id'     => $p['editor_id'],
         ]);
 
-        $max_file_size  = $CFG_GLPI['document_max_size'] * 1024 * 1024;
+        //$max_file_size  = $CFG_GLPI['document_max_size'] * 1024 * 1024;
+        $max_file_size  = min($CFG_GLPI['document_max_size'] * 1024 * 1024, Toolbox::getPhpUploadSizeLimit());
         $max_chunk_size = round(Toolbox::getPhpUploadSizeLimit() * 0.9); // keep some place for extra data
 
         $required = "";
