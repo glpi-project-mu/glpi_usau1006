@@ -29,12 +29,12 @@ msgstr "Color HTML"
 #: setup.php:111
 msgctxt "filters"
 msgid "If the item has a tag"
-msgstr ""
+msgstr "Si el elemento tiene una etiqueta"
 
 #: setup.php:115
 msgctxt "filters"
 msgid "If the item is tagged"
-msgstr ""
+msgstr "Si el elemento está etiquetado"
 
 #: hook.php:185
 msgid "Remove tags"
@@ -53,11 +53,11 @@ msgstr "Administración de etiquetas"
 
 #: inc/profile.class.php:34 inc/profile.class.php:58
 msgid "Tag management"
-msgstr ""
+msgstr "Gestión de etiquetas"
 
 #: inc/config.class.php:56
 msgid "Tags location"
-msgstr ""
+msgstr "Ubicación de etiquetas"
 
 #: inc/tag.class.php:693
 msgid "View all tags"

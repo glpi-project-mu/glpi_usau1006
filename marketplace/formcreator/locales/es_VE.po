@@ -700,15 +700,15 @@ msgstr "Grupo de aprobadores de casos"
 
 #: inc/issue.class.php:840
 msgid "Ticket requester"
-msgstr ""
+msgstr "Solicitante del caso"
 
 #: inc/issue.class.php:887
 msgid "Ticket observer"
-msgstr ""
+msgstr "Observador del caso"
 
 #: inc/issue.class.php:935
 msgid "Ticket technician"
-msgstr ""
+msgstr "Técnico del caso"
 
 #: inc/issue.class.php:1078
 #, php-format
@@ -1249,11 +1249,11 @@ msgstr "Altura uniforme"
 
 #: inc/entityconfig.class.php:164
 msgid "Search for assistance"
-msgstr ""
+msgstr "Buscar para asistencia"
 
 #: inc/entityconfig.class.php:165
 msgid "User's assistance requests"
-msgstr ""
+msgstr "Solicitudes de asistencia de usuario"
 
 #: inc/entityconfig.class.php:261
 msgid "Helpdesk"
@@ -1294,7 +1294,7 @@ msgstr "Buscar asunto"
 
 #: inc/entityconfig.class.php:393 inc/entityconfig.class.php:509
 msgid "Service catalog home page"
-msgstr ""
+msgstr "Página principal de catálogo de servicio"
 
 #: inc/entityconfig.class.php:409 inc/entityconfig.class.php:549
 msgid "Tile design"
