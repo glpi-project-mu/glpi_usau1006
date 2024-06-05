@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2022-09-13 12:47+0000\n"
 "PO-Revision-Date: 2015-09-18 12:56+0000\n"
 "Last-Translator: Alexander Salas Bastidas <alexander.salas@gmail.com>, 2017\n"
-"Language-Team: Spanish (Mexico) (http://www.transifex.com/teclib/glpi-plugin-tag/language/es_MX/)\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/teclib/glpi-plugin-tag/language/es_419/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,12 +29,12 @@ msgstr "Color HTML"
 #: setup.php:111
 msgctxt "filters"
 msgid "If the item has a tag"
-msgstr ""
+msgstr "Si el elemento tiene una etiqueta"
 
 #: setup.php:115
 msgctxt "filters"
 msgid "If the item is tagged"
-msgstr ""
+msgstr "Si el elemento está etiquetado"
 
 #: hook.php:185
 msgid "Remove tags"
@@ -53,11 +53,11 @@ msgstr "Administración de etiquetas"
 
 #: inc/profile.class.php:34 inc/profile.class.php:58
 msgid "Tag management"
-msgstr ""
+msgstr "Gestión de etiquetas"
 
 #: inc/config.class.php:56
 msgid "Tags location"
-msgstr ""
+msgstr "Ubicación de etiquetas"
 
 #: inc/tag.class.php:693
 msgid "View all tags"
