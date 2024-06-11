@@ -14,7 +14,8 @@ my $obj = RateLimiter->new(
     password => '0J1vYNum/6yOwX9oLPRn0hQ6hXZotu3ccWfimajBmZNs0FECj5KBHjy5ya7BBiZtogIguA2ej28D4aP4',
     maxrate => 10,
     maxrate_period => 60,
-    namespace => 'rate_limit'
+    namespace => 'rate_limit',
+    rate_limit_enabled => 1
 );
 
 if ($obj->rate_limited($clientIp)) {

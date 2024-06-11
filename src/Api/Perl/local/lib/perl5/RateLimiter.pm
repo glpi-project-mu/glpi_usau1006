@@ -15,6 +15,7 @@ sub new {
         maxrate => $params{maxrate} || 10,
         maxrate_period => $params{maxrate_period} || 60,
         namespace => $params{namespace} || 'rate_limit',
+        rate_limit_enabled => $params{rate_limit_enabled},
     };
     bless $self, $class;
     return $self;
@@ -34,6 +35,8 @@ sub rate_limited {
     my ($self, $clientIp) = @_;
 
     croak "Client IP is required" unless $clientIp;
+
+    return 0 unless $self->{rate_limit_enabled};
 
     my $maxrate = $self->{maxrate};
     my $maxrate_period = $self->{maxrate_period};
