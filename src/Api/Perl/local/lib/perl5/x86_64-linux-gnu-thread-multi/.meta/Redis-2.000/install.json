@@ -1,0 +1,1 @@
+{"dist":"Redis-2.000","pathname":"D/DA/DAMS/Redis-2.000.tar.gz","name":"Redis","version":"2.000","provides":{"Redis":{"version":"2.000","file":"lib/Redis.pm"},"Redis::Hash":{"version":"2.000","file":"lib/Redis/Hash.pm"},"Redis::Sentinel":{"version":"2.000","file":"lib/Redis/Sentinel.pm"},"Redis::List":{"file":"lib/Redis/List.pm","version":"2.000"}},"target":"Redis"}

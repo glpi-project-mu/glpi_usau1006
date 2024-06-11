@@ -1,0 +1,4 @@
+/var/www/html/glpi_usau1006/src/Api/Perl/local/lib/perl5/Redis.pm
+/var/www/html/glpi_usau1006/src/Api/Perl/local/lib/perl5/Redis/Hash.pm
+/var/www/html/glpi_usau1006/src/Api/Perl/local/lib/perl5/Redis/List.pm
+/var/www/html/glpi_usau1006/src/Api/Perl/local/lib/perl5/Redis/Sentinel.pm
