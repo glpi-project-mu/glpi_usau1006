@@ -71,6 +71,8 @@ use Ticket;
 use Toolbox;
 use User;
 use Glpi\Application\View\Extension\DocumentExtension;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 abstract class API
 {
@@ -205,6 +207,28 @@ abstract class API
                 false
             );
         }
+
+        
+        $clientIpEscaped = escapeshellarg($this->iptxt);
+
+        $process = new Process(['perl', 'src/Api/Perl/rate_limited.pl', $clientIpEscaped]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $rateLimitOutput = trim($process->getOutput());
+        
+        if ($rateLimitOutput === "1") {
+            $this->returnError(
+                __("Rate limit reached for IP address: ". $clientIpEscaped),
+                429,
+               "ERROR_RATE_LIMIT",
+                false
+            );    
+        }
+               
         $app_tokens = array_column($found_clients, 'app_token');
         $apiclients_id = array_column($found_clients, 'id');
         $this->app_tokens = array_combine($apiclients_id, $app_tokens);
