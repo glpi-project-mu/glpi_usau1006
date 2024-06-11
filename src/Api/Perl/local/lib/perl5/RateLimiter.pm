@@ -8,7 +8,10 @@ use Carp;
 sub new {
     my ($class, %params) = @_;
     my $self = {
-        redis => Redis->new(server => $params{server} || '127.0.0.1:6379'),
+        redis => Redis->new(
+            server => $params{server} || '127.0.0.1:6379',
+            password => $params{password}
+        ),
         maxrate => $params{maxrate} || 10,
         maxrate_period => $params{maxrate_period} || 60,
         namespace => $params{namespace} || 'rate_limit',
